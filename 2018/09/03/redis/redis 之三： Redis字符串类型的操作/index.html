@@ -1,0 +1,1012 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="true" />
+
+
+
+
+
+
+
+	<meta name="baidu-site-verification" content="ADEVsVvcYE" />
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="redis," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="liuzhupeng的博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="set key value [ex 秒数] / [px 毫秒数]  [nx] /[xx] 如: set a 1 ex 10 , 10秒有效 Set a 1 px 9000  , 9秒有效 注: 如果ex,px同时写,以后面的有效期为准 如 set a 1 ex 100 px 9000, 实际有效期是9000毫秒   nx: 表示key不存在时,执行操作 xx: 表示key存在时,执行操作12345">
+<meta name="keywords" content="redis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="redis 之三： Redis字符串类型的操作">
+<meta property="og:url" content="http://yoursite.com/2018/09/03/redis/redis 之三： Redis字符串类型的操作/index.html">
+<meta property="og:site_name" content="liuzhupeng的博客">
+<meta property="og:description" content="set key value [ex 秒数] / [px 毫秒数]  [nx] /[xx] 如: set a 1 ex 10 , 10秒有效 Set a 1 px 9000  , 9秒有效 注: 如果ex,px同时写,以后面的有效期为准 如 set a 1 ex 100 px 9000, 实际有效期是9000毫秒   nx: 表示key不存在时,执行操作 xx: 表示key存在时,执行操作12345">
+<meta property="og:updated_time" content="2018-09-03T00:16:44.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="redis 之三： Redis字符串类型的操作">
+<meta name="twitter:description" content="set key value [ex 秒数] / [px 毫秒数]  [nx] /[xx] 如: set a 1 ex 10 , 10秒有效 Set a 1 px 9000  , 9秒有效 注: 如果ex,px同时写,以后面的有效期为准 如 set a 1 ex 100 px 9000, 实际有效期是9000毫秒   nx: 表示key不存在时,执行操作 xx: 表示key存在时,执行操作12345">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'XO07FKRYQU',
+      apiKey: '42f277b78659c936fba4af368318e5b9',
+      indexName: 'lzpnote',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"搜索...","hits_empty":"未发现与 「${query}」相关的内容","hits_stats":"${hits} 条相关条目，使用了 ${time} 毫秒"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/09/03/redis/redis 之三： Redis字符串类型的操作/"/>
+
+
+
+
+
+  <title>redis 之三： Redis字符串类型的操作 | liuzhupeng的博客</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">liuzhupeng的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  <!-- 
+ -->
+ 
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+                <a href="javascript:;" class="popup-trigger">
+			<!-- 增加结束 -->
+              
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/03/redis/redis 之三： Redis字符串类型的操作/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘铸澎">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="liuzhupeng的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">redis 之三： Redis字符串类型的操作</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-03T09:14:33+08:00">
+                2018-09-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/redis/" itemprop="url" rel="index">
+                    <span itemprop="name">redis</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/09/03/redis/redis 之三： Redis字符串类型的操作/" class="leancloud_visitors" data-flag-title="redis 之三： Redis字符串类型的操作">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="set-key-value-ex-秒数-px-毫秒数-nx-xx"><a href="#set-key-value-ex-秒数-px-毫秒数-nx-xx" class="headerlink" title="set key value [ex 秒数] / [px 毫秒数]  [nx] /[xx]"></a>set key value [ex 秒数] / [px 毫秒数]  [nx] /[xx]</h4><ul>
+<li>如: set a 1 ex 10 , 10秒有效</li>
+<li>Set a 1 px 9000  , 9秒有效<ul>
+<li>注: 如果ex,px同时写,以后面的有效期为准</li>
+<li>如 set a 1 ex 100 px 9000, 实际有效期是9000毫秒</li>
+</ul>
+</li>
+<li>nx: 表示key不存在时,执行操作</li>
+<li>xx: 表示key存在时,执行操作<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; set site www.google.com</div><div class="line">OK</div><div class="line">127.0.0.1:6379&gt; set site www.baidu.com nx</div><div class="line">(nil)</div><div class="line">127.0.0.1:6379&gt; get site</div><div class="line">&quot;www.google.com&quot;</div><div class="line">127.0.0.1:6379&gt; set site www.baidu.com xx</div><div class="line">OK</div><div class="line">127.0.0.1:6379&gt; get site</div><div class="line">&quot;www.baidu.com&quot;</div><div class="line">127.0.0.1:6379&gt; set site www.google.com</div><div class="line">OK</div><div class="line">127.0.0.1:6379&gt; set site www.baidu.com nx</div><div class="line">(nil)</div><div class="line">127.0.0.1:6379&gt; get site</div><div class="line">&quot;www.google.com&quot;</div><div class="line">127.0.0.1:6379&gt; set site www.baidu.com xx</div><div class="line">OK</div><div class="line">127.0.0.1:6379&gt; set sites www.baidu.com xx</div><div class="line">(nil)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="mset-multi-set-一次性设置多个键值"><a href="#mset-multi-set-一次性设置多个键值" class="headerlink" title="mset  multi set , 一次性设置多个键值"></a>mset  multi set , 一次性设置多个键值</h4><p>例: mset key1 v1 key2 v2 ….<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; mset a lzp b liming c zhangsan</div><div class="line">OK</div><div class="line">127.0.0.1:6379&gt; keys *</div><div class="line">1) &quot;a&quot;</div><div class="line">2) &quot;c&quot;</div><div class="line">3) &quot;b&quot;</div></pre></td></tr></table></figure></p>
+<h4 id="get-key"><a href="#get-key" class="headerlink" title="get key"></a>get key</h4><ul>
+<li>作用:获取key的值</li>
+</ul>
+<h4 id="mget-key1-key2-keyn"><a href="#mget-key1-key2-keyn" class="headerlink" title="mget key1 key2 ..keyn"></a>mget key1 key2 ..keyn</h4><ul>
+<li>作用:获取多个key的值<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; mget a b c d</div><div class="line">1) &quot;lzp&quot;</div><div class="line">2) &quot;liming&quot;</div><div class="line">3) &quot;zhangsan&quot;</div><div class="line">4) (nil)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="setrange-key-offset-value"><a href="#setrange-key-offset-value" class="headerlink" title="setrange key offset value"></a>setrange key offset value</h4><ul>
+<li>作用:把字符串的offset偏移字节,改成value</li>
+<li>注意: 如果偏移量&gt;字符长度, 该字符自动补0x00<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; set word hello</div><div class="line">OK</div><div class="line">127.0.0.1:6379&gt; get word</div><div class="line">&quot;hello&quot;</div><div class="line">127.0.0.1:6379&gt; setrange word 2 ??</div><div class="line">(integer) 5</div><div class="line">127.0.0.1:6379&gt; get word</div><div class="line">&quot;he??o&quot;</div><div class="line">----------------------------------------</div><div class="line">127.0.0.1:6379&gt; set word hello</div><div class="line">OK</div><div class="line">127.0.0.1:6379&gt; setrange word 6 ?</div><div class="line">(integer) 7</div><div class="line">127.0.0.1:6379&gt; get word</div><div class="line">&quot;hello\x00?&quot;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="append-key-value"><a href="#append-key-value" class="headerlink" title="append key value"></a>append key value</h4><ul>
+<li>作用: 把value追加到key的原值上<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; get word</div><div class="line">&quot;hello\x00?&quot;</div><div class="line">127.0.0.1:6379&gt; append word &amp;&amp;</div><div class="line">(integer) 9</div><div class="line">127.0.0.1:6379&gt; get word</div><div class="line">&quot;hello\x00?&amp;&amp;&quot;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="getrange-key-start-stop"><a href="#getrange-key-start-stop" class="headerlink" title="getrange key start stop"></a>getrange key start stop</h4><ul>
+<li>作用: 是获取字符串中 [start, stop]范围的值</li>
+<li>注意: 对于字符串的下标,左数从0开始,右数从-1开始</li>
+<li>注意: <ul>
+<li>1: start&gt;=length, 则返回空字符串</li>
+<li>2: stop&gt;=length,则截取至字符结尾</li>
+<li>3: 如果start 所处位置在stop右边, 返回空字符串<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; set area chinese</div><div class="line">OK</div><div class="line">127.0.0.1:6379&gt; getrange area 1 4</div><div class="line">&quot;hine&quot;</div><div class="line">------------------------</div><div class="line">127.0.0.1:6379&gt; set status working</div><div class="line">OK</div><div class="line">127.0.0.1:6379&gt; getrange status 0 -4</div><div class="line">&quot;work&quot;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="getset-key-newvalue"><a href="#getset-key-newvalue" class="headerlink" title="getset key newvalue"></a>getset key newvalue</h4><ul>
+<li>作用: 获取并返回旧值,设置新值<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; set status sleep</div><div class="line">OK</div><div class="line">127.0.0.1:6379&gt; getset status wakeup</div><div class="line">&quot;sleep&quot;</div><div class="line">127.0.0.1:6379&gt; get status</div><div class="line">&quot;wakeup&quot;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="incr-key"><a href="#incr-key" class="headerlink" title="incr key"></a>incr key</h4><ul>
+<li>作用: 指定的key的值加1,并返回加1后的值</li>
+<li>注意:<ul>
+<li>1:不存在的key当成0,再incr操作</li>
+<li>2: 范围为64有符号 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; get status</div><div class="line">&quot;wakeup&quot;</div><div class="line">127.0.0.1:6379&gt; set age 29</div><div class="line">OK</div><div class="line">127.0.0.1:6379&gt; incr age</div><div class="line">(integer) 30</div><div class="line">127.0.0.1:6379&gt; decr age</div><div class="line">(integer) 29</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="decr-key"><a href="#decr-key" class="headerlink" title="decr key"></a>decr key</h4><ul>
+<li>作用: 指定的key的值减1,并返回减1后的值<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">redis 127.0.0.1:6379&gt; set age 20</div><div class="line">OK</div><div class="line">redis 127.0.0.1:6379&gt; decr age</div><div class="line">(integer) 19</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="incrby-float-key-floatnumber"><a href="#incrby-float-key-floatnumber" class="headerlink" title="incrby float key floatnumber"></a>incrby float key floatnumber</h4><ul>
+<li>浮点型增加<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; set age 0</div><div class="line">OK</div><div class="line">127.0.0.1:6379&gt; incrbyfloat age 0.5</div><div class="line">&quot;0.5&quot;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="getbit-key-offset"><a href="#getbit-key-offset" class="headerlink" title="getbit key offset"></a>getbit key offset</h4><ul>
+<li>作用:获取值的二进制表示,对应位上的值(从左,从0编号)<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">ascii</div><div class="line">a 65  0100 0001</div><div class="line">a 97  0110 0001</div><div class="line">---------------------------</div><div class="line">127.0.0.1:6379&gt; set char A</div><div class="line">127.0.0.1:6379&gt; getbit char 1</div><div class="line">(integer) 1</div><div class="line">127.0.0.1:6379&gt; getbit char 2</div><div class="line">(integer) 0</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="setbit-key-offset-value"><a href="#setbit-key-offset-value" class="headerlink" title="setbit  key offset value"></a>setbit  key offset value</h4><ul>
+<li>设置offset对应二进制位上的值</li>
+<li>返回: 该位上的旧值</li>
+<li>注意: <ul>
+<li>1:如果offset过大,则会在中间填充0,</li>
+<li>2: offset最大大到多少</li>
+<li>3:offset最大2^32-1,可推出最大的的字符串为512M<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; set char A</div><div class="line">OK</div><div class="line">127.0.0.1:6379&gt; get char</div><div class="line">&quot;A&quot;</div><div class="line">大写变小写：setbit char 2 1</div><div class="line">127.0.0.1:6379&gt; setbit char 2 1</div><div class="line">(integer) 0</div><div class="line">127.0.0.1:6379&gt; get char</div><div class="line">&quot;a&quot;</div><div class="line">小写变大写：setbit char 2 0</div><div class="line">127.0.0.1:6379&gt; get char</div><div class="line">&quot;a&quot;</div><div class="line">127.0.0.1:6379&gt; setbit char 2 0</div><div class="line">(integer) 1</div><div class="line">127.0.0.1:6379&gt; get char</div><div class="line">&quot;A&quot;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="bitop-operation-destkey-key1-key2-…"><a href="#bitop-operation-destkey-key1-key2-…" class="headerlink" title="bitop operation destkey key1 [key2 …]"></a>bitop operation destkey key1 [key2 …]</h4><ul>
+<li>对key1,key2..keyN作operation,并将结果保存到 destkey 上。</li>
+<li>operation 可以是 AND 、 OR 、 NOT 、 XOR<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; get upper</div><div class="line">(nil)</div><div class="line">127.0.0.1:6379&gt; setbit upper 2 1</div><div class="line">(integer) 0</div><div class="line">127.0.0.1:6379&gt; get upper</div><div class="line">&quot; &quot;</div><div class="line">127.0.0.1:6379&gt; setbit lower 2 1</div><div class="line">(integer) 0</div><div class="line">127.0.0.1:6379&gt; get lower</div><div class="line">&quot; &quot;</div><div class="line">127.0.0.1:6379&gt; get char</div><div class="line">&quot;Q&quot;</div><div class="line">127.0.0.1:6379&gt; bitop or char char lower</div><div class="line">(integer) 1</div><div class="line">127.0.0.1:6379&gt; get char</div><div class="line">&quot;q&quot;</div></pre></td></tr></table></figure></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/redis/" rel="tag"># redis</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/03/redis/redis 之 一： 安装配置及启动连接/" rel="next" title="redis 之 一： 安装配置及启动连接">
+                <i class="fa fa-chevron-left"></i> redis 之 一： 安装配置及启动连接
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/03/redis/redis 之 二： Redis操作命令/" rel="prev" title="redis 之 二： Redis对于key的操作命令">
+                redis 之 二： Redis对于key的操作命令 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="刘铸澎" />
+          <p class="site-author-name" itemprop="name">刘铸澎</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">46</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">45</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://git.oschina.net/dashboard/projects" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#set-key-value-ex-秒数-px-毫秒数-nx-xx"><span class="nav-number">1.</span> <span class="nav-text">set key value [ex 秒数] / [px 毫秒数]  [nx] /[xx]</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mset-multi-set-一次性设置多个键值"><span class="nav-number">2.</span> <span class="nav-text">mset  multi set , 一次性设置多个键值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#get-key"><span class="nav-number">3.</span> <span class="nav-text">get key</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mget-key1-key2-keyn"><span class="nav-number">4.</span> <span class="nav-text">mget key1 key2 ..keyn</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#setrange-key-offset-value"><span class="nav-number">5.</span> <span class="nav-text">setrange key offset value</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#append-key-value"><span class="nav-number">6.</span> <span class="nav-text">append key value</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#getrange-key-start-stop"><span class="nav-number">7.</span> <span class="nav-text">getrange key start stop</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#getset-key-newvalue"><span class="nav-number">8.</span> <span class="nav-text">getset key newvalue</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#incr-key"><span class="nav-number">9.</span> <span class="nav-text">incr key</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#decr-key"><span class="nav-number">10.</span> <span class="nav-text">decr key</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#incrby-float-key-floatnumber"><span class="nav-number">11.</span> <span class="nav-text">incrby float key floatnumber</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#getbit-key-offset"><span class="nav-number">12.</span> <span class="nav-text">getbit key offset</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#setbit-key-offset-value"><span class="nav-number">13.</span> <span class="nav-text">setbit  key offset value</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#bitop-operation-destkey-key1-key2-…"><span class="nav-number">14.</span> <span class="nav-text">bitop operation destkey key1 [key2 …]</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">刘铸澎</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+<div>
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.1"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("6OMtX0qKxdIdOnV5KE5rgWX1-gzGzoHsz", "ODT08Qg3pX4wC18rqsaLQb35");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1010 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="true" />
+
+
+
+
+
+
+
+	<meta name="baidu-site-verification" content="ADEVsVvcYE" />
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="redis," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="liuzhupeng的博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="https://redis.io/commands String——字符串 Hash——字典 List——列表 Set——集合 Sorted Set——有序集合  keys pattern 查询相应的key 在redis里,允许模糊查询key  有3个通配符 *, ? ,[] *: 通配任意多个字符 ?: 通配单个字符 []: 通配括号内的某1个字符     keys * 12345678910">
+<meta name="keywords" content="redis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="redis 之 二： Redis对于key的操作命令">
+<meta property="og:url" content="http://yoursite.com/2018/09/03/redis/redis 之 二： Redis操作命令/index.html">
+<meta property="og:site_name" content="liuzhupeng的博客">
+<meta property="og:description" content="https://redis.io/commands String——字符串 Hash——字典 List——列表 Set——集合 Sorted Set——有序集合  keys pattern 查询相应的key 在redis里,允许模糊查询key  有3个通配符 *, ? ,[] *: 通配任意多个字符 ?: 通配单个字符 []: 通配括号内的某1个字符     keys * 12345678910">
+<meta property="og:updated_time" content="2018-09-03T00:16:34.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="redis 之 二： Redis对于key的操作命令">
+<meta name="twitter:description" content="https://redis.io/commands String——字符串 Hash——字典 List——列表 Set——集合 Sorted Set——有序集合  keys pattern 查询相应的key 在redis里,允许模糊查询key  有3个通配符 *, ? ,[] *: 通配任意多个字符 ?: 通配单个字符 []: 通配括号内的某1个字符     keys * 12345678910">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'XO07FKRYQU',
+      apiKey: '42f277b78659c936fba4af368318e5b9',
+      indexName: 'lzpnote',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"搜索...","hits_empty":"未发现与 「${query}」相关的内容","hits_stats":"${hits} 条相关条目，使用了 ${time} 毫秒"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/09/03/redis/redis 之 二： Redis操作命令/"/>
+
+
+
+
+
+  <title>redis 之 二： Redis对于key的操作命令 | liuzhupeng的博客</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">liuzhupeng的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  <!-- 
+ -->
+ 
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+                <a href="javascript:;" class="popup-trigger">
+			<!-- 增加结束 -->
+              
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/03/redis/redis 之 二： Redis操作命令/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘铸澎">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="liuzhupeng的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">redis 之 二： Redis对于key的操作命令</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-03T09:14:33+08:00">
+                2018-09-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/redis/" itemprop="url" rel="index">
+                    <span itemprop="name">redis</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/09/03/redis/redis 之 二： Redis操作命令/" class="leancloud_visitors" data-flag-title="redis 之 二： Redis对于key的操作命令">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <ul>
+<li><a href="https://redis.io/commands" target="_blank" rel="external">https://redis.io/commands</a></li>
+<li>String——字符串</li>
+<li>Hash——字典</li>
+<li>List——列表</li>
+<li>Set——集合</li>
+<li>Sorted Set——有序集合</li>
+</ul>
+<h4 id="keys-pattern-查询相应的key"><a href="#keys-pattern-查询相应的key" class="headerlink" title="keys pattern 查询相应的key"></a>keys pattern 查询相应的key</h4><ul>
+<li><p>在redis里,允许模糊查询key</p>
+<ul>
+<li>有3个通配符 *, ? ,[]<ul>
+<li>*: 通配任意多个字符</li>
+<li>?: 通配单个字符</li>
+<li>[]: 通配括号内的某1个字符</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>keys *</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; set sit www.glodon.com</div><div class="line">127.0.0.1:6379&gt; set site www.glodon.com</div><div class="line">127.0.0.1:6379&gt; set age 29</div><div class="line">127.0.0.1:6379&gt; keys *</div><div class="line">1) &quot;age&quot;</div><div class="line">2) &quot;sit&quot;</div><div class="line">3) &quot;site&quot;</div><div class="line">127.0.0.1:6379&gt; keys s*</div><div class="line">1) &quot;sit&quot;</div><div class="line">2) &quot;site&quot;</div><div class="line">127.0.0.1:6379&gt; keys sit[ey]</div><div class="line">1) &quot;site&quot;</div><div class="line">127.0.0.1:6379&gt; keys sit?</div><div class="line">1) &quot;site&quot;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="randomkey-返回随机key"><a href="#randomkey-返回随机key" class="headerlink" title="randomkey 返回随机key"></a>randomkey 返回随机key</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; randomkey</div><div class="line">&quot;age&quot;</div><div class="line">127.0.0.1:6379&gt; randomkey</div><div class="line">&quot;sit&quot;</div><div class="line">127.0.0.1:6379&gt; randomkey</div><div class="line">&quot;sit&quot;</div></pre></td></tr></table></figure>
+<h4 id="type-key"><a href="#type-key" class="headerlink" title="type key"></a>type key</h4><ul>
+<li>返回key存储的值的类型</li>
+<li>有string,link,set,order set, hash<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; type site</div><div class="line">string</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="exists-key"><a href="#exists-key" class="headerlink" title="exists key"></a>exists key</h4><ul>
+<li>判断key是否存在,返回1/0<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; exists site</div><div class="line">(integer) 1</div><div class="line">127.0.0.1:6379&gt; exists title</div><div class="line">(integer) 0</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="del-key1-key2-…-Keyn"><a href="#del-key1-key2-…-Keyn" class="headerlink" title="del key1 key2 … Keyn"></a>del key1 key2 … Keyn</h4><ul>
+<li>作用: 删除1个或多个键</li>
+<li>返回值: 不存在的key忽略掉,返回真正删除的key的数量<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; keys *</div><div class="line">1) &quot;age&quot;</div><div class="line">2) &quot;sit&quot;</div><div class="line">3) &quot;site&quot;</div><div class="line">127.0.0.1:6379&gt; del sit</div><div class="line">(integer) 1</div><div class="line">127.0.0.1:6379&gt; keys *</div><div class="line">1) &quot;age&quot;</div><div class="line">2) &quot;site&quot;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="rename-key-newkey"><a href="#rename-key-newkey" class="headerlink" title="rename key newkey"></a>rename key newkey</h4><ul>
+<li>作用: 给key赋一个新的key名</li>
+<li>注:如果newkey已存在,则newkey的原值被覆盖<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; rename site wangzhi</div><div class="line">OK</div><div class="line">127.0.0.1:6379&gt; keys *</div><div class="line">1) &quot;age&quot;</div><div class="line">2) &quot;wangzhi&quot;</div><div class="line">--------------------------------------</div><div class="line">127.0.0.1:6379&gt; set site www.glodon.com</div><div class="line">OK</div><div class="line">127.0.0.1:6379&gt; set search www.baidu.com</div><div class="line">OK</div><div class="line">127.0.0.1:6379&gt; rename site search</div><div class="line">OK</div><div class="line">127.0.0.1:6379&gt; get search</div><div class="line">&quot;www.glodon.com&quot;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="renamenx-key-newkey"><a href="#renamenx-key-newkey" class="headerlink" title="renamenx key newkey"></a>renamenx key newkey</h4><ul>
+<li>作用: 把key改名为newkey</li>
+<li>返回: 发生修改返回1,未发生修改返回0</li>
+<li>注: nx–&gt; not exists, 即, newkey不存在时,作改名动作<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; renamenx site sea</div><div class="line">(integer) 1</div><div class="line">127.0.0.1:6379&gt; get sea</div><div class="line">&quot;www.glodon.com&quot;</div><div class="line">127.0.0.1:6379&gt; renamenx sea search</div><div class="line">(integer) 0</div><div class="line">127.0.0.1:6379&gt; keys *</div><div class="line">1) &quot;age&quot;</div><div class="line">2) &quot;sea&quot;</div><div class="line">3) &quot;search&quot;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="move-key-db"><a href="#move-key-db" class="headerlink" title="move key db\"></a>move key db\</h4><ul>
+<li>redis 默认有16个数据库（0，1，2，3…,15）</li>
+<li>select 1 进入1号数据库</li>
+<li>move age 1 把age移动到1号数据库<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; move age 1</div><div class="line">(integer) 1</div><div class="line">127.0.0.1:6379&gt; select 1</div><div class="line">OK</div><div class="line">127.0.0.1:6379[1]&gt; keys *</div><div class="line">1) &quot;age&quot;</div><div class="line">----------------------------------</div><div class="line">127.0.0.1:6379&gt; keys *</div><div class="line">1) &quot;age&quot;</div><div class="line">2) &quot;sea&quot;</div><div class="line">3) &quot;search&quot;</div><div class="line">127.0.0.1:6379&gt; select 1</div><div class="line">OK</div><div class="line">127.0.0.1:6379[1]&gt; keys *</div><div class="line">(empty list or set)</div><div class="line">127.0.0.1:6379[1]&gt; select 0</div><div class="line">OK</div><div class="line">127.0.0.1:6379&gt; keys *</div><div class="line">1) &quot;age&quot;</div><div class="line">2) &quot;sea&quot;</div><div class="line">3) &quot;search&quot;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="ttl-key"><a href="#ttl-key" class="headerlink" title="ttl key"></a>ttl key</h4><ul>
+<li>作用: 查询key的生命周期</li>
+<li>返回: 秒数<ul>
+<li>注:对于不存在的key或已过期的key/不过期的key,都返回-1</li>
+<li>Redis4.0中,对于不存在的key,返回-2<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; ttl search</div><div class="line">(integer) -1</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="expire-key-整型值"><a href="#expire-key-整型值" class="headerlink" title="expire key 整型值"></a>expire key 整型值</h4><ul>
+<li>作用: 设置key的生命周期,以秒为单位</li>
+<li>同理: <ul>
+<li>pexpire key 毫秒数, 设置生命周期</li>
+<li>pttl  key, 以毫秒返回生命周期<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; expire search 10</div><div class="line">(integer) 1</div><div class="line">127.0.0.1:6379&gt; get search</div><div class="line">&quot;www.baidu.com&quot;</div><div class="line">127.0.0.1:6379&gt; get search</div><div class="line">(nil)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="persist-key"><a href="#persist-key" class="headerlink" title="persist key"></a>persist key</h4><ul>
+<li>作用: 把指定key置为永久有效<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; set site www.baidu.com</div><div class="line">OK</div><div class="line">127.0.0.1:6379&gt; expire site 10</div><div class="line">(integer) 1</div><div class="line">127.0.0.1:6379&gt; ttl site</div><div class="line">(integer) 8</div><div class="line">127.0.0.1:6379&gt; ttl site</div><div class="line">(integer) 7</div><div class="line">127.0.0.1:6379&gt; persist site</div><div class="line">(integer) 1</div><div class="line">127.0.0.1:6379&gt; ttl site</div><div class="line">(integer) -1</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="flushdb-清空当前数据库中的所有key"><a href="#flushdb-清空当前数据库中的所有key" class="headerlink" title="flushdb 清空当前数据库中的所有key"></a>flushdb 清空当前数据库中的所有key</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; keys *</div><div class="line">1) &quot;sea&quot;</div><div class="line">2) &quot;site&quot;</div><div class="line">127.0.0.1:6379&gt; flushdb</div><div class="line">OK</div><div class="line">127.0.0.1:6379&gt; keys *</div><div class="line">(empty list or set)</div><div class="line">127.0.0.1:6379&gt; select 1</div><div class="line">OK</div><div class="line">127.0.0.1:6379[1]&gt; keys *</div><div class="line">1) &quot;age&quot;</div><div class="line">127.0.0.1:6379[1]&gt; flushdb</div><div class="line">OK</div><div class="line">127.0.0.1:6379[1]&gt; keys *</div><div class="line">(empty list or set)</div></pre></td></tr></table></figure>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/redis/" rel="tag"># redis</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/03/redis/redis 之三： Redis字符串类型的操作/" rel="next" title="redis 之三： Redis字符串类型的操作">
+                <i class="fa fa-chevron-left"></i> redis 之三： Redis字符串类型的操作
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/03/redis/redis 之五： 集合 set 相关命令/" rel="prev" title="redis 之 五： 集合 set 相关命令">
+                redis 之 五： 集合 set 相关命令 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="刘铸澎" />
+          <p class="site-author-name" itemprop="name">刘铸澎</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">46</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">45</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://git.oschina.net/dashboard/projects" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#keys-pattern-查询相应的key"><span class="nav-number">1.</span> <span class="nav-text">keys pattern 查询相应的key</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#randomkey-返回随机key"><span class="nav-number">2.</span> <span class="nav-text">randomkey 返回随机key</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#type-key"><span class="nav-number">3.</span> <span class="nav-text">type key</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#exists-key"><span class="nav-number">4.</span> <span class="nav-text">exists key</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#del-key1-key2-…-Keyn"><span class="nav-number">5.</span> <span class="nav-text">del key1 key2 … Keyn</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#rename-key-newkey"><span class="nav-number">6.</span> <span class="nav-text">rename key newkey</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#renamenx-key-newkey"><span class="nav-number">7.</span> <span class="nav-text">renamenx key newkey</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#move-key-db"><span class="nav-number">8.</span> <span class="nav-text">move key db\</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ttl-key"><span class="nav-number">9.</span> <span class="nav-text">ttl key</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#expire-key-整型值"><span class="nav-number">10.</span> <span class="nav-text">expire key 整型值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#persist-key"><span class="nav-number">11.</span> <span class="nav-text">persist key</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#flushdb-清空当前数据库中的所有key"><span class="nav-number">12.</span> <span class="nav-text">flushdb 清空当前数据库中的所有key</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">刘铸澎</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+<div>
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.1"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("6OMtX0qKxdIdOnV5KE5rgWX1-gzGzoHsz", "ODT08Qg3pX4wC18rqsaLQb35");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

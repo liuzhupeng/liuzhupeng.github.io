@@ -317,7 +317,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/06/算法/二叉树/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/03/TensorFlow/Optimizer/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="刘铸澎">
@@ -336,7 +336,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/06/06/算法/二叉树/" itemprop="url">二叉树 前序、中序、后序、层次遍历及非递归实现 查找、统计个数、比较、求深度的递归实现</a></h1>
+                <a class="post-title-link" href="/2018/09/03/TensorFlow/Optimizer/" itemprop="url">TensorFlow 传统神经网络之优化器</a></h1>
         
 
         <div class="post-meta">
@@ -348,8 +348,631 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-06T22:05:15+08:00">
-                2017-06-06
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-03T09:01:50+08:00">
+                2018-09-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/" itemprop="url" rel="index">
+                    <span itemprop="name">深度学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/09/03/TensorFlow/Optimizer/" class="leancloud_visitors" data-flag-title="TensorFlow 传统神经网络之优化器">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          优化器在TensorFlow对应的方法
+tf.train.GradientDescentOptimizer
+tf.train.AdadeltaOptimizer
+tf.train.AdagradOptimizer
+tf.train.AdagradDAOptimizer
+tf.train.Moment
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/09/03/TensorFlow/Optimizer/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/03/TensorFlow/代价函数&拟合&激活函数/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘铸澎">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="liuzhupeng的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/03/TensorFlow/代价函数&拟合&激活函数/" itemprop="url">TensorFlow 代价函数 拟合 激活函数</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-03T09:01:50+08:00">
+                2018-09-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/" itemprop="url" rel="index">
+                    <span itemprop="name">深度学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/09/03/TensorFlow/代价函数&拟合&激活函数/" class="leancloud_visitors" data-flag-title="TensorFlow 代价函数 拟合 激活函数">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          
+二次代价函数(quadratic cost)
+
+其中，C表示代价函数，x表示样本，y表示实际值，a表示输出值，n表示样本的总数。为简单起见 ，同样一个样本为例进行说明，此时二次代价函数为：
+a=σ(z),  z=∑Wj*Xj+b 
+σ() 是激活函数
+
+
+          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/09/03/TensorFlow/代价函数&拟合&激活函数/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/03/消息中间件/消息中间件（一）介绍及特点/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘铸澎">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="liuzhupeng的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/03/消息中间件/消息中间件（一）介绍及特点/" itemprop="url">消息中间件（一）介绍及特点</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-03T09:01:50+08:00">
+                2018-09-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/消息中间件/" itemprop="url" rel="index">
+                    <span itemprop="name">消息中间件</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/09/03/消息中间件/消息中间件（一）介绍及特点/" class="leancloud_visitors" data-flag-title="消息中间件（一）介绍及特点">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h3 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h3><ul>
+<li>消息中间件介绍及特点</li>
+<li>消息服务传递模型及各自的特点详解</li>
+<li>互联网消息中间件应用场景</li>
+<li>消息中间件分类</li>
+</ul>
+<h3 id="消息中间件介绍及特点"><a href="#消息中间件介绍及特点" class="headerlink" title="消息中间件介绍及特点"></a>消息中间件介绍及特点</h3><h4 id="消息中间件简介"><a href="#消息中间件简介" class="headerlink" title="消息中间件简介"></a>消息中间件简介</h4><p>消息中间件是在消息的传输过程中保存消息的容器，消息中间件再将消息从它的源中继（生成者）到它的目标（消费者）时充当中间人的作用。队列的主要目的是提供路由并保证消息的传递；如果发送消息是接收者不可用，消息队列也保留消息，直到消息可以成功传递它为止，当然，消息队列保存消息也是有限期的。<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/09/03/消息中间件/消息中间件（一）介绍及特点/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/03/TensorFlow/MNIST数据集分类/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘铸澎">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="liuzhupeng的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/03/TensorFlow/MNIST数据集分类/" itemprop="url">TensorFlow MNIST数据集分类</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-03T09:01:50+08:00">
+                2018-09-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/" itemprop="url" rel="index">
+                    <span itemprop="name">深度学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/09/03/TensorFlow/MNIST数据集分类/" class="leancloud_visitors" data-flag-title="TensorFlow MNIST数据集分类">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          MNIST数据集
+MNIST数据集的官网：Yann LeCun’s website 
+下载下来的数据集被分成两部分：60000行的训练数据集（mnist.train）和10000行的测试数据 集（mnist.test）  
+每一张图片包含28*28个像素，我们把这一个数组展开成一个向量，长度是28*
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/09/03/TensorFlow/MNIST数据集分类/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/03/算法/hashmap/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘铸澎">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="liuzhupeng的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/03/算法/hashmap/" itemprop="url">HashMap原理及实现</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-03T09:01:50+08:00">
+                2018-09-03
               </time>
             
 
@@ -388,7 +1011,166 @@
 
           
           
-             <span id="/2017/06/06/算法/二叉树/" class="leancloud_visitors" data-flag-title="二叉树 前序、中序、后序、层次遍历及非递归实现 查找、统计个数、比较、求深度的递归实现">
+             <span id="/2018/09/03/算法/hashmap/" class="leancloud_visitors" data-flag-title="HashMap原理及实现">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          什么是hash
+它将一个长度为二进制通过一个映射关系转换成一个固定长度的二进制值。
+1.任意长度的二进制
+2.映射关系（哈希算法–就相当于一个大学里面的学号的一个映射规则）
+3.固定的二进制（哈希值–相当于我大学里面的学号）
+
+
+任意长度的二进制和固定长度的二进制 是一个一一对应关系
+固定长度的二进
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/09/03/算法/hashmap/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/03/算法/二叉树/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘铸澎">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="liuzhupeng的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/03/算法/二叉树/" itemprop="url">二叉树 前序、中序、后序、层次遍历及非递归实现 查找、统计个数、比较、求深度的递归实现</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-03T09:01:50+08:00">
+                2018-09-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/算法与数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">算法与数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/09/03/算法/二叉树/" class="leancloud_visitors" data-flag-title="二叉树 前序、中序、后序、层次遍历及非递归实现 查找、统计个数、比较、求深度的递归实现">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -430,7 +1212,7 @@
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/06/06/算法/二叉树/#more" rel="contents">
+            <a class="btn" href="/2018/09/03/算法/二叉树/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -476,7 +1258,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/06/算法/数组相关算法/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/03/算法/字符串/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="刘铸澎">
@@ -495,7 +1277,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/06/06/算法/数组相关算法/" itemprop="url">数组相关算法（局部极小值、第一个缺失的正整数、元素最大间距离(分桶)、只出现1次的数、众数问题、前缀和的应用）</a></h1>
+                <a class="post-title-link" href="/2018/09/03/算法/字符串/" itemprop="url">字符串相关算法（0-1交换、字符替换和复制、交换星号、子串变位词、单词翻转 ）</a></h1>
         
 
         <div class="post-meta">
@@ -507,8 +1289,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-06T20:23:17+08:00">
-                2017-06-06
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-03T09:01:50+08:00">
+                2018-09-03
               </time>
             
 
@@ -547,168 +1329,7 @@
 
           
           
-             <span id="/2017/06/06/算法/数组相关算法/" class="leancloud_visitors" data-flag-title="数组相关算法（局部极小值、第一个缺失的正整数、元素最大间距离(分桶)、只出现1次的数、众数问题、前缀和的应用）">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          数组简介
-数组(array)
-java : [], ArrayList 
-C++ : STL vector, []
-C：  只有[]
-理解：输入的数组通常理解为集合，我们自己可以排序，查找
-注意
-C++ STL中vector的一种实现
-数组下标是一种特殊的hash…做计数
-理解数组与map
-给数组“
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/06/06/算法/数组相关算法/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/06/算法/字符串/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="刘铸澎">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="liuzhupeng的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/06/算法/字符串/" itemprop="url">字符串相关算法（0-1交换、字符替换和复制、交换星号、子串变位词、单词翻转 ）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-06T16:04:58+08:00">
-                2017-06-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/算法与数据结构/" itemprop="url" rel="index">
-                    <span itemprop="name">算法与数据结构</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/06/06/算法/字符串/" class="leancloud_visitors" data-flag-title="字符串相关算法（0-1交换、字符替换和复制、交换星号、子串变位词、单词翻转 ）">
+             <span id="/2018/09/03/算法/字符串/" class="leancloud_visitors" data-flag-title="字符串相关算法（0-1交换、字符替换和复制、交换星号、子串变位词、单词翻转 ）">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -744,7 +1365,7 @@ o 00…0001…….0111….1伪代码实现12345678void exchangeo1&#123;    int a
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/06/06/算法/字符串/#more" rel="contents">
+            <a class="btn" href="/2018/09/03/算法/字符串/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -790,7 +1411,7 @@ o 00…0001…….0111….1伪代码实现12345678void exchangeo1&#123;    int a
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/03/go/goBlog/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/03/算法/栈算法/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="刘铸澎">
@@ -809,7 +1430,7 @@ o 00…0001…….0111….1伪代码实现12345678void exchangeo1&#123;    int a
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/06/03/go/goBlog/" itemprop="url">go 博客系统</a></h1>
+                <a class="post-title-link" href="/2018/09/03/算法/栈算法/" itemprop="url">栈相关算法（括号匹配 ）</a></h1>
         
 
         <div class="post-meta">
@@ -821,487 +1442,8 @@ o 00…0001…….0111….1伪代码实现12345678void exchangeo1&#123;    int a
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-03T14:27:19+08:00">
-                2017-06-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/go/" itemprop="url" rel="index">
-                    <span itemprop="name">go</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/06/03/go/goBlog/" class="leancloud_visitors" data-flag-title="go 博客系统">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          一、Beego Web框架使用go get下载安装bee工具与Beego
-Bee:https://github.com/astaxie/bee
-Beego:https://github.com/astaxie/beego 
-12345678安装go get github.com/astaxie/be
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/06/03/go/goBlog/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/03/TensorFlow/非线性回归/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="刘铸澎">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="liuzhupeng的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/03/TensorFlow/非线性回归/" itemprop="url">TensorFlow 传统神经网络之非线性回归(激励函数，拟合，二次代价函数，对数释然函数，交叉熵)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-03T09:43:24+08:00">
-                2017-06-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/深度学习/" itemprop="url" rel="index">
-                    <span itemprop="name">深度学习</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/06/03/TensorFlow/非线性回归/" class="leancloud_visitors" data-flag-title="TensorFlow 传统神经网络之非线性回归(激励函数，拟合，二次代价函数，对数释然函数，交叉熵)">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          非线性激励 
-
-考量标准：
-1.正向对输入的调整 
-2.反向梯度损失 
-
-
-
-常用的非线性激励函数Sigmoid
-
-函数效果，导数 
-优点，缺点 
-将输入数据映射到［0，1］
-梯度下降非常明显，至少减少75% 
-
-
-sigmoid函数可以把实数域光滑的映射到[0,1]空间。函数值恰好可以解释为属于正
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/06/03/TensorFlow/非线性回归/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/02/TensorFlow/代价函数&拟合&激活函数/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="刘铸澎">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="liuzhupeng的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/02/TensorFlow/代价函数&拟合&激活函数/" itemprop="url">TensorFlow 代价函数 拟合 激活函数</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-02T22:28:09+08:00">
-                2017-06-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/深度学习/" itemprop="url" rel="index">
-                    <span itemprop="name">深度学习</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/06/02/TensorFlow/代价函数&拟合&激活函数/" class="leancloud_visitors" data-flag-title="TensorFlow 代价函数 拟合 激活函数">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          
-二次代价函数(quadratic cost)
-
-其中，C表示代价函数，x表示样本，y表示实际值，a表示输出值，n表示样本的总数。为简单起见 ，同样一个样本为例进行说明，此时二次代价函数为：
-a=σ(z),  z=∑Wj*Xj+b 
-σ() 是激活函数
-
-
-          
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/06/02/TensorFlow/代价函数&拟合&激活函数/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/02/算法/队列算法/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="刘铸澎">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="liuzhupeng的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/02/算法/队列算法/" itemprop="url">队列相关算法（最短路径条数问题,拓扑排序）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-02T15:33:20+08:00">
-                2017-06-02
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-03T09:01:50+08:00">
+                2018-09-03
               </time>
             
 
@@ -1340,7 +1482,7 @@ a=σ(z),  z=∑Wj*Xj+b
 
           
           
-             <span id="/2017/06/02/算法/队列算法/" class="leancloud_visitors" data-flag-title="队列相关算法（最短路径条数问题,拓扑排序）">
+             <span id="/2018/09/03/算法/栈算法/" class="leancloud_visitors" data-flag-title="栈相关算法（括号匹配 ）">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1370,18 +1512,20 @@ a=σ(z),  z=∑Wj*Xj+b
       
         
           
-          queue
-队列是一种特殊的线性表，只允许在表的前端front进行删除操作，在表的后端rear进行插入操作，和栈一样，队列是一种操作受限制的线性表。进行插入操作的端称为队尾，进行删除操作的端称为队头。
-队列元素服从先进先出原则
-FIFO——First In First Out
+          stack
+堆栈是一种特殊的线性表，只允许在表的顶 端top进行插入或者删除操作，是一种操作受 限制的线性表。 
+栈元素服从后进先出原则 
+LIFO——Last In First Out
 
 
 
-最短路径条数问题
+括号匹配
+给定字符串，仅由”()[]{}”六个字符组成。设 计算法，判断该字符串是否有效。 
+括号必须以正
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/06/02/算法/队列算法/#more" rel="contents">
+            <a class="btn" href="/2018/09/03/算法/栈算法/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1427,7 +1571,7 @@ FIFO——First In First Out
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/02/go/GoWeb基础/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/03/算法/链表算法/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="刘铸澎">
@@ -1446,7 +1590,7 @@ FIFO——First In First Out
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/06/02/go/GoWeb基础/" itemprop="url">goWeb基础（http服务器+模板）</a></h1>
+                <a class="post-title-link" href="/2018/09/03/算法/链表算法/" itemprop="url">链表相关算法（链表相加, 链表的部分翻转,链表划分链表划分,排序链表中去重）</a></h1>
         
 
         <div class="post-meta">
@@ -1458,8 +1602,8 @@ FIFO——First In First Out
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-02T14:00:18+08:00">
-                2017-06-02
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-03T09:01:50+08:00">
+                2018-09-03
               </time>
             
 
@@ -1481,8 +1625,8 @@ FIFO——First In First Out
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/go/" itemprop="url" rel="index">
-                    <span itemprop="name">go</span>
+                  <a href="/categories/算法与数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">算法与数据结构</span>
                   </a>
                 </span>
 
@@ -1498,7 +1642,7 @@ FIFO——First In First Out
 
           
           
-             <span id="/2017/06/02/go/GoWeb基础/" class="leancloud_visitors" data-flag-title="goWeb基础（http服务器+模板）">
+             <span id="/2018/09/03/算法/链表算法/" class="leancloud_visitors" data-flag-title="链表相关算法（链表相加, 链表的部分翻转,链表划分链表划分,排序链表中去重）">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1528,14 +1672,17 @@ FIFO——First In First Out
       
         
           
-          ####使用go get下载安装bee工具与Beego
+          链表相加
+给定两个链表，分别表示两个非负整数。它 们的数字逆序存储在链表中，且每个结点只 存储一个数字，计算两个数的和，并且返回 和的链表头指针
+如：输入：2→4→3、5→6→4，输出：7→0→8
 
-Bee:https://github.com/astaxie/bee
-Beego:https://github.com/astaxie/beego 12345678安装go get github.com/astaxie/beego更新go g
+
+问题分析 
+输入：2-&gt;4-&gt;3、5-&gt;6-&gt;4，输出：7-&gt;0-&
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/06/02/go/GoWeb基础/#more" rel="contents">
+            <a class="btn" href="/2018/09/03/算法/链表算法/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1581,7 +1728,7 @@ Beego:https://github.com/astaxie/beego 12345678安装go get github.com/astaxie/b
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/01/TensorFlow/MNIST数据集分类/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/03/TensorFlow/TensorFlow 安装及简单实例/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="刘铸澎">
@@ -1600,7 +1747,7 @@ Beego:https://github.com/astaxie/beego 12345678安装go get github.com/astaxie/b
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/06/01/TensorFlow/MNIST数据集分类/" itemprop="url">TensorFlow MNIST数据集分类</a></h1>
+                <a class="post-title-link" href="/2018/09/03/TensorFlow/TensorFlow 安装及简单实例/" itemprop="url">TensorFlow 安装及简单实例</a></h1>
         
 
         <div class="post-meta">
@@ -1612,162 +1759,8 @@ Beego:https://github.com/astaxie/beego 12345678安装go get github.com/astaxie/b
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-01T22:22:11+08:00">
-                2017-06-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/深度学习/" itemprop="url" rel="index">
-                    <span itemprop="name">深度学习</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/06/01/TensorFlow/MNIST数据集分类/" class="leancloud_visitors" data-flag-title="TensorFlow MNIST数据集分类">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          MNIST数据集
-MNIST数据集的官网：Yann LeCun’s website 
-下载下来的数据集被分成两部分：60000行的训练数据集（mnist.train）和10000行的测试数据 集（mnist.test）  
-每一张图片包含28*28个像素，我们把这一个数组展开成一个向量，长度是28*
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/06/01/TensorFlow/MNIST数据集分类/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/01/TensorFlow/线性回归/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="刘铸澎">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="liuzhupeng的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/01/TensorFlow/线性回归/" itemprop="url">TensorFlow 传统神经网络之线性回归</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-01T21:09:54+08:00">
-                2017-06-01
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-03T09:01:50+08:00">
+                2018-09-03
               </time>
             
 
@@ -1806,7 +1799,7 @@ MNIST数据集的官网：Yann LeCun’s website
 
           
           
-             <span id="/2017/06/01/TensorFlow/线性回归/" class="leancloud_visitors" data-flag-title="TensorFlow 传统神经网络之线性回归">
+             <span id="/2018/09/03/TensorFlow/TensorFlow 安装及简单实例/" class="leancloud_visitors" data-flag-title="TensorFlow 安装及简单实例">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1836,24 +1829,15 @@ MNIST数据集的官网：Yann LeCun’s website
       
         
           
-          神经网络起源：线性回归
-概念: 线性关系来描述输入到输出的映射关系 
-应用场景： 
-网络分析
-银行风险分析
-基金股份预测
-天气预报
+          安装TensorFlow步骤Anaconda 安装
+1.Window,MacOS,Linux 都已支持 都已支持 
+2.Window用 户只能使python3.5(64bit) 。MacOS,Linux 支持 python2.7 和python3.3+。
 
-
-一个线性回归问题 
-
-目标方程：y=ax1+bx2+cx3+d 
-参数：m=[a,b,c,d] 
-数据：[(x1,1,x2,1,x3,1), (x1,2,x2,2,
+有GPU 可以安装带 GPU 版本的，没有
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/06/01/TensorFlow/线性回归/#more" rel="contents">
+            <a class="btn" href="/2018/09/03/TensorFlow/TensorFlow 安装及简单实例/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1894,7 +1878,7 @@ MNIST数据集的官网：Yann LeCun’s website
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1939,7 +1923,7 @@ MNIST数据集的官网：Yann LeCun’s website
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">46</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1950,7 +1934,7 @@ MNIST数据集的官网：Yann LeCun’s website
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-count">13</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1961,7 +1945,7 @@ MNIST数据集的官网：Yann LeCun’s website
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">44</span>
+                <span class="site-state-item-count">45</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -2025,7 +2009,7 @@ MNIST数据集的官网：Yann LeCun’s website
 <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

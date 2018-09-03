@@ -1,0 +1,1118 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="true" />
+
+
+
+
+
+
+
+	<meta name="baidu-site-verification" content="ADEVsVvcYE" />
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="python,TensorFlow,非线性回归," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="liuzhupeng的博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="非线性激励   考量标准： 1.正向对输入的调整  2.反向梯度损失     常用的非线性激励函数Sigmoid  函数效果，导数  优点，缺点  将输入数据映射到［0，1］ 梯度下降非常明显，至少减少75%    sigmoid函数可以把实数域光滑的映射到[0,1]空间。函数值恰好可以解释为属于正类的概率（概率的取值范围是0~1）。另外，sigmoid函数单调递增，连续可导，导数形式非常简单，是">
+<meta name="keywords" content="python,TensorFlow,非线性回归">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TensorFlow 传统神经网络之非线性回归(激励函数，拟合，二次代价函数，对数释然函数，交叉熵)">
+<meta property="og:url" content="http://yoursite.com/2018/09/03/TensorFlow/非线性回归/index.html">
+<meta property="og:site_name" content="liuzhupeng的博客">
+<meta property="og:description" content="非线性激励   考量标准： 1.正向对输入的调整  2.反向梯度损失     常用的非线性激励函数Sigmoid  函数效果，导数  优点，缺点  将输入数据映射到［0，1］ 梯度下降非常明显，至少减少75%    sigmoid函数可以把实数域光滑的映射到[0,1]空间。函数值恰好可以解释为属于正类的概率（概率的取值范围是0~1）。另外，sigmoid函数单调递增，连续可导，导数形式非常简单，是">
+<meta property="og:image" content="http://i.imgur.com/iL6Sgxy.png">
+<meta property="og:image" content="http://i.imgur.com/7z7296c.png">
+<meta property="og:image" content="http://i.imgur.com/UtEraBM.png">
+<meta property="og:image" content="http://i.imgur.com/g16OdUY.png">
+<meta property="og:image" content="http://i.imgur.com/OOpr4uQ.png">
+<meta property="og:image" content="http://i.imgur.com/8icoWvX.png">
+<meta property="og:image" content="http://i.imgur.com/JLe14k6.png">
+<meta property="og:image" content="http://i.imgur.com/s4Cp3IE.png">
+<meta property="og:image" content="http://i.imgur.com/d2k5aRH.png">
+<meta property="og:image" content="http://i.imgur.com/PwU5L9X.png">
+<meta property="og:image" content="http://i.imgur.com/v48UPtN.png">
+<meta property="og:image" content="http://i.imgur.com/TfkyNMV.png">
+<meta property="og:image" content="http://i.imgur.com/RboxM59.png">
+<meta property="og:image" content="http://i.imgur.com/5OOzPSd.png">
+<meta property="og:image" content="http://i.imgur.com/m9S6lIw.png">
+<meta property="og:image" content="http://i.imgur.com/uMUiChz.png">
+<meta property="og:image" content="http://i.imgur.com/D8AwwFF.png">
+<meta property="og:image" content="http://i.imgur.com/ADwSAEx.png">
+<meta property="og:image" content="http://i.imgur.com/nslv91P.png">
+<meta property="og:image" content="http://i.imgur.com/iPMHIFm.png">
+<meta property="og:image" content="http://i.imgur.com/wBiWams.png">
+<meta property="og:image" content="http://i.imgur.com/ABY3HQk.png">
+<meta property="og:image" content="http://i.imgur.com/srDw13Z.png">
+<meta property="og:image" content="http://i.imgur.com/HpAdpEG.png">
+<meta property="og:image" content="http://i.imgur.com/qcwsJTX.png">
+<meta property="og:image" content="http://i.imgur.com/9h7prWB.png">
+<meta property="og:image" content="http://i.imgur.com/Bm1hRDE.png">
+<meta property="og:image" content="http://i.imgur.com/9lWvUzf.png">
+<meta property="og:image" content="http://i.imgur.com/ddcx2d9.png">
+<meta property="og:image" content="http://i.imgur.com/TfAECWs.png">
+<meta property="og:image" content="http://i.imgur.com/OR6FFtI.png">
+<meta property="og:image" content="http://i.imgur.com/tAef3Yc.png">
+<meta property="og:image" content="http://i.imgur.com/GwzUz79.png">
+<meta property="og:updated_time" content="2017-06-12T02:12:06.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TensorFlow 传统神经网络之非线性回归(激励函数，拟合，二次代价函数，对数释然函数，交叉熵)">
+<meta name="twitter:description" content="非线性激励   考量标准： 1.正向对输入的调整  2.反向梯度损失     常用的非线性激励函数Sigmoid  函数效果，导数  优点，缺点  将输入数据映射到［0，1］ 梯度下降非常明显，至少减少75%    sigmoid函数可以把实数域光滑的映射到[0,1]空间。函数值恰好可以解释为属于正类的概率（概率的取值范围是0~1）。另外，sigmoid函数单调递增，连续可导，导数形式非常简单，是">
+<meta name="twitter:image" content="http://i.imgur.com/iL6Sgxy.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'XO07FKRYQU',
+      apiKey: '42f277b78659c936fba4af368318e5b9',
+      indexName: 'lzpnote',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"搜索...","hits_empty":"未发现与 「${query}」相关的内容","hits_stats":"${hits} 条相关条目，使用了 ${time} 毫秒"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/09/03/TensorFlow/非线性回归/"/>
+
+
+
+
+
+  <title>TensorFlow 传统神经网络之非线性回归(激励函数，拟合，二次代价函数，对数释然函数，交叉熵) | liuzhupeng的博客</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">liuzhupeng的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  <!-- 
+ -->
+ 
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+                <a href="javascript:;" class="popup-trigger">
+			<!-- 增加结束 -->
+              
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/03/TensorFlow/非线性回归/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘铸澎">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="liuzhupeng的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">TensorFlow 传统神经网络之非线性回归(激励函数，拟合，二次代价函数，对数释然函数，交叉熵)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-03T09:01:50+08:00">
+                2018-09-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/" itemprop="url" rel="index">
+                    <span itemprop="name">深度学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/09/03/TensorFlow/非线性回归/" class="leancloud_visitors" data-flag-title="TensorFlow 传统神经网络之非线性回归(激励函数，拟合，二次代价函数，对数释然函数，交叉熵)">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="非线性激励"><a href="#非线性激励" class="headerlink" title="非线性激励"></a>非线性激励</h4><p> <img src="http://i.imgur.com/iL6Sgxy.png" alt=""></p>
+<ul>
+<li>考量标准：<ul>
+<li>1.正向对输入的调整 </li>
+<li>2.反向梯度损失 </li>
+</ul>
+</li>
+</ul>
+<h4 id="常用的非线性激励函数"><a href="#常用的非线性激励函数" class="headerlink" title="常用的非线性激励函数"></a>常用的非线性激励函数</h4><h5 id="Sigmoid"><a href="#Sigmoid" class="headerlink" title="Sigmoid"></a>Sigmoid</h5><p><img src="http://i.imgur.com/7z7296c.png" alt=""><br><img src="http://i.imgur.com/UtEraBM.png" alt=""></p>
+<ul>
+<li>函数效果，导数 </li>
+<li>优点，缺点 <ul>
+<li>将输入数据映射到［0，1］</li>
+<li>梯度下降非常明显，至少减少75% </li>
+</ul>
+</li>
+<li>sigmoid函数可以把实数域光滑的映射到[0,1]空间。函数值恰好可以解释为属于正类的概率（概率的取值范围是0~1）。另外，sigmoid函数单调递增，连续可导，导数形式非常简单，是一个比较合适的函数</li>
+<li>对于二分类问题，输出层是sigmoid函数</li>
+<li>对于多分类问题，输出层就必须是softmax函数了。softmax函数是sigmoid函数的推广</li>
+<li>当输入非常大或者非常小的时候，这些神经元的梯度是接近于0的，从图中可以看出梯度的趋势。<br>Sigmoid 的 输出不是0均值，这会导致后一层的神经元将得到上一层输出的非0均值的信号作为输入。</li>
+</ul>
+<h5 id="tahn"><a href="#tahn" class="headerlink" title="tahn"></a>tahn</h5><p>   <img src="http://i.imgur.com/g16OdUY.png" alt=""><br>   <img src="http://i.imgur.com/OOpr4uQ.png" alt=""></p>
+<ul>
+<li>函数效果，导数 </li>
+<li>优点，缺点 <ul>
+<li>将输入数据映射到［－1，1］ </li>
+<li>梯度损失明显 </li>
+</ul>
+</li>
+<li>Tanh是Sigmoid的变形，与 sigmoid 不同的是，tanh 是0均值的。因此，实际应用中，tanh 会比 sigmoid 更好。</li>
+</ul>
+<h5 id="softmax"><a href="#softmax" class="headerlink" title="softmax"></a>softmax</h5><p><img src="http://i.imgur.com/8icoWvX.png" alt=""></p>
+<ul>
+<li>sigmoid将一个real value映射到（0,1）的区间（当然也可以是（-1,1）），这样可以用来做二分类。 </li>
+<li>我们知道MNIST的结果是0-9，我们的模型可能推测出一张图片是数字9的概率是80%，是数字8 的概率是10%，然后其他数字的概率更小，总体概率加起来等于1。这是一个使用softmax回归模 型的经典案例。softmax模型可以用来给不同的对象分配概率。</li>
+<li>比如输出结果为[1,5,3]<br><img src="http://i.imgur.com/JLe14k6.png" alt=""></li>
+</ul>
+<h5 id="ReLU-Rectified-linear-unit"><a href="#ReLU-Rectified-linear-unit" class="headerlink" title="ReLU(Rectified linear unit)"></a>ReLU(Rectified linear unit)</h5><p><img src="http://i.imgur.com/s4Cp3IE.png" alt=""><br><img src="http://i.imgur.com/d2k5aRH.png" alt=""></p>
+<p>f(x)=max(0,x)</p>
+<ul>
+<li>输入信号<0时，输出都是0，>0 的情况下，输出等于输入</0时，输出都是0，></li>
+<li>正向截断负值，损失大量特征 <ul>
+<li>正向截断负值，损失大量特征为什么还用？<ul>
+<li>特征足够多 </li>
+</ul>
+</li>
+</ul>
+</li>
+<li>反向梯度没有损失<br><img src="http://i.imgur.com/PwU5L9X.png" alt=""></li>
+<li>优点<ul>
+<li>使用 ReLU 得到的SGD的收敛速度会比 sigmoid/tanh 快很多(看右图)。有人说这是因为它是linear，而且 non-saturating<br>相比于 sigmoid/tanh，ReLU 只需要一个阈值就可以得到激活值，而不用去算一大堆复杂的运算。</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>就是训练的时候很”脆弱”，很容易就就”die”了<ul>
+<li>一个非常大的梯度流过一个 ReLU 神经元，更新过参数之后，这个神经元再也不会对任何数据有激活现象了。</li>
+<li>如果这个情况发生了，那么这个神经元的梯度就永远都会是0.</li>
+</ul>
+</li>
+<li>实际操作中，如果你的learning rate 很大，那么很有可能你网络中的40%的神经元都”dead”了。 </li>
+<li>当然，如果你设置了一个合适的较小的learning rate，这个问题发生的情况其实也不会太频繁。</li>
+</ul>
+</li>
+</ul>
+<h5 id="Leaky-ReLU-Rectified-linear-unit"><a href="#Leaky-ReLU-Rectified-linear-unit" class="headerlink" title="Leaky ReLU(Rectified  linear unit)"></a>Leaky ReLU(Rectified  linear unit)</h5><p><img src="http://i.imgur.com/v48UPtN.png" alt=""></p>
+<ul>
+<li><p>Leaky ReLUs： 就是用来解决这个 “dying ReLU” 的问题的。与 ReLU 不同的是： </p>
+<pre><code>f(x)=αx，(x&lt;0)
+f(x)=x，(x&gt;=0)
+</code></pre><p>这里的 α 是一个很小的常数。这样，即修正了数据分布，又保留了一些负轴的值，使得负轴信息不会全部丢失。<br><img src="http://i.imgur.com/TfkyNMV.png" alt=""><br><img src="http://i.imgur.com/RboxM59.png" alt=""> </p>
+</li>
+<li>为什么不变成y=x ?   线性了</li>
+</ul>
+<h4 id="二次代价函数-quadratic-cost"><a href="#二次代价函数-quadratic-cost" class="headerlink" title="二次代价函数(quadratic cost)"></a>二次代价函数(quadratic cost)</h4><p><img src="http://i.imgur.com/5OOzPSd.png" alt=""></p>
+<ul>
+<li>其中，C表示代价函数，x表示样本，y表示实际值，a表示输出值，n表示样本的总数。为简单起见 ，同样一个样本为例进行说明，此时二次代价函数为：</li>
+<li>a=σ(z),  z=∑Wj*Xj+b </li>
+<li>σ() 是激活函数</li>
+</ul>
+<p><img src="http://i.imgur.com/m9S6lIw.png" alt=""></p>
+<ul>
+<li>假如我们使用梯度下降法(Gradient descent)来调整权值参数的大小，权值w和偏置b的梯度推导 如下：<br><img src="http://i.imgur.com/uMUiChz.png" alt=""></li>
+<li>其中，z表示神经元的输入，σ表示激活函数。w和b的梯度跟激活函数的梯度成正比，激活函数的 梯度越大，w和b的大小调整得越快，训练收敛得就越快。</li>
+<li>假设我们的激活函数是sigmoid函数<br><img src="http://i.imgur.com/D8AwwFF.png" alt=""><br>假设我们目标是收敛到1。A点为0.82离目标比较远，梯度比较大，权值调整比较大。B点为0.92离目标比较近，梯度比较小，权值调整比较小。调整方案合理。</li>
+</ul>
+<h5 id="交叉熵代价函数-cross-entropy"><a href="#交叉熵代价函数-cross-entropy" class="headerlink" title="交叉熵代价函数(cross-entropy)"></a>交叉熵代价函数(cross-entropy)</h5><p> 换一个思路，我们不改变激活函数，而是改变代价函数，改用交叉熵代价函数：</p>
+<p> <img src="http://i.imgur.com/ADwSAEx.png" alt=""></p>
+<ul>
+<li>其中，C表示代价函数，x表示样本，y表示 实际值，a表示输出值，n表示样本的总数。 a=σ(z),  z=∑Wj*Xj+b<br><img src="http://i.imgur.com/nslv91P.png" alt=""><br><img src="http://i.imgur.com/iPMHIFm.png" alt=""></li>
+</ul>
+<p><img src="http://i.imgur.com/wBiWams.png" alt=""></p>
+<ul>
+<li>权值和偏置值的调整与<img src="http://i.imgur.com/ABY3HQk.png" alt="">无关，另外，梯度公式中的<img src="http://i.imgur.com/srDw13Z.png" alt=""> 表示输出值与实 际值的误差。所以当误差越大时，梯度就越大，参数w和b的调整就越快，训练的速度也就越快。 </li>
+<li>如果输出神经元是线性的，那么二次代价函数就是一种合适的选择。如果输出神经元是S型函数， 那么比较适合用交叉熵代价函数。</li>
+<li>对数似然代价函数与softmax的组合和交叉熵与sigmoid函数的组合非常相似。对数释然代价函数 在二分类时可以化简为交叉熵代价函数的形式。</li>
+</ul>
+<h5 id="对数释然代价函数-log-likelihood-cost"><a href="#对数释然代价函数-log-likelihood-cost" class="headerlink" title="对数释然代价函数(log-likelihood cost)"></a>对数释然代价函数(log-likelihood cost)</h5><ul>
+<li><p>log似然代价函数的公式为：</p>
+<p> <img src="http://i.imgur.com/HpAdpEG.png" alt=""></p>
+<p> 其中，表示第k个神经元的输出值，表示第k个神经元对应的真实值，取值为0或1。</p>
+</li>
+<li><p>偏置b的梯度公式</p>
+</li>
+</ul>
+<p><img src="http://i.imgur.com/qcwsJTX.png" alt=""></p>
+<ul>
+<li>权重w的梯度公式</li>
+</ul>
+<p><img src="http://i.imgur.com/9h7prWB.png" alt=""></p>
+<ul>
+<li>对数释然函数常用来作为softmax回归的代价函数，如果输出层神经元是sigmoid函数，可以采用 交叉熵代价函数。而深度学习中更普遍的做法是将softmax作为最后一层，此时常用的代价函数是 对数释然代价函数。</li>
+<li>对数似然代价函数与softmax的组合和交叉熵与sigmoid函数的组合非常相似。对数释然代价函数 在二分类时可以化简为交叉熵代价函数的形式。</li>
+</ul>
+<h5 id="交叉熵在Tensorflow中用"><a href="#交叉熵在Tensorflow中用" class="headerlink" title="交叉熵在Tensorflow中用"></a>交叉熵在Tensorflow中用</h5><ul>
+<li>tf.nn.sigmoid_cross_entropy_with_logits()来表示跟sigmoid搭配使用的交叉熵。 </li>
+<li>tf.nn.softmax_cross_entropy_with_logits()来表示跟softmax搭配使用的交叉熵。</li>
+</ul>
+<h4 id="神经元－神经网络"><a href="#神经元－神经网络" class="headerlink" title="神经元－神经网络"></a>神经元－神经网络</h4><p><img src="http://i.imgur.com/Bm1hRDE.png" alt=""></p>
+<ul>
+<li>有线性回归网络吗？<br>并没有。。</li>
+</ul>
+<p><img src="http://i.imgur.com/9lWvUzf.png" alt=""></p>
+<h4 id="拟合"><a href="#拟合" class="headerlink" title="拟合"></a>拟合</h4><p><img src="http://i.imgur.com/ddcx2d9.png" alt=""><br><img src="http://i.imgur.com/TfAECWs.png" alt=""></p>
+<h5 id="防止过拟合"><a href="#防止过拟合" class="headerlink" title="防止过拟合"></a>防止过拟合</h5><ul>
+<li>增加数据集<ul>
+<li>一般有更多数据来训练话，训练得到的模型就会比较好。如果数据集太少，构造模型太复杂，就会出现过拟合</li>
+<li>在AlexNet中,将256<em>256图像随机的截取224</em>224大小,增加了许多的训练样本,同时可以对图像进行左右翻转,增加样本的个数,实验的结果可以可降低1%的误差. <ul>
+<li>在神经网络中输入噪声也可以看做是数据增强的一种方式.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>正则化方法</p>
+<p><img src="http://i.imgur.com/OR6FFtI.png" alt=""></p>
+</li>
+<li><p>Dropout</p>
+<p><img src="http://i.imgur.com/tAef3Yc.png" alt=""></p>
+<ul>
+<li>Dropout提供了一种廉价的Bagging集成近似,能够训练和评估指数级数量的神经网络。dropout可以随机的让一部分神经元失活,这样仿佛是bagging的采样过程,因此可以看做是bagging的廉价的实现.<br>但是它们训练不太一样,因为bagging,所有的模型都是独立的,而dropout下所有模型的参数是共享的.<br>通常可以这样理解dropout:假设我们要判别一只猫,有一个神经元说看到有毛就是猫,但是如果我让这个神经元失活,它还能判断出来是猫的话,这样就比较具有泛化的能力,减轻了过拟合的风险.</li>
+</ul>
+</li>
+<li><a href="http://blog.csdn.net/taoyanqi8932/article/details/71101699" target="_blank" rel="external">参考</a></li>
+</ul>
+<h4 id="tensorFlow非线性代码实现"><a href="#tensorFlow非线性代码实现" class="headerlink" title="tensorFlow非线性代码实现"></a>tensorFlow非线性代码实现</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"><span class="comment">#使用numpy生成200个随机点</span></div><div class="line"><span class="comment">#[生成数据存在“:”,np.newaxis增加了一个维度] 2维 200行1列</span></div><div class="line">x_data = np.linspace(<span class="number">-0.5</span>,<span class="number">0.5</span>,<span class="number">200</span>)[:,np.newaxis]</div><div class="line">noise = np.random.normal(<span class="number">0</span>,<span class="number">0.02</span>,x_data.shape)</div><div class="line">y_data = np.square(x_data) + noise</div><div class="line"></div><div class="line"><span class="comment">#定义两个placeholder</span></div><div class="line"><span class="comment">#[None,1] 任一行1列</span></div><div class="line">x = tf.placeholder(tf.float32,[<span class="keyword">None</span>,<span class="number">1</span>])</div><div class="line">y = tf.placeholder(tf.float32,[<span class="keyword">None</span>,<span class="number">1</span>])</div><div class="line"></div><div class="line"><span class="comment">#定义神经网络中间层</span></div><div class="line">Weights_L1 = tf.Variable(tf.random_normal([<span class="number">1</span>,<span class="number">10</span>]))</div><div class="line">biases_L1 = tf.Variable(tf.zeros([<span class="number">1</span>,<span class="number">10</span>]))</div><div class="line">Wx_plus_b_L1 = tf.matmul(x,Weights_L1) + biases_L1</div><div class="line">L1 = tf.nn.tanh(Wx_plus_b_L1)<span class="comment">#激活函数 中间层的输出</span></div><div class="line"></div><div class="line"><span class="comment">#定义神经网络输出层</span></div><div class="line">Weights_L2 = tf.Variable(tf.random_normal([<span class="number">10</span>,<span class="number">1</span>]))</div><div class="line">biases_L2 = tf.Variable(tf.zeros([<span class="number">1</span>,<span class="number">1</span>]))</div><div class="line">Wx_plus_b_L2 = tf.matmul(L1,Weights_L2) + biases_L2</div><div class="line">prediction = tf.nn.tanh(Wx_plus_b_L2)</div><div class="line"></div><div class="line"><span class="comment">#二次代价函数</span></div><div class="line"><span class="comment">#tf.square 平方</span></div><div class="line"><span class="comment">#tf.reduce_mean 求平均</span></div><div class="line">loss = tf.reduce_mean(tf.square(y-prediction))</div><div class="line"></div><div class="line"><span class="comment">#使用梯度下降法训练</span></div><div class="line"><span class="comment">#0.1学习率</span></div><div class="line"><span class="comment">#minimize 是loss最小化</span></div><div class="line">train_step = tf.train.GradientDescentOptimizer(<span class="number">0.1</span>).minimize(loss)</div><div class="line"></div><div class="line">ith tf.Session() <span class="keyword">as</span> sess:</div><div class="line">    <span class="comment">#变量初始化</span></div><div class="line">    sess.run(tf.global_variables_initializer())</div><div class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">2000</span>):</div><div class="line">        sess.run(train_step,feed_dict=&#123;x:x_data,y:y_data&#125;)</div><div class="line">        </div><div class="line">    <span class="comment">#获得预测值</span></div><div class="line">    prediction_value = sess.run(prediction,feed_dict=&#123;x:x_data&#125;)</div><div class="line">    <span class="comment">#画图</span></div><div class="line">    plt.figure()</div><div class="line">    <span class="comment">#离散的点</span></div><div class="line">    plt.scatter(x_data,y_data)</div><div class="line">    <span class="comment">#画线</span></div><div class="line">    <span class="comment">#r-红色的实线</span></div><div class="line">    plt.plot(x_data,prediction_value,<span class="string">'r-'</span>,lw=<span class="number">5</span>)</div><div class="line">    plt.show()</div></pre></td></tr></table></figure>
+<p><img src="http://i.imgur.com/GwzUz79.png" alt=""></p>
+<h4 id="tensorFlow交叉熵代码实现"><a href="#tensorFlow交叉熵代码实现" class="headerlink" title="tensorFlow交叉熵代码实现"></a>tensorFlow交叉熵代码实现</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</div><div class="line"><span class="keyword">from</span> tensorflow.examples.tutorials.mnist <span class="keyword">import</span> input_data</div><div class="line"></div><div class="line"><span class="comment">#载入数据集</span></div><div class="line">mnist = input_data.read_data_sets(<span class="string">"MNIST_data"</span>,one_hot=<span class="keyword">True</span>)</div><div class="line"></div><div class="line"><span class="comment">#每个批次的大小</span></div><div class="line">batch_size = <span class="number">100</span></div><div class="line"><span class="comment">#计算一共有多少个批次</span></div><div class="line">n_batch = mnist.train.num_examples // batch_size</div><div class="line"></div><div class="line"><span class="comment">#定义两个placeholder</span></div><div class="line">x = tf.placeholder(tf.float32,[<span class="keyword">None</span>,<span class="number">784</span>])</div><div class="line">y = tf.placeholder(tf.float32,[<span class="keyword">None</span>,<span class="number">10</span>])</div><div class="line"></div><div class="line"><span class="comment">#创建一个简单的神经网络</span></div><div class="line">W = tf.Variable(tf.zeros([<span class="number">784</span>,<span class="number">10</span>]))</div><div class="line">b = tf.Variable(tf.zeros([<span class="number">10</span>]))</div><div class="line">prediction = tf.nn.softmax(tf.matmul(x,W)+b)</div><div class="line"></div><div class="line"><span class="comment">#二次代价函数</span></div><div class="line"><span class="comment"># loss = tf.reduce_mean(tf.square(y-prediction))</span></div><div class="line">loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=y,logits=prediction))</div><div class="line"><span class="comment">#使用梯度下降法</span></div><div class="line">train_step = tf.train.GradientDescentOptimizer(<span class="number">0.2</span>).minimize(loss)</div><div class="line"></div><div class="line"><span class="comment">#初始化变量</span></div><div class="line">init = tf.global_variables_initializer()</div><div class="line"></div><div class="line"><span class="comment">#结果存放在一个布尔型列表中</span></div><div class="line">correct_prediction = tf.equal(tf.argmax(y,<span class="number">1</span>),tf.argmax(prediction,<span class="number">1</span>))<span class="comment">#argmax返回一维张量中最大的值所在的位置</span></div><div class="line"><span class="comment">#求准确率</span></div><div class="line">accuracy = tf.reduce_mean(tf.cast(correct_prediction,tf.float32))</div><div class="line"></div><div class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</div><div class="line">    sess.run(init)</div><div class="line">    <span class="keyword">for</span> epoch <span class="keyword">in</span> range(<span class="number">21</span>):</div><div class="line">        <span class="keyword">for</span> batch <span class="keyword">in</span> range(n_batch):</div><div class="line">            batch_xs,batch_ys =  mnist.train.next_batch(batch_size)</div><div class="line">            sess.run(train_step,feed_dict=&#123;x:batch_xs,y:batch_ys&#125;)</div><div class="line">        </div><div class="line">        acc = sess.run(accuracy,feed_dict=&#123;x:mnist.test.images,y:mnist.test.labels&#125;)</div><div class="line">        print(<span class="string">"Iter "</span> + str(epoch) + <span class="string">",Testing Accuracy "</span> + str(acc))</div></pre></td></tr></table></figure>
+<h4 id="tensorFlow-Dropout代码实现"><a href="#tensorFlow-Dropout代码实现" class="headerlink" title="tensorFlow Dropout代码实现"></a>tensorFlow Dropout代码实现</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</div><div class="line"><span class="keyword">from</span> tensorflow.examples.tutorials.mnist <span class="keyword">import</span> input_data</div><div class="line"><span class="comment">#输出层：784   中间层1：2000 中间层2:1000 输出层：10</span></div><div class="line"><span class="comment">#数据集少 模型过于复杂 =》 过拟合  </span></div><div class="line"><span class="comment">#使用dropout防止过拟合</span></div><div class="line"><span class="comment">#训练的时候让百分之多少的神经元工作，测试的时候让所有的神经元工作</span></div><div class="line"><span class="comment">#载入数据集</span></div><div class="line">mnist = input_data.read_data_sets(<span class="string">"MNIST_data"</span>,one_hot=<span class="keyword">True</span>)</div><div class="line"></div><div class="line"><span class="comment">#每个批次的大小</span></div><div class="line">batch_size = <span class="number">100</span></div><div class="line"><span class="comment">#计算一共有多少个批次</span></div><div class="line">n_batch = mnist.train.num_examples // batch_size</div><div class="line"></div><div class="line"><span class="comment">#定义两个placeholder</span></div><div class="line">x = tf.placeholder(tf.float32,[<span class="keyword">None</span>,<span class="number">784</span>])</div><div class="line">y = tf.placeholder(tf.float32,[<span class="keyword">None</span>,<span class="number">10</span>])</div><div class="line">keep_prob=tf.placeholder(tf.float32)<span class="comment">#百分之多少的神经元工作</span></div><div class="line"></div><div class="line"><span class="comment">#创建一个简单的神经网络</span></div><div class="line"><span class="comment">#truncated_normal  截断的正态分布中输出随机值</span></div><div class="line"><span class="comment">#tf.truncated_normal(shape, mean=0.0, stddev=1.0, dtype=tf.float32, seed=None, name=None)</span></div><div class="line"><span class="comment">#shape: 一维的张量，也是输出的张量  mean: 正态分布的均值 stddev: 正态分布的标准差  dtype: 输出的类型</span></div><div class="line"><span class="comment">#seed: 一个整数，当设置之后，每次生成的随机数都一样  name: 操作的名字</span></div><div class="line"><span class="comment">#stddev=0.1 标准差</span></div><div class="line">W1 = tf.Variable(tf.truncated_normal([<span class="number">784</span>,<span class="number">2000</span>],stddev=<span class="number">0.1</span>))</div><div class="line">b1 = tf.Variable(tf.zeros([<span class="number">2000</span>])+<span class="number">0.1</span>)</div><div class="line">L1 = tf.nn.tanh(tf.matmul(x,W1)+b1)</div><div class="line">L1_drop = tf.nn.dropout(L1,keep_prob) <span class="comment">#防止过拟合</span></div><div class="line"></div><div class="line">W2 = tf.Variable(tf.truncated_normal([<span class="number">2000</span>,<span class="number">2000</span>],stddev=<span class="number">0.1</span>))</div><div class="line">b2 = tf.Variable(tf.zeros([<span class="number">2000</span>])+<span class="number">0.1</span>)</div><div class="line">L2 = tf.nn.tanh(tf.matmul(L1_drop,W2)+b2)</div><div class="line">L2_drop = tf.nn.dropout(L2,keep_prob) </div><div class="line"></div><div class="line">W3 = tf.Variable(tf.truncated_normal([<span class="number">2000</span>,<span class="number">1000</span>],stddev=<span class="number">0.1</span>))</div><div class="line">b3 = tf.Variable(tf.zeros([<span class="number">1000</span>])+<span class="number">0.1</span>)</div><div class="line">L3 = tf.nn.tanh(tf.matmul(L2_drop,W3)+b3)</div><div class="line">L3_drop = tf.nn.dropout(L3,keep_prob) </div><div class="line"></div><div class="line">W4 = tf.Variable(tf.truncated_normal([<span class="number">1000</span>,<span class="number">10</span>],stddev=<span class="number">0.1</span>))</div><div class="line">b4 = tf.Variable(tf.zeros([<span class="number">10</span>])+<span class="number">0.1</span>)</div><div class="line">prediction = tf.nn.softmax(tf.matmul(L3_drop,W4)+b4)</div><div class="line"></div><div class="line"><span class="comment">#二次代价函数</span></div><div class="line"><span class="comment"># loss = tf.reduce_mean(tf.square(y-prediction))</span></div><div class="line">loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=y,logits=prediction))</div><div class="line"><span class="comment">#使用梯度下降法</span></div><div class="line">train_step = tf.train.GradientDescentOptimizer(<span class="number">0.2</span>).minimize(loss)</div><div class="line"></div><div class="line"><span class="comment">#初始化变量</span></div><div class="line">init = tf.global_variables_initializer()</div><div class="line"></div><div class="line"><span class="comment">#结果存放在一个布尔型列表中</span></div><div class="line">correct_prediction = tf.equal(tf.argmax(y,<span class="number">1</span>),tf.argmax(prediction,<span class="number">1</span>))<span class="comment">#argmax返回一维张量中最大的值所在的位置</span></div><div class="line"><span class="comment">#求准确率</span></div><div class="line">accuracy = tf.reduce_mean(tf.cast(correct_prediction,tf.float32))</div><div class="line"></div><div class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</div><div class="line">    sess.run(init)</div><div class="line">    <span class="keyword">for</span> epoch <span class="keyword">in</span> range(<span class="number">31</span>):</div><div class="line">        <span class="keyword">for</span> batch <span class="keyword">in</span> range(n_batch):</div><div class="line">            batch_xs,batch_ys =  mnist.train.next_batch(batch_size)</div><div class="line">            <span class="comment">#keep_prob = 1 所有神经元都是工作的  =0.7 ---&gt; 70%的神经元工作</span></div><div class="line">            sess.run(train_step,feed_dict=&#123;x:batch_xs,y:batch_ys,keep_prob:<span class="number">0.7</span>&#125;)</div><div class="line">        </div><div class="line">        test_acc = sess.run(accuracy,feed_dict=&#123;x:mnist.test.images,y:mnist.test.labels,keep_prob:<span class="number">1.0</span>&#125;)</div><div class="line">        train_acc = sess.run(accuracy,feed_dict=&#123;x:mnist.train.images,y:mnist.train.labels,keep_prob:<span class="number">1.0</span>&#125;)</div><div class="line">        print(<span class="string">"Iter "</span> + str(epoch) + <span class="string">",Testing Accuracy "</span> + str(test_acc) +<span class="string">",Training Accuracy "</span> + str(train_acc))</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">Extracting MNIST_data\train-images-idx3-ubyte.gz</div><div class="line">Extracting MNIST_data\train-labels-idx1-ubyte.gz</div><div class="line">Extracting MNIST_data\t10k-images-idx3-ubyte.gz</div><div class="line">Extracting MNIST_data\t10k-labels-idx1-ubyte.gz</div><div class="line">Iter <span class="number">0</span>,Testing Accuracy <span class="number">0.9117</span>,Training Accuracy <span class="number">0.903655</span></div><div class="line">Iter <span class="number">1</span>,Testing Accuracy <span class="number">0.9243</span>,Training Accuracy <span class="number">0.923709</span></div><div class="line">Iter <span class="number">2</span>,Testing Accuracy <span class="number">0.936</span>,Training Accuracy <span class="number">0.933528</span></div><div class="line">Iter <span class="number">3</span>,Testing Accuracy <span class="number">0.9389</span>,Training Accuracy <span class="number">0.939546</span></div><div class="line">Iter <span class="number">4</span>,Testing Accuracy <span class="number">0.9419</span>,Training Accuracy <span class="number">0.942328</span></div><div class="line">Iter <span class="number">5</span>,Testing Accuracy <span class="number">0.9466</span>,Training Accuracy <span class="number">0.948309</span></div><div class="line">Iter <span class="number">6</span>,Testing Accuracy <span class="number">0.9487</span>,Training Accuracy <span class="number">0.951873</span></div><div class="line">Iter <span class="number">7</span>,Testing Accuracy <span class="number">0.9514</span>,Training Accuracy <span class="number">0.953437</span></div><div class="line">Iter <span class="number">8</span>,Testing Accuracy <span class="number">0.9525</span>,Training Accuracy <span class="number">0.956291</span></div><div class="line">Iter <span class="number">9</span>,Testing Accuracy <span class="number">0.9533</span>,Training Accuracy <span class="number">0.957327</span></div><div class="line">Iter <span class="number">10</span>,Testing Accuracy <span class="number">0.9558</span>,Training Accuracy <span class="number">0.958237</span></div><div class="line">Iter <span class="number">11</span>,Testing Accuracy <span class="number">0.9571</span>,Training Accuracy <span class="number">0.961128</span></div><div class="line">Iter <span class="number">12</span>,Testing Accuracy <span class="number">0.9576</span>,Training Accuracy <span class="number">0.963473</span></div><div class="line">Iter <span class="number">13</span>,Testing Accuracy <span class="number">0.9595</span>,Training Accuracy <span class="number">0.964037</span></div><div class="line">Iter <span class="number">14</span>,Testing Accuracy <span class="number">0.9604</span>,Training Accuracy <span class="number">0.965255</span></div><div class="line">Iter <span class="number">15</span>,Testing Accuracy <span class="number">0.9619</span>,Training Accuracy <span class="number">0.966</span></div><div class="line">Iter <span class="number">16</span>,Testing Accuracy <span class="number">0.9621</span>,Training Accuracy <span class="number">0.966928</span></div><div class="line">Iter <span class="number">17</span>,Testing Accuracy <span class="number">0.9634</span>,Training Accuracy <span class="number">0.968091</span></div><div class="line">Iter <span class="number">18</span>,Testing Accuracy <span class="number">0.9643</span>,Training Accuracy <span class="number">0.968691</span></div><div class="line">Iter <span class="number">19</span>,Testing Accuracy <span class="number">0.9659</span>,Training Accuracy <span class="number">0.970237</span></div><div class="line">Iter <span class="number">20</span>,Testing Accuracy <span class="number">0.9656</span>,Training Accuracy <span class="number">0.971128</span></div><div class="line">Iter <span class="number">21</span>,Testing Accuracy <span class="number">0.9653</span>,Training Accuracy <span class="number">0.971218</span></div><div class="line">Iter <span class="number">22</span>,Testing Accuracy <span class="number">0.9667</span>,Training Accuracy <span class="number">0.971873</span></div><div class="line">Iter <span class="number">23</span>,Testing Accuracy <span class="number">0.9676</span>,Training Accuracy <span class="number">0.973655</span></div><div class="line">Iter <span class="number">24</span>,Testing Accuracy <span class="number">0.9675</span>,Training Accuracy <span class="number">0.973546</span></div><div class="line">Iter <span class="number">25</span>,Testing Accuracy <span class="number">0.9695</span>,Training Accuracy <span class="number">0.974637</span></div><div class="line">Iter <span class="number">26</span>,Testing Accuracy <span class="number">0.97</span>,Training Accuracy <span class="number">0.975618</span></div><div class="line">Iter <span class="number">27</span>,Testing Accuracy <span class="number">0.9688</span>,Training Accuracy <span class="number">0.9752</span></div><div class="line">Iter <span class="number">28</span>,Testing Accuracy <span class="number">0.969</span>,Training Accuracy <span class="number">0.976928</span></div><div class="line">Iter <span class="number">29</span>,Testing Accuracy <span class="number">0.9695</span>,Training Accuracy <span class="number">0.976491</span></div><div class="line">Iter <span class="number">30</span>,Testing Accuracy <span class="number">0.971</span>,Training Accuracy <span class="number">0.977219</span></div><div class="line">In [ ]:</div><div class="line"></div><div class="line"></div><div class="line">Iter <span class="number">29</span>,Testing Accuracy <span class="number">0.9727</span>,Training Accuracy <span class="number">0.995655</span></div><div class="line">Iter <span class="number">30</span>,Testing Accuracy <span class="number">0.9722</span>,Training Accuracy <span class="number">0.995782</span></div></pre></td></tr></table></figure>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/TensorFlow/" rel="tag"># TensorFlow</a>
+          
+            <a href="/tags/非线性回归/" rel="tag"># 非线性回归</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/03/算法/常用排序算法/" rel="next" title="常用排序算法总结">
+                <i class="fa fa-chevron-left"></i> 常用排序算法总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/03/算法/算法/" rel="prev" title="数组、链表、斐波那契数列的递归、Reverse数组、Reverse链表、约瑟夫环问题、合并两个排好序的链表（纯代码）">
+                数组、链表、斐波那契数列的递归、Reverse数组、Reverse链表、约瑟夫环问题、合并两个排好序的链表（纯代码） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="刘铸澎" />
+          <p class="site-author-name" itemprop="name">刘铸澎</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">46</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">45</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://git.oschina.net/dashboard/projects" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#非线性激励"><span class="nav-number">1.</span> <span class="nav-text">非线性激励</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#常用的非线性激励函数"><span class="nav-number">2.</span> <span class="nav-text">常用的非线性激励函数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Sigmoid"><span class="nav-number">2.1.</span> <span class="nav-text">Sigmoid</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#tahn"><span class="nav-number">2.2.</span> <span class="nav-text">tahn</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#softmax"><span class="nav-number">2.3.</span> <span class="nav-text">softmax</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ReLU-Rectified-linear-unit"><span class="nav-number">2.4.</span> <span class="nav-text">ReLU(Rectified linear unit)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Leaky-ReLU-Rectified-linear-unit"><span class="nav-number">2.5.</span> <span class="nav-text">Leaky ReLU(Rectified  linear unit)</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二次代价函数-quadratic-cost"><span class="nav-number">3.</span> <span class="nav-text">二次代价函数(quadratic cost)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#交叉熵代价函数-cross-entropy"><span class="nav-number">3.1.</span> <span class="nav-text">交叉熵代价函数(cross-entropy)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#对数释然代价函数-log-likelihood-cost"><span class="nav-number">3.2.</span> <span class="nav-text">对数释然代价函数(log-likelihood cost)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#交叉熵在Tensorflow中用"><span class="nav-number">3.3.</span> <span class="nav-text">交叉熵在Tensorflow中用</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#神经元－神经网络"><span class="nav-number">4.</span> <span class="nav-text">神经元－神经网络</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#拟合"><span class="nav-number">5.</span> <span class="nav-text">拟合</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#防止过拟合"><span class="nav-number">5.1.</span> <span class="nav-text">防止过拟合</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tensorFlow非线性代码实现"><span class="nav-number">6.</span> <span class="nav-text">tensorFlow非线性代码实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tensorFlow交叉熵代码实现"><span class="nav-number">7.</span> <span class="nav-text">tensorFlow交叉熵代码实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tensorFlow-Dropout代码实现"><span class="nav-number">8.</span> <span class="nav-text">tensorFlow Dropout代码实现</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">刘铸澎</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+<div>
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.1"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("6OMtX0qKxdIdOnV5KE5rgWX1-gzGzoHsz", "ODT08Qg3pX4wC18rqsaLQb35");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

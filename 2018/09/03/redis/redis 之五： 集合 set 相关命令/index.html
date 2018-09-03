@@ -1,0 +1,1032 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="true" />
+
+
+
+
+
+
+
+	<meta name="baidu-site-verification" content="ADEVsVvcYE" />
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="redis," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="liuzhupeng的博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="集合 set 相关命令 集合的性质: 唯一性,无序性,确定性 注: 在string和link的命令中,可以通过range 来访问string中的某几个字符或某几个元素但,因为集合的无序性,无法通过下标或范围来访问部分元素. 因此想看元素,要么随机先一个,要么全选  sadd key  value1 value2 作用: 往集合key中增加元素  srem value1 value2 作用: 删除集">
+<meta name="keywords" content="redis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="redis 之 五： 集合 set 相关命令">
+<meta property="og:url" content="http://yoursite.com/2018/09/03/redis/redis 之五： 集合 set 相关命令/index.html">
+<meta property="og:site_name" content="liuzhupeng的博客">
+<meta property="og:description" content="集合 set 相关命令 集合的性质: 唯一性,无序性,确定性 注: 在string和link的命令中,可以通过range 来访问string中的某几个字符或某几个元素但,因为集合的无序性,无法通过下标或范围来访问部分元素. 因此想看元素,要么随机先一个,要么全选  sadd key  value1 value2 作用: 往集合key中增加元素  srem value1 value2 作用: 删除集">
+<meta property="og:updated_time" content="2018-09-03T00:17:05.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="redis 之 五： 集合 set 相关命令">
+<meta name="twitter:description" content="集合 set 相关命令 集合的性质: 唯一性,无序性,确定性 注: 在string和link的命令中,可以通过range 来访问string中的某几个字符或某几个元素但,因为集合的无序性,无法通过下标或范围来访问部分元素. 因此想看元素,要么随机先一个,要么全选  sadd key  value1 value2 作用: 往集合key中增加元素  srem value1 value2 作用: 删除集">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'XO07FKRYQU',
+      apiKey: '42f277b78659c936fba4af368318e5b9',
+      indexName: 'lzpnote',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"搜索...","hits_empty":"未发现与 「${query}」相关的内容","hits_stats":"${hits} 条相关条目，使用了 ${time} 毫秒"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/09/03/redis/redis 之五： 集合 set 相关命令/"/>
+
+
+
+
+
+  <title>redis 之 五： 集合 set 相关命令 | liuzhupeng的博客</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">liuzhupeng的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  <!-- 
+ -->
+ 
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+                <a href="javascript:;" class="popup-trigger">
+			<!-- 增加结束 -->
+              
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/03/redis/redis 之五： 集合 set 相关命令/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘铸澎">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="liuzhupeng的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">redis 之 五： 集合 set 相关命令</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-03T09:14:33+08:00">
+                2018-09-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/redis/" itemprop="url" rel="index">
+                    <span itemprop="name">redis</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/09/03/redis/redis 之五： 集合 set 相关命令/" class="leancloud_visitors" data-flag-title="redis 之 五： 集合 set 相关命令">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="集合-set-相关命令"><a href="#集合-set-相关命令" class="headerlink" title="集合 set 相关命令"></a>集合 set 相关命令</h3><ul>
+<li>集合的性质: 唯一性,无序性,确定性</li>
+<li>注: 在string和link的命令中,可以通过range 来访问string中的某几个字符或某几个元素<br>但,因为集合的无序性,无法通过下标或范围来访问部分元素.</li>
+<li>因此想看元素,要么随机先一个,要么全选</li>
+</ul>
+<h4 id="sadd-key-value1-value2"><a href="#sadd-key-value1-value2" class="headerlink" title="sadd key  value1 value2"></a>sadd key  value1 value2</h4><ul>
+<li>作用: 往集合key中增加元素</li>
+</ul>
+<h4 id="srem-value1-value2"><a href="#srem-value1-value2" class="headerlink" title="srem value1 value2"></a>srem value1 value2</h4><ul>
+<li>作用: 删除集合中集为 value1 value2的元素</li>
+<li>返回值: 忽略不存在的元素后,真正删除掉的元素的个数</li>
+</ul>
+<h4 id="spop-key"><a href="#spop-key" class="headerlink" title="spop key"></a>spop key</h4><ul>
+<li>作用: 返回并删除集合中key中1个随机元素</li>
+<li>随机–体现了无序性</li>
+</ul>
+<h4 id="srandmember-key"><a href="#srandmember-key" class="headerlink" title="srandmember key"></a>srandmember key</h4><ul>
+<li>作用: 返回集合key中,随机的1个元素.</li>
+</ul>
+<h4 id="sismember-key-value"><a href="#sismember-key-value" class="headerlink" title="sismember key  value"></a>sismember key  value</h4><ul>
+<li>作用: 判断value是否在key集合中</li>
+<li>是返回1,否返回0</li>
+</ul>
+<h4 id="smembers-key"><a href="#smembers-key" class="headerlink" title="smembers key"></a>smembers key</h4><ul>
+<li>作用: 返回集中中所有的元素</li>
+</ul>
+<h4 id="scard-key"><a href="#scard-key" class="headerlink" title="scard key"></a>scard key</h4><ul>
+<li>作用: 返回集合中元素的个数</li>
+</ul>
+<h4 id="smove-source-dest-value"><a href="#smove-source-dest-value" class="headerlink" title="smove source dest value"></a>smove source dest value</h4><ul>
+<li>作用:把source中的value删除,并添加到dest集合中</li>
+</ul>
+<h4 id="sinter-key1-key2-key3"><a href="#sinter-key1-key2-key3" class="headerlink" title="sinter  key1 key2 key3"></a>sinter  key1 key2 key3</h4><ul>
+<li>作用: 求出key1 key2 key3 三个集合中的交集,并返回<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">redis 127.0.0.1:6379&gt; sadd s1 0 2 4 6</div><div class="line">(integer) 4</div><div class="line">redis 127.0.0.1:6379&gt; sadd s2 1 2 3 4</div><div class="line">(integer) 4</div><div class="line">redis 127.0.0.1:6379&gt; sadd s3 4 8 9 12</div><div class="line">(integer) 4</div><div class="line">redis 127.0.0.1:6379&gt; sinter s1 s2 s3</div><div class="line">1) &quot;4&quot;</div><div class="line">redis 127.0.0.1:6379&gt; sinter s3 s1 s2</div><div class="line">1) &quot;4&quot;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="sinterstore-dest-key1-key2-key3"><a href="#sinterstore-dest-key1-key2-key3" class="headerlink" title="sinterstore dest key1 key2 key3"></a>sinterstore dest key1 key2 key3</h4><ul>
+<li>作用: 求出key1 key2 key3 三个集合中的交集,并赋给dest</li>
+</ul>
+<h4 id="suion-key1-key2-Keyn"><a href="#suion-key1-key2-Keyn" class="headerlink" title="suion key1 key2.. Keyn"></a>suion key1 key2.. Keyn</h4><ul>
+<li>作用: 求出key1 key2 keyn的并集,并返回</li>
+</ul>
+<h4 id="sdiff-key1-key2-key3"><a href="#sdiff-key1-key2-key3" class="headerlink" title="sdiff key1 key2 key3"></a>sdiff key1 key2 key3</h4><ul>
+<li>作用: 求出key1与key2 key3的差集<br>即key1-key2-key3 </li>
+</ul>
+<h3 id="order-set-有序集合"><a href="#order-set-有序集合" class="headerlink" title="order set 有序集合"></a>order set 有序集合</h3><h4 id="zadd-key-score1-value1-score2-value2"><a href="#zadd-key-score1-value1-score2-value2" class="headerlink" title="zadd key score1 value1 score2 value2 .."></a>zadd key score1 value1 score2 value2 ..</h4><ul>
+<li>添加元素<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">redis 127.0.0.1:6379&gt; zadd stu 18 lily 19 hmm 20 lilei 21 lilei</div><div class="line">(integer) 3</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="zrem-key-value1-value2"><a href="#zrem-key-value1-value2" class="headerlink" title="zrem key value1 value2 .."></a>zrem key value1 value2 ..</h4><ul>
+<li>作用: 删除集合中的元素</li>
+</ul>
+<h4 id="zremrangebyscore-key-min-max"><a href="#zremrangebyscore-key-min-max" class="headerlink" title="zremrangebyscore key min max"></a>zremrangebyscore key min max</h4><ul>
+<li>作用: 按照socre来删除元素,删除score在[min,max]之间的<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">redis 127.0.0.1:6379&gt; zremrangebyscore stu 4 10</div><div class="line">(integer) 2</div><div class="line">redis 127.0.0.1:6379&gt; zrange stu 0 -1</div><div class="line">1) &quot;f&quot;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="zremrangebyrank-key-start-end"><a href="#zremrangebyrank-key-start-end" class="headerlink" title="zremrangebyrank key start end"></a>zremrangebyrank key start end</h4><ul>
+<li>作用: 按排名删除元素,删除名次在[start,end]之间的<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">redis 127.0.0.1:6379&gt; zremrangebyrank stu 0 1</div><div class="line">(integer) 2</div><div class="line">redis 127.0.0.1:6379&gt; zrange stu 0 -1</div><div class="line">1) &quot;c&quot;</div><div class="line">2) &quot;e&quot;</div><div class="line">3) &quot;f&quot;</div><div class="line">4) &quot;g&quot;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="zrank-key-member"><a href="#zrank-key-member" class="headerlink" title="zrank key member"></a>zrank key member</h4><ul>
+<li>查询member的排名(升续 0名开始)</li>
+</ul>
+<h4 id="zrevrank-key-memeber"><a href="#zrevrank-key-memeber" class="headerlink" title="zrevrank key memeber"></a>zrevrank key memeber</h4><ul>
+<li>查询 member的排名(降续 0名开始)</li>
+</ul>
+<h4 id="zrange-key-start-stop-WITHSCORES"><a href="#zrange-key-start-stop-WITHSCORES" class="headerlink" title="zrange key start stop [WITHSCORES]"></a>zrange key start stop [WITHSCORES]</h4><ul>
+<li>把集合排序后,返回名次[start,stop]的元素</li>
+<li>默认是升续排列 </li>
+<li>Withscores 是把score也打印出来</li>
+</ul>
+<h4 id="zrevrange-key-start-stop"><a href="#zrevrange-key-start-stop" class="headerlink" title="zrevrange key start stop"></a>zrevrange key start stop</h4><ul>
+<li>作用:把集合降序排列,取名字[start,stop]之间的元素</li>
+</ul>
+<h4 id="zrangebyscore-key-min-max-withscores-limit-offset-N"><a href="#zrangebyscore-key-min-max-withscores-limit-offset-N" class="headerlink" title="zrangebyscore  key min max [withscores] limit offset N"></a>zrangebyscore  key min max [withscores] limit offset N</h4><ul>
+<li>作用: 集合(升续)排序后,取score在[min,max]内的元素, 并跳过 offset个, 取出N个<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">redis 127.0.0.1:6379&gt; zadd stu 1 a 3 b 4 c 9 e 12 f 15 g</div><div class="line">(integer) 6</div><div class="line">redis 127.0.0.1:6379&gt; zrangebyscore stu 3 12 limit 1 2 withscores</div><div class="line">1) &quot;c&quot;</div><div class="line">2) &quot;4&quot;</div><div class="line">3) &quot;e&quot;</div><div class="line">4) &quot;9&quot;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="zcard-key"><a href="#zcard-key" class="headerlink" title="zcard key"></a>zcard key</h4><ul>
+<li>返回元素个数</li>
+</ul>
+<h4 id="zcount-key-min-max"><a href="#zcount-key-min-max" class="headerlink" title="zcount key min max"></a>zcount key min max</h4><ul>
+<li>返回[min,max] 区间内元素的数量</li>
+</ul>
+<h4 id="zinterstore-destination-numkeys-key1-key2-…-WEIGHTS-weight-weight-…-AGGREGATE-SUM-MIN-MAX"><a href="#zinterstore-destination-numkeys-key1-key2-…-WEIGHTS-weight-weight-…-AGGREGATE-SUM-MIN-MAX" class="headerlink" title="zinterstore destination numkeys key1 [key2 …] [WEIGHTS weight [weight …]] [AGGREGATE SUM|MIN|MAX]"></a>zinterstore destination numkeys key1 [key2 …] [WEIGHTS weight [weight …]] [AGGREGATE SUM|MIN|MAX]</h4><ul>
+<li>求key1,key2的交集,key1,key2的权重分别是 weight1,weight2</li>
+<li>聚合方法用: sum |min|max</li>
+<li>聚合的结果,保存在dest集合内</li>
+<li><p>注意: weights ,aggregate如何理解?</p>
+<ul>
+<li>答: 如果有交集, 交集元素又有socre,score怎么处理?</li>
+<li><p>Aggregate sum-&gt;score相加   , min 求最小score, max 最大score</p>
+</li>
+<li><p>另: 可以通过weigth设置不同key的权重, 交集时,socre * weights</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="详见下例"><a href="#详见下例" class="headerlink" title="详见下例"></a>详见下例</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">redis 127.0.0.1:6379&gt; zadd z1 2 a 3 b 4 c</div><div class="line">(integer) 3</div><div class="line">redis 127.0.0.1:6379&gt; zadd z2 2.5 a 1 b 8 d</div><div class="line">(integer) 3</div><div class="line">redis 127.0.0.1:6379&gt; zinterstore tmp 2 z1 z2</div><div class="line">(integer) 2</div><div class="line">redis 127.0.0.1:6379&gt; zrange tmp 0 -1</div><div class="line">1) &quot;b&quot;</div><div class="line">2) &quot;a&quot;</div><div class="line">redis 127.0.0.1:6379&gt; zrange tmp 0 -1 withscores</div><div class="line">1) &quot;b&quot;</div><div class="line">2) &quot;4&quot;</div><div class="line">3) &quot;a&quot;</div><div class="line">4) &quot;4.5&quot;</div><div class="line">redis 127.0.0.1:6379&gt; zinterstore tmp 2 z1 z2 aggregate sum</div><div class="line">(integer) 2</div><div class="line">redis 127.0.0.1:6379&gt; zrange tmp 0 -1 withscores</div><div class="line">1) &quot;b&quot;</div><div class="line">2) &quot;4&quot;</div><div class="line">3) &quot;a&quot;</div><div class="line">4) &quot;4.5&quot;</div><div class="line">redis 127.0.0.1:6379&gt; zinterstore tmp 2 z1 z2 aggregate min</div><div class="line">(integer) 2</div><div class="line">redis 127.0.0.1:6379&gt; zrange tmp 0 -1 withscores</div><div class="line">1) &quot;b&quot;</div><div class="line">2) &quot;1&quot;</div><div class="line">3) &quot;a&quot;</div><div class="line">4) &quot;2&quot;</div><div class="line">redis 127.0.0.1:6379&gt; zinterstore tmp 2 z1 z2 weights 1 2</div><div class="line">(integer) 2</div><div class="line">redis 127.0.0.1:6379&gt; zrange tmp 0 -1 withscores</div><div class="line">1) &quot;b&quot;</div><div class="line">2) &quot;5&quot;</div><div class="line">3) &quot;a&quot;</div><div class="line">4) &quot;7&quot;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/redis/" rel="tag"># redis</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/03/redis/redis 之 二： Redis操作命令/" rel="next" title="redis 之 二： Redis对于key的操作命令">
+                <i class="fa fa-chevron-left"></i> redis 之 二： Redis对于key的操作命令
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/03/redis/redis 之四： link 链表结构/" rel="prev" title="redis 之四： link 链表结构">
+                redis 之四： link 链表结构 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="刘铸澎" />
+          <p class="site-author-name" itemprop="name">刘铸澎</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">46</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">45</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://git.oschina.net/dashboard/projects" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#集合-set-相关命令"><span class="nav-number">1.</span> <span class="nav-text">集合 set 相关命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#sadd-key-value1-value2"><span class="nav-number">1.1.</span> <span class="nav-text">sadd key  value1 value2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#srem-value1-value2"><span class="nav-number">1.2.</span> <span class="nav-text">srem value1 value2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#spop-key"><span class="nav-number">1.3.</span> <span class="nav-text">spop key</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#srandmember-key"><span class="nav-number">1.4.</span> <span class="nav-text">srandmember key</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sismember-key-value"><span class="nav-number">1.5.</span> <span class="nav-text">sismember key  value</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#smembers-key"><span class="nav-number">1.6.</span> <span class="nav-text">smembers key</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#scard-key"><span class="nav-number">1.7.</span> <span class="nav-text">scard key</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#smove-source-dest-value"><span class="nav-number">1.8.</span> <span class="nav-text">smove source dest value</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sinter-key1-key2-key3"><span class="nav-number">1.9.</span> <span class="nav-text">sinter  key1 key2 key3</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sinterstore-dest-key1-key2-key3"><span class="nav-number">1.10.</span> <span class="nav-text">sinterstore dest key1 key2 key3</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#suion-key1-key2-Keyn"><span class="nav-number">1.11.</span> <span class="nav-text">suion key1 key2.. Keyn</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sdiff-key1-key2-key3"><span class="nav-number">1.12.</span> <span class="nav-text">sdiff key1 key2 key3</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#order-set-有序集合"><span class="nav-number">2.</span> <span class="nav-text">order set 有序集合</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#zadd-key-score1-value1-score2-value2"><span class="nav-number">2.1.</span> <span class="nav-text">zadd key score1 value1 score2 value2 ..</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#zrem-key-value1-value2"><span class="nav-number">2.2.</span> <span class="nav-text">zrem key value1 value2 ..</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#zremrangebyscore-key-min-max"><span class="nav-number">2.3.</span> <span class="nav-text">zremrangebyscore key min max</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#zremrangebyrank-key-start-end"><span class="nav-number">2.4.</span> <span class="nav-text">zremrangebyrank key start end</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#zrank-key-member"><span class="nav-number">2.5.</span> <span class="nav-text">zrank key member</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#zrevrank-key-memeber"><span class="nav-number">2.6.</span> <span class="nav-text">zrevrank key memeber</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#zrange-key-start-stop-WITHSCORES"><span class="nav-number">2.7.</span> <span class="nav-text">zrange key start stop [WITHSCORES]</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#zrevrange-key-start-stop"><span class="nav-number">2.8.</span> <span class="nav-text">zrevrange key start stop</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#zrangebyscore-key-min-max-withscores-limit-offset-N"><span class="nav-number">2.9.</span> <span class="nav-text">zrangebyscore  key min max [withscores] limit offset N</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#zcard-key"><span class="nav-number">2.10.</span> <span class="nav-text">zcard key</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#zcount-key-min-max"><span class="nav-number">2.11.</span> <span class="nav-text">zcount key min max</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#zinterstore-destination-numkeys-key1-key2-…-WEIGHTS-weight-weight-…-AGGREGATE-SUM-MIN-MAX"><span class="nav-number">2.12.</span> <span class="nav-text">zinterstore destination numkeys key1 [key2 …] [WEIGHTS weight [weight …]] [AGGREGATE SUM|MIN|MAX]</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#详见下例"><span class="nav-number">2.13.</span> <span class="nav-text">详见下例</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">刘铸澎</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+<div>
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.1"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("6OMtX0qKxdIdOnV5KE5rgWX1-gzGzoHsz", "ODT08Qg3pX4wC18rqsaLQb35");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

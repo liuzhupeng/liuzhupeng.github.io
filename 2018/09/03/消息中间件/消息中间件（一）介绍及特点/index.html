@@ -1,0 +1,1052 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="true" />
+
+
+
+
+
+
+
+	<meta name="baidu-site-verification" content="ADEVsVvcYE" />
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="rabbitMQ,kafka,metaq," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="liuzhupeng的博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="目录 消息中间件介绍及特点 消息服务传递模型及各自的特点详解 互联网消息中间件应用场景 消息中间件分类  消息中间件介绍及特点消息中间件简介消息中间件是在消息的传输过程中保存消息的容器，消息中间件再将消息从它的源中继（生成者）到它的目标（消费者）时充当中间人的作用。队列的主要目的是提供路由并保证消息的传递；如果发送消息是接收者不可用，消息队列也保留消息，直到消息可以成功传递它为止，当然，消息队列保">
+<meta name="keywords" content="rabbitMQ,kafka,metaq">
+<meta property="og:type" content="article">
+<meta property="og:title" content="消息中间件（一）介绍及特点">
+<meta property="og:url" content="http://yoursite.com/2018/09/03/消息中间件/消息中间件（一）介绍及特点/index.html">
+<meta property="og:site_name" content="liuzhupeng的博客">
+<meta property="og:description" content="目录 消息中间件介绍及特点 消息服务传递模型及各自的特点详解 互联网消息中间件应用场景 消息中间件分类  消息中间件介绍及特点消息中间件简介消息中间件是在消息的传输过程中保存消息的容器，消息中间件再将消息从它的源中继（生成者）到它的目标（消费者）时充当中间人的作用。队列的主要目的是提供路由并保证消息的传递；如果发送消息是接收者不可用，消息队列也保留消息，直到消息可以成功传递它为止，当然，消息队列保">
+<meta property="og:image" content="http://i.imgur.com/yPanJco.png">
+<meta property="og:image" content="http://i.imgur.com/ZuISSSQ.png">
+<meta property="og:image" content="http://i.imgur.com/kYNhao1.png">
+<meta property="og:image" content="http://i.imgur.com/GEouX0k.png">
+<meta property="og:image" content="http://i.imgur.com/hEQsASf.png">
+<meta property="og:image" content="http://i.imgur.com/OehfDXP.png">
+<meta property="og:image" content="http://i.imgur.com/7L4lBcD.png">
+<meta property="og:image" content="http://i.imgur.com/CSYlzcs.png">
+<meta property="og:image" content="http://i.imgur.com/hW9IhMX.png">
+<meta property="og:updated_time" content="2017-05-25T02:11:46.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="消息中间件（一）介绍及特点">
+<meta name="twitter:description" content="目录 消息中间件介绍及特点 消息服务传递模型及各自的特点详解 互联网消息中间件应用场景 消息中间件分类  消息中间件介绍及特点消息中间件简介消息中间件是在消息的传输过程中保存消息的容器，消息中间件再将消息从它的源中继（生成者）到它的目标（消费者）时充当中间人的作用。队列的主要目的是提供路由并保证消息的传递；如果发送消息是接收者不可用，消息队列也保留消息，直到消息可以成功传递它为止，当然，消息队列保">
+<meta name="twitter:image" content="http://i.imgur.com/yPanJco.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'XO07FKRYQU',
+      apiKey: '42f277b78659c936fba4af368318e5b9',
+      indexName: 'lzpnote',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"搜索...","hits_empty":"未发现与 「${query}」相关的内容","hits_stats":"${hits} 条相关条目，使用了 ${time} 毫秒"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/09/03/消息中间件/消息中间件（一）介绍及特点/"/>
+
+
+
+
+
+  <title>消息中间件（一）介绍及特点 | liuzhupeng的博客</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">liuzhupeng的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  <!-- 
+ -->
+ 
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+                <a href="javascript:;" class="popup-trigger">
+			<!-- 增加结束 -->
+              
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/03/消息中间件/消息中间件（一）介绍及特点/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘铸澎">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="liuzhupeng的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">消息中间件（一）介绍及特点</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-03T09:01:50+08:00">
+                2018-09-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/消息中间件/" itemprop="url" rel="index">
+                    <span itemprop="name">消息中间件</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/09/03/消息中间件/消息中间件（一）介绍及特点/" class="leancloud_visitors" data-flag-title="消息中间件（一）介绍及特点">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h3><ul>
+<li>消息中间件介绍及特点</li>
+<li>消息服务传递模型及各自的特点详解</li>
+<li>互联网消息中间件应用场景</li>
+<li>消息中间件分类</li>
+</ul>
+<h3 id="消息中间件介绍及特点"><a href="#消息中间件介绍及特点" class="headerlink" title="消息中间件介绍及特点"></a>消息中间件介绍及特点</h3><h4 id="消息中间件简介"><a href="#消息中间件简介" class="headerlink" title="消息中间件简介"></a>消息中间件简介</h4><p>消息中间件是在消息的传输过程中保存消息的容器，消息中间件再将消息从它的源中继（生成者）到它的目标（消费者）时充当中间人的作用。队列的主要目的是提供路由并保证消息的传递；如果发送消息是接收者不可用，消息队列也保留消息，直到消息可以成功传递它为止，当然，消息队列保存消息也是有限期的。<br><a id="more"></a> </p>
+<h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><ul>
+<li>在消息的传输过程中保存消息的容器。</li>
+<li>在从它源中继到它的目标时充当中间人的作用。</li>
+</ul>
+<h4 id="队列"><a href="#队列" class="headerlink" title="队列"></a>队列</h4><ul>
+<li>主要目的是提供路由并保证消息的传递；</li>
+<li>如果消息接收者不可用；消息队列保存消息，知道可以成功传递为止；</li>
+<li>消息队列保存消息也是有期限的。</li>
+</ul>
+<h3 id="消息中间件特点、"><a href="#消息中间件特点、" class="headerlink" title="消息中间件特点、"></a>消息中间件特点、</h3><h4 id="采用异步处理模式"><a href="#采用异步处理模式" class="headerlink" title="采用异步处理模式"></a>采用异步处理模式</h4><ul>
+<li>消息发送不需等待响应；</li>
+<li>发送者将消息发送到一条虚拟的通道（队列）上，消息接受者则订阅或监听该通道；</li>
+<li>一条消息最终发送给一个或者多个接受者；</li>
+<li>这些接受者都无需对消息发送者做出同步响应。</li>
+</ul>
+<p>比如用户信息注册。注册完毕后过一段时间发送邮件或者短信</p>
+<h4 id="应用程序和应用程序调用关系为松耦合关系"><a href="#应用程序和应用程序调用关系为松耦合关系" class="headerlink" title="应用程序和应用程序调用关系为松耦合关系"></a>应用程序和应用程序调用关系为松耦合关系</h4><ul>
+<li>发送者和接受者不必了解对方，只需要确认消息</li>
+<li>发送者和接受者不必同时在线</li>
+</ul>
+<p>比如在线交易系统为了保证数据的最终一致性，在支系统处理完成后会把支付结果放到消息中间件里通知订单系统修改订单支付状态。两个系统通过在消息中间件解耦</p>
+<h3 id="消息服务传递模型及各自的特点详解"><a href="#消息服务传递模型及各自的特点详解" class="headerlink" title="消息服务传递模型及各自的特点详解"></a>消息服务传递模型及各自的特点详解</h3><h4 id="消息传递服务模型"><a href="#消息传递服务模型" class="headerlink" title="消息传递服务模型"></a>消息传递服务模型</h4><p><img src="http://i.imgur.com/yPanJco.png" alt=""></p>
+<h4 id="消息中间件的传递模型"><a href="#消息中间件的传递模型" class="headerlink" title="消息中间件的传递模型"></a>消息中间件的传递模型</h4><ul>
+<li><p>点对点模型（PTP）</p>
+<ul>
+<li>点对点模型用于消息生产者和消息消费者之间点到点的通信。</li>
+<li>消息生产者将消息发送到某个名字标识的特定消费者。</li>
+<li>这个名字实际上对应消息服务中的一个队列（Queue），在消息传递给消费者之前它被存储在这个队列中。</li>
+<li><p>队列消息可以放在内存中也可以是持久的，以保证在消息服务出现故障时仍然能够传递消息。</p>
+</li>
+<li><p>特性</p>
+<blockquote>
+<p>1.每个消息只用一个消费者<br>2.发送者和接受者没有时间依赖<br>3.接受者确认消息接收和处理成功 </p>
+</blockquote>
+<p><img src="http://i.imgur.com/ZuISSSQ.png" alt=""></p>
+</li>
+</ul>
+</li>
+<li><p>发布-订阅模型（Pub/Sub）</p>
+<ul>
+<li>发布者。订阅者模型支持向一个特定的消息主题生产消息。</li>
+<li>0或多个订阅者可能对接收来自特定消息主题的消息感兴趣。</li>
+<li>在这种模型下，发布者和订阅者彼此不知道对方。这种模型好比是匿名公告板。</li>
+<li><p>这种模型概括为：多个消费者可以获得消息，在发布者和订阅者之间存在时间依赖。发布者需要建立一个订阅（subscription），以便能够消费者订阅。订阅者必须保持持续的活动状态以接收消息，除非订阅者建立了持久的订阅。这种情况下，在订阅者未连接时发布的消息将在订阅者重新连接时重新发布。</p>
+</li>
+<li><p>特性</p>
+<blockquote>
+<p>1.每个消息可以有多个订阅者<br>2.客户端只有订阅后才能接收到消息<br><br>3.持久订阅和非持久订阅</p>
+</blockquote>
+<p><img src="http://i.imgur.com/kYNhao1.png" alt=""></p>
+<blockquote>
+<p>1.发布者和订阅者有时间依赖  </p>
+</blockquote>
+<p>  接收者和发布者只有建立订阅关系才能收到消息</p>
+<blockquote>
+<p>2.持久订阅</p>
+</blockquote>
+<p>  订阅关系建立后，消息就不会消失，不管订阅者是否都在线</p>
+<blockquote>
+<p>3.非持久订阅</p>
+</blockquote>
+<p>  订阅为了接收消息、必须一直在线<br>  当只有一个订阅者时约等于点对点模式</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="互联网消息中间件应用场景"><a href="#互联网消息中间件应用场景" class="headerlink" title="互联网消息中间件应用场景"></a>互联网消息中间件应用场景</h3><h4 id="网站用户注册，注册成功后过一会发送邮件确认或者短信"><a href="#网站用户注册，注册成功后过一会发送邮件确认或者短信" class="headerlink" title="网站用户注册，注册成功后过一会发送邮件确认或者短信"></a>网站用户注册，注册成功后过一会发送邮件确认或者短信</h4><p><img src="http://i.imgur.com/GEouX0k.png" alt=""></p>
+<pre><code>注：发布队列模型
+    生产者：用户注册服务
+    消费者：邮件服务、短信服务
+</code></pre><h4 id="日志分析（把日志进行收集中收集，用于计算pv、用户行为分析）"><a href="#日志分析（把日志进行收集中收集，用于计算pv、用户行为分析）" class="headerlink" title="日志分析（把日志进行收集中收集，用于计算pv、用户行为分析）"></a>日志分析（把日志进行收集中收集，用于计算pv、用户行为分析）</h4><p><img src="http://i.imgur.com/hEQsASf.png" alt=""></p>
+<pre><code>注：发布队列模型
+    生产者：应用服务
+    消费者：pv分析服务、行为分析服务
+</code></pre><h4 id="数据复制案例"><a href="#数据复制案例" class="headerlink" title="数据复制案例"></a>数据复制案例</h4><ul>
+<li>1.将数据从源头复制到多个目的地，一般是要求顺序或者保证因果序列<blockquote>
+<p>因果序列：保证部分顺序，如部分1和2 内部不要求顺序，但是1和2是按顺序的</p>
+</blockquote>
+</li>
+<li><p>2.用于跨机房数据传输、搜索、离线数据计算等<br><img src="http://i.imgur.com/OehfDXP.png" alt=""></p>
+<pre><code>注：发布队列模型
+    生产者：DB、DB Sync       主机房
+    消费者：Search Hadoop DB  副机房
+</code></pre><h4 id="延迟消息发送和暂存"><a href="#延迟消息发送和暂存" class="headerlink" title="延迟消息发送和暂存"></a>延迟消息发送和暂存</h4></li>
+<li>1.把消息中间件当成可靠的消息暂存地</li>
+<li>2.定时进行消息投递，比如模拟用户秒杀访问、进行系统性能压测。 </li>
+</ul>
+<p><img src="http://i.imgur.com/7L4lBcD.png" alt=""></p>
+<h4 id="消息广播"><a href="#消息广播" class="headerlink" title="消息广播"></a>消息广播</h4><ul>
+<li>缓存数据同步更新</li>
+<li>往应用推送数据</li>
+<li>比如更新本地缓存：<br><img src="http://i.imgur.com/CSYlzcs.png" alt=""></li>
+</ul>
+<h4 id="消息中间件分类"><a href="#消息中间件分类" class="headerlink" title="消息中间件分类"></a>消息中间件分类</h4><ul>
+<li>1.（push）推消息模型：消息生产者将消息发送给消息传递服务，消息传递服务又将消息推给消费者。</li>
+<li>2.（pull）拉消息模型：消费者请求消息服务接收消息，消息生产者从消息中间件拉该消息。</li>
+<li>两种类型的区别<br><img src="http://i.imgur.com/hW9IhMX.png" alt=""></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/rabbitMQ/" rel="tag"># rabbitMQ</a>
+          
+            <a href="/tags/kafka/" rel="tag"># kafka</a>
+          
+            <a href="/tags/metaq/" rel="tag"># metaq</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/03/TensorFlow/MNIST数据集分类/" rel="next" title="TensorFlow MNIST数据集分类">
+                <i class="fa fa-chevron-left"></i> TensorFlow MNIST数据集分类
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/03/TensorFlow/代价函数&拟合&激活函数/" rel="prev" title="TensorFlow 代价函数 拟合 激活函数">
+                TensorFlow 代价函数 拟合 激活函数 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="刘铸澎" />
+          <p class="site-author-name" itemprop="name">刘铸澎</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">46</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">45</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://git.oschina.net/dashboard/projects" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#目录"><span class="nav-number">1.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#消息中间件介绍及特点"><span class="nav-number">2.</span> <span class="nav-text">消息中间件介绍及特点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#消息中间件简介"><span class="nav-number">2.1.</span> <span class="nav-text">消息中间件简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#定义"><span class="nav-number">2.2.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#队列"><span class="nav-number">2.3.</span> <span class="nav-text">队列</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#消息中间件特点、"><span class="nav-number">3.</span> <span class="nav-text">消息中间件特点、</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#采用异步处理模式"><span class="nav-number">3.1.</span> <span class="nav-text">采用异步处理模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#应用程序和应用程序调用关系为松耦合关系"><span class="nav-number">3.2.</span> <span class="nav-text">应用程序和应用程序调用关系为松耦合关系</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#消息服务传递模型及各自的特点详解"><span class="nav-number">4.</span> <span class="nav-text">消息服务传递模型及各自的特点详解</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#消息传递服务模型"><span class="nav-number">4.1.</span> <span class="nav-text">消息传递服务模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#消息中间件的传递模型"><span class="nav-number">4.2.</span> <span class="nav-text">消息中间件的传递模型</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#互联网消息中间件应用场景"><span class="nav-number">5.</span> <span class="nav-text">互联网消息中间件应用场景</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#网站用户注册，注册成功后过一会发送邮件确认或者短信"><span class="nav-number">5.1.</span> <span class="nav-text">网站用户注册，注册成功后过一会发送邮件确认或者短信</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#日志分析（把日志进行收集中收集，用于计算pv、用户行为分析）"><span class="nav-number">5.2.</span> <span class="nav-text">日志分析（把日志进行收集中收集，用于计算pv、用户行为分析）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据复制案例"><span class="nav-number">5.3.</span> <span class="nav-text">数据复制案例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#延迟消息发送和暂存"><span class="nav-number">5.4.</span> <span class="nav-text">延迟消息发送和暂存</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#消息广播"><span class="nav-number">5.5.</span> <span class="nav-text">消息广播</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#消息中间件分类"><span class="nav-number">5.6.</span> <span class="nav-text">消息中间件分类</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">刘铸澎</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+<div>
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.1"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("6OMtX0qKxdIdOnV5KE5rgWX1-gzGzoHsz", "ODT08Qg3pX4wC18rqsaLQb35");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

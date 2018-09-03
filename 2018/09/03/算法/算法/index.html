@@ -1,0 +1,1263 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="true" />
+
+
+
+
+
+
+
+	<meta name="baidu-site-verification" content="ADEVsVvcYE" />
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="算法与数据结构,C++," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="liuzhupeng的博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="stdafx.h 数组 链表 斐波那契数列的递归 Reverse数组 Reverse链表 约瑟夫环问题 合并两个排好序的链表 stdafx.h  // stdafx.h : 标准系统包含文件的包含文件，  // 或是经常使用但不常更改的  // 特定于项目的包含文件  //   #pragma once   #include “targetver.h”   #include   #include">
+<meta name="keywords" content="算法与数据结构,C++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数组、链表、斐波那契数列的递归、Reverse数组、Reverse链表、约瑟夫环问题、合并两个排好序的链表（纯代码）">
+<meta property="og:url" content="http://yoursite.com/2018/09/03/算法/算法/index.html">
+<meta property="og:site_name" content="liuzhupeng的博客">
+<meta property="og:description" content="stdafx.h 数组 链表 斐波那契数列的递归 Reverse数组 Reverse链表 约瑟夫环问题 合并两个排好序的链表 stdafx.h  // stdafx.h : 标准系统包含文件的包含文件，  // 或是经常使用但不常更改的  // 特定于项目的包含文件  //   #pragma once   #include “targetver.h”   #include   #include">
+<meta property="og:image" content="http://i.imgur.com/0wCyKO7.png">
+<meta property="og:image" content="http://i.imgur.com/CcyX0Hb.png">
+<meta property="og:updated_time" content="2017-06-01T07:06:02.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数组、链表、斐波那契数列的递归、Reverse数组、Reverse链表、约瑟夫环问题、合并两个排好序的链表（纯代码）">
+<meta name="twitter:description" content="stdafx.h 数组 链表 斐波那契数列的递归 Reverse数组 Reverse链表 约瑟夫环问题 合并两个排好序的链表 stdafx.h  // stdafx.h : 标准系统包含文件的包含文件，  // 或是经常使用但不常更改的  // 特定于项目的包含文件  //   #pragma once   #include “targetver.h”   #include   #include">
+<meta name="twitter:image" content="http://i.imgur.com/0wCyKO7.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'XO07FKRYQU',
+      apiKey: '42f277b78659c936fba4af368318e5b9',
+      indexName: 'lzpnote',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"搜索...","hits_empty":"未发现与 「${query}」相关的内容","hits_stats":"${hits} 条相关条目，使用了 ${time} 毫秒"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/09/03/算法/算法/"/>
+
+
+
+
+
+  <title>数组、链表、斐波那契数列的递归、Reverse数组、Reverse链表、约瑟夫环问题、合并两个排好序的链表（纯代码） | liuzhupeng的博客</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">liuzhupeng的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  <!-- 
+ -->
+ 
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+                <a href="javascript:;" class="popup-trigger">
+			<!-- 增加结束 -->
+              
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/03/算法/算法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘铸澎">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="liuzhupeng的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">数组、链表、斐波那契数列的递归、Reverse数组、Reverse链表、约瑟夫环问题、合并两个排好序的链表（纯代码）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-03T09:01:50+08:00">
+                2018-09-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/算法与数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">算法与数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/09/03/算法/算法/" class="leancloud_visitors" data-flag-title="数组、链表、斐波那契数列的递归、Reverse数组、Reverse链表、约瑟夫环问题、合并两个排好序的链表（纯代码）">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <ul>
+<li><a href="#stdafx">stdafx.h</a></li>
+<li><a href="#array">数组</a></li>
+<li><a href="#links">链表</a></li>
+<li><a href="#linksaaa">斐波那契数列的递归</a></li>
+<li><a href="#ReverseArray">Reverse数组</a></li>
+<li><a href="#ReverseLink">Reverse链表</a></li>
+<li><a href="#joseph_circle">约瑟夫环问题</a></li>
+<li><p><a href="#merge_list">合并两个排好序的链表</a></p>
+<h4 id="stdafx-h"><a href="#stdafx-h" class="headerlink" title="stdafx.h"></a><a name="stdafx">stdafx.h</a></h4><p>  // stdafx.h : 标准系统包含文件的包含文件，<br>  // 或是经常使用但不常更改的<br>  // 特定于项目的包含文件<br>  //</p>
+<p>  #pragma once</p>
+<p>  #include “targetver.h”</p>
+<p>  #include <stdio.h><br>  #include <tchar.h><br>  #include <iostream><br>  #include “stdlib.h”</iostream></tchar.h></stdio.h></p>
+</li>
+</ul>
+<pre><code>// TODO:  在此处引用程序需要的其他头文件
+</code></pre><h4 id="数组"><a href="#数组" class="headerlink" title="数组"></a><a name="array">数组</a></h4><pre><code>#include &quot;stdafx.h&quot;
+
+using namespace std;
+/*int main()
+{
+    int array[] = { 5,4,10,1,7,9,2 };
+    cout &lt;&lt; array[4] &lt;&lt; endl;
+    cout &lt;&lt; *(array+4) &lt;&lt; endl;
+    system(&quot;pause&quot;);
+    return 0;
+
+}*/
+</code></pre><h4 id="链表"><a href="#链表" class="headerlink" title="链表"></a><a name="links">链表</a></h4><pre><code>#include &quot;stdafx.h&quot;
+using namespace std;b
+struct node
+{
+    int payload;
+    node* next;
+};
+/*
+int main() {
+    node* head = nullptr;
+    //insert 10 nodes
+    for (int i = 0; i&lt; 10; i++)
+    {
+        //链表头插入
+        node* new_node = new node;
+        new_node-&gt;payload = i * 10;
+        new_node-&gt;next = head;
+        head = new_node;
+    }
+    //output each node in the linked-list
+    node* iterator = head;
+    while (iterator) {
+        cout &lt;&lt; iterator-&gt;payload &lt;&lt; endl;
+        iterator = iterator-&gt;next;
+    }
+    system(&quot;pause&quot;);
+    return 0;
+}
+*/
+</code></pre><h4 id="斐波那契数列的递归"><a href="#斐波那契数列的递归" class="headerlink" title="斐波那契数列的递归"></a><a name="linksaaa">斐波那契数列的递归</a></h4><pre><code>#include &quot;stdafx.h&quot;
+int fib(int n) {
+    if (n &lt; 2)
+        return n;
+    else
+        return fib(n - 1) + fib(n - 2);
+}
+/*
+int main() {
+    for (int i = 0; i &lt; 10; i++)
+    {
+        std::cout &lt;&lt; fib(i) &lt;&lt; std::endl;
+    }
+    system(&quot;pause&quot;);
+    return 0;
+}*/
+</code></pre><h4 id="Reverse数组"><a href="#Reverse数组" class="headerlink" title="Reverse数组"></a><a name="ReverseArray">Reverse数组</a></h4><pre><code>#include &quot;stdafx.h&quot;
+//using namespace std;
+void reverse(int[],int);
+void output(int[],int);
+/*
+int main()
+{
+    int array[] = { 5,4,10,1,7,9,2 };
+    reverse(array,7);
+    output(array,7);
+    system(&quot;pause&quot;);
+    return 0;
+
+}*/
+void reverse(int array[],int length) {
+    int left = 0;
+    int right = length - 1;
+    while (left &lt; right) {
+        int temp = array[left];
+        array[left] = array[right];
+        array[right] = temp;
+        left++;
+        right--;
+    }
+}
+void output(int array[], int length) {
+    for (int i = 0; i &lt; length; i++) {
+        std::cout &lt;&lt; array[i] &lt;&lt; std::endl;
+    }
+}
+</code></pre><h4 id="Reverse链表"><a href="#Reverse链表" class="headerlink" title="Reverse链表"></a><a name="ReverseLink">Reverse链表</a></h4><pre><code>#include &quot;stdafx.h&quot;
+using namespace std;
+struct node
+{
+    int payload;
+    node* next;
+};
+//递归转置
+node* reverse_recursive(node* head) {
+    if (head == nullptr || head-&gt;next == nullptr)
+        return head;
+    node* second = head-&gt;next;
+    node* new_head = reverse_recursive(second);
+    second-&gt;next = head;
+    head-&gt;next = nullptr;
+    return new_head;
+
+}
+//非递归转置
+node* reverse(node* head) {
+    if (head == nullptr || head-&gt;next == nullptr)
+        return head;
+    node* p = head-&gt;next;
+    node* p_previous = head;
+    head-&gt;next = nullptr;
+    while (p!=nullptr){
+        node* p_next = p-&gt;next;
+        p-&gt;next = p_previous;
+        p_previous = p;
+        p = p_next;
+    }
+    return p_previous;
+}    
+
+int main() {
+node* head = nullptr;
+//insert 10 nodes
+for (int i = 0; i&lt; 10; i++)
+{
+    //链表头插入
+    node* new_node = new node;
+    new_node-&gt;payload = i * 10;
+    new_node-&gt;next = head;
+    head = new_node;
+    }
+    node* iterator = head;
+    while (iterator) {
+        cout &lt;&lt; iterator-&gt;payload &lt;&lt; endl;
+        iterator = iterator-&gt;next;
+    }
+
+    head = reverse_recursive(head);
+
+    //output each node in the linked-list
+    iterator = head;
+    while (iterator) {
+        cout &lt;&lt; iterator-&gt;payload &lt;&lt; endl;
+        iterator = iterator-&gt;next;
+    }
+    ///
+    iterator = reverse(head);
+    while (iterator) {
+        cout &lt;&lt; iterator-&gt;payload &lt;&lt; endl;
+        iterator = iterator-&gt;next;
+    }
+    system(&quot;pause&quot;);
+    return 0;
+}
+</code></pre><h4 id="约瑟夫环问题"><a href="#约瑟夫环问题" class="headerlink" title="约瑟夫环问题"></a><a name="joseph_circle">约瑟夫环问题</a></h4><p><img src="http://i.imgur.com/0wCyKO7.png" alt=""></p>
+<pre><code>#include &quot;stdafx.h&quot;
+#include &lt;iostream&gt;
+ struct node
+ {
+     int payload;
+     node* next;
+     node(int payload){this-&gt;payload=payload;}//构造函数，赋初值
+ };
+
+ class joseph_circle{
+    node* tail;  //从尾处插入
+    node* eliminate_ptr;
+    public:
+        joseph_circle() { tail = NULL; }//nullptr
+        //add a new node to joseph circle
+        void add(int value){
+            if(tail == NULL){//if the joseph circle is empty,modify tail
+                tail = new node(value);
+                tail-&gt;next = tail;
+            }else{//insert new node as the tail of the circle
+                node* new_node = new node(value);
+                new_node-&gt;next = tail-&gt;next;
+                tail-&gt;next =new_node;
+                tail = new_node;
+            }
+        }
+
+        void eliminate(int step){
+            node* p = tail;
+            while(p!=NULL &amp;&amp; p-&gt;next != p){
+                //while more than one element in the circle
+                for(int i=0;i&lt;step-1;i++){
+                    p=p-&gt;next;
+                }
+                node* eliminate_node = p-&gt;next;//eliminate the next one
+                p-&gt;next=p-&gt;next-&gt;next;
+                if(eliminate_node==tail)
+                    tail = p;//update tail
+                std::cout&lt;&lt;&quot;deleting:&quot;&lt;&lt;eliminate_node-&gt;payload &lt;&lt; std::endl;
+                delete eliminate_node;
+                output();
+            }
+        }
+        void output(){
+            node* p =tail;
+            while(p!=NULL){
+                p=p-&gt;next;
+                std::cout&lt;&lt;p-&gt;payload &lt;&lt; &quot; &quot;;
+                if(p == tail)
+                    break;
+            }
+            std::cout &lt;&lt; std::endl;
+        }
+ };
+int main(int argc, char const *argv[])
+ {
+     joseph_circle circle;
+     for (int i = 0; i &lt; 6; ++i)
+     {
+         circle.add(i);
+     }
+     circle.eliminate(3);//eliminate using a step of 3
+     system(&quot;pause&quot;);
+     return 0;
+ }
+</code></pre><h4 id="合并两个排好序的链表"><a href="#合并两个排好序的链表" class="headerlink" title="合并两个排好序的链表"></a><a name="merge_list">合并两个排好序的链表</a></h4><pre><code>//#include &lt;iostream&gt;
+#include &quot;stdafx.h&quot;
+struct node {
+    int payload;
+    node* next;
+    node(int payload) { this-&gt;payload = payload; next = nullptr; };
+};
+
+class linkedlist {
+    node *head, *tail;
+public:
+    //constructor,initialize head and tail to nullptr
+    linkedlist() :head(nullptr), tail(nullptr) {};
+    //push a new node at the end of the list
+    void push_back(int value) {
+        if (empty()) {
+            head = tail = new node(value);
+        }
+        else {
+            tail-&gt;next = new node(value);
+            tail = tail-&gt;next;
+        }
+    }
+    //return the value stored in the first node
+    int front() {
+        if (empty()) {
+            throw &quot;This list is empty.&quot;;
+        }
+        return head-&gt;payload;
+    }
+    //remove the first node
+    void pop_front() {
+        if (empty()) {
+            throw &quot;The list is empty.&quot;;
+        }
+        node* first_node = head;
+        head = head-&gt;next;
+        delete first_node;
+    }
+
+    bool empty() {
+        return head == nullptr;
+    }
+    void output() {
+        node* interator = head;
+        while (interator) {
+            std::cout &lt;&lt; interator-&gt;payload &lt;&lt; &quot; &quot;;
+            interator = interator-&gt;next;
+        }
+        std::cout &lt;&lt; std::endl;
+    }
+};
+
+//merge to sorted linked list,return a new list
+linkedlist merge(linkedlist a, linkedlist b) {
+    linkedlist result;
+    while (!a.empty() || !b.empty()) {
+        if (a.empty()) {
+            result.push_back(b.front());
+            b.pop_front();
+        }
+        else if (b.empty()) {
+            result.push_back(a.front());
+            a.pop_front();
+        }
+        else if (a.front() &gt; b.front()) {
+            result.push_back(b.front());
+            b.pop_front();
+        }
+        else {
+            result.push_back(a.front());
+            a.pop_front();
+        }
+    }
+    return result;
+}
+int main() {
+    linkedlist a, b;
+    a.push_back(4); a.push_back(7); a.push_back(20);
+    b.push_back(2); b.push_back(3); b.push_back(9); b.push_back(29);
+    a.output();
+    b.output();
+    linkedlist result = merge(a, b);
+    result.output();
+    system(&quot;pause&quot;);
+    return 0;
+}
+</code></pre><p><img src="http://i.imgur.com/CcyX0Hb.png" alt=""></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/算法与数据结构/" rel="tag"># 算法与数据结构</a>
+          
+            <a href="/tags/C/" rel="tag"># C++</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/03/TensorFlow/非线性回归/" rel="next" title="TensorFlow 传统神经网络之非线性回归(激励函数，拟合，二次代价函数，对数释然函数，交叉熵)">
+                <i class="fa fa-chevron-left"></i> TensorFlow 传统神经网络之非线性回归(激励函数，拟合，二次代价函数，对数释然函数，交叉熵)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/03/算法/数组相关算法/" rel="prev" title="数组相关算法（局部极小值、第一个缺失的正整数、元素最大间距离(分桶)、只出现1次的数、众数问题、前缀和的应用）">
+                数组相关算法（局部极小值、第一个缺失的正整数、元素最大间距离(分桶)、只出现1次的数、众数问题、前缀和的应用） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="刘铸澎" />
+          <p class="site-author-name" itemprop="name">刘铸澎</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">46</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">45</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://git.oschina.net/dashboard/projects" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#stdafx-h"><span class="nav-number">1.</span> <span class="nav-text">stdafx.h</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数组"><span class="nav-number">2.</span> <span class="nav-text">数组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#链表"><span class="nav-number">3.</span> <span class="nav-text">链表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#斐波那契数列的递归"><span class="nav-number">4.</span> <span class="nav-text">斐波那契数列的递归</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Reverse数组"><span class="nav-number">5.</span> <span class="nav-text">Reverse数组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Reverse链表"><span class="nav-number">6.</span> <span class="nav-text">Reverse链表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#约瑟夫环问题"><span class="nav-number">7.</span> <span class="nav-text">约瑟夫环问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#合并两个排好序的链表"><span class="nav-number">8.</span> <span class="nav-text">合并两个排好序的链表</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">刘铸澎</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+<div>
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.1"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("6OMtX0qKxdIdOnV5KE5rgWX1-gzGzoHsz", "ODT08Qg3pX4wC18rqsaLQb35");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
