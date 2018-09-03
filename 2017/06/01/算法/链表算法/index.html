@@ -1,0 +1,1011 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="true" />
+
+
+
+
+
+
+
+	<meta name="baidu-site-verification" content="ADEVsVvcYE" />
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="算法与数据结构,C++,链表," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="liuzhupeng的博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="链表相加 给定两个链表，分别表示两个非负整数。它 们的数字逆序存储在链表中，且每个结点只 存储一个数字，计算两个数的和，并且返回 和的链表头指针 如：输入：2→4→3、5→6→4，输出：7→0→8   问题分析  输入：2-&amp;gt;4-&amp;gt;3、5-&amp;gt;6-&amp;gt;4，输出：7-&amp;gt;0-&amp;gt;8  因为两个数都是逆序存储，正好可以从头向 后依次相加，完成“两个数的竖式计算”。    1">
+<meta name="keywords" content="算法与数据结构,C++,链表">
+<meta property="og:type" content="article">
+<meta property="og:title" content="链表相关算法（链表相加, 链表的部分翻转,链表划分链表划分,排序链表中去重）">
+<meta property="og:url" content="http://yoursite.com/2017/06/01/算法/链表算法/index.html">
+<meta property="og:site_name" content="liuzhupeng的博客">
+<meta property="og:description" content="链表相加 给定两个链表，分别表示两个非负整数。它 们的数字逆序存储在链表中，且每个结点只 存储一个数字，计算两个数的和，并且返回 和的链表头指针 如：输入：2→4→3、5→6→4，输出：7→0→8   问题分析  输入：2-&amp;gt;4-&amp;gt;3、5-&amp;gt;6-&amp;gt;4，输出：7-&amp;gt;0-&amp;gt;8  因为两个数都是逆序存储，正好可以从头向 后依次相加，完成“两个数的竖式计算”。    1">
+<meta property="og:image" content="http://i.imgur.com/blSeH2B.png">
+<meta property="og:updated_time" content="2017-06-02T06:55:16.084Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="链表相关算法（链表相加, 链表的部分翻转,链表划分链表划分,排序链表中去重）">
+<meta name="twitter:description" content="链表相加 给定两个链表，分别表示两个非负整数。它 们的数字逆序存储在链表中，且每个结点只 存储一个数字，计算两个数的和，并且返回 和的链表头指针 如：输入：2→4→3、5→6→4，输出：7→0→8   问题分析  输入：2-&amp;gt;4-&amp;gt;3、5-&amp;gt;6-&amp;gt;4，输出：7-&amp;gt;0-&amp;gt;8  因为两个数都是逆序存储，正好可以从头向 后依次相加，完成“两个数的竖式计算”。    1">
+<meta name="twitter:image" content="http://i.imgur.com/blSeH2B.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'XO07FKRYQU',
+      apiKey: '42f277b78659c936fba4af368318e5b9',
+      indexName: 'lzpnote',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"搜索...","hits_empty":"未发现与 「${query}」相关的内容","hits_stats":"${hits} 条相关条目，使用了 ${time} 毫秒"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/06/01/算法/链表算法/"/>
+
+
+
+
+
+  <title>链表相关算法（链表相加, 链表的部分翻转,链表划分链表划分,排序链表中去重） | liuzhupeng的博客</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">liuzhupeng的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  <!-- 
+ -->
+ 
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+                <a href="javascript:;" class="popup-trigger">
+			<!-- 增加结束 -->
+              
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/01/算法/链表算法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘铸澎">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="liuzhupeng的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">链表相关算法（链表相加, 链表的部分翻转,链表划分链表划分,排序链表中去重）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-01T14:55:26+08:00">
+                2017-06-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/算法与数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">算法与数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/06/01/算法/链表算法/" class="leancloud_visitors" data-flag-title="链表相关算法（链表相加, 链表的部分翻转,链表划分链表划分,排序链表中去重）">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="链表相加"><a href="#链表相加" class="headerlink" title="链表相加"></a>链表相加</h4><ul>
+<li>给定两个链表，分别表示两个非负整数。它 们的数字逆序存储在链表中，且每个结点只 存储一个数字，计算两个数的和，并且返回 和的链表头指针<ul>
+<li>如：输入：2→4→3、5→6→4，输出：7→0→8</li>
+</ul>
+</li>
+<li>问题分析 <ul>
+<li>输入：2-&gt;4-&gt;3、5-&gt;6-&gt;4，输出：7-&gt;0-&gt;8 </li>
+<li>因为两个数都是逆序存储，正好可以从头向 后依次相加，完成“两个数的竖式计算”。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">tagSNode</span>&#123;</span></div><div class="line">	<span class="keyword">int</span> value;</div><div class="line">	tagSnode *pNext;</div><div class="line"></div><div class="line">	tagSNode(<span class="keyword">int</span> v):value(v),pNext(<span class="literal">NULL</span>)&#123;&#125;</div><div class="line">&#125;SNode;</div><div class="line"></div><div class="line"><span class="keyword">int</span> _tmain(<span class="keyword">int</span> argc,_TCHAR* argv[])&#123;</div><div class="line">	SNode *pHead1 = <span class="keyword">new</span> SNode(<span class="number">0</span>);</div><div class="line">	<span class="keyword">int</span> i;</div><div class="line">	<span class="keyword">for</span>(i = <span class="number">0</span>;i&lt;<span class="number">6</span>;i++)&#123;</div><div class="line">		SNode* p = <span class="keyword">new</span> SNode(rand()%<span class="number">10</span>)</div><div class="line">		p-&gt;pNext = pHead1-&gt;pNext;</div><div class="line">		pHead1-&gt;pNext = p;</div><div class="line">	&#125;</div><div class="line">	SNode *pHead2 = <span class="keyword">new</span> SNode(<span class="number">0</span>);</div><div class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">9</span>;i++)&#123;</div><div class="line">		SNode *p = <span class="keyword">new</span> SNode(rand() % <span class="number">10</span>);</div><div class="line">		p-&gt;pNext = pHead2-&gt;pNext;</div><div class="line">		pHead2-&gt;pNext = p;</div><div class="line">	&#125;</div><div class="line">	Print(pHead1);</div><div class="line">	Print(pHead2);</div><div class="line">	SNode *pSum = Add(pHead1,pHead2);</div><div class="line">	Print(pSum);</div><div class="line">	Destory(pHead1);</div><div class="line">	Destory(pHead2);</div><div class="line">	Destory(pSum);</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"><span class="function">SNode* <span class="title">Add</span><span class="params">(SNode* pHead1,SNode* pHead2)</span></span>&#123;</div><div class="line"></div><div class="line">	SNode * pSum = <span class="keyword">new</span> SNode(<span class="number">0</span>);</div><div class="line">	SNode *pTail = pSum;<span class="comment">//新节点插入到pTail的后面</span></div><div class="line">	SNode *p1 = pHead1-&gt;pNext;</div><div class="line">	SNode *p2 = pHead2-&gt;pNext;</div><div class="line">	SNode *pCur;</div><div class="line">	<span class="keyword">int</span> carry = <span class="number">0</span>;<span class="comment">//进位</span></div><div class="line">	<span class="keyword">int</span> value;</div><div class="line">	<span class="keyword">while</span>(p1 &amp;&amp; p2)&#123;</div><div class="line">		value = p1-&gt;value + p2.-&gt;value+carry;</div><div class="line">		carry = value/<span class="number">10</span>;</div><div class="line">		value %= <span class="number">10</span>;</div><div class="line">		pCur = SNode(value);</div><div class="line">		pTail-&gt;pNext = pCur;<span class="comment">//新节点链接到pTail后面</span></div><div class="line">		pTail = pCur;</div><div class="line">		p1 = p1-&gt;pNext;</div><div class="line">		p2 = p2-&gt;pNext; </div><div class="line">	&#125;</div><div class="line">	<span class="comment">//处理较长的链</span></div><div class="line">	SNode *p = p1 ? p1 : p2;</div><div class="line">	<span class="keyword">while</span>(p)&#123;</div><div class="line">		value = p-&gt;value+carry;</div><div class="line">		carry = value/<span class="number">10</span>;</div><div class="line">		value %= <span class="number">10</span>;</div><div class="line">		pCur = <span class="keyword">new</span> SNode(value);</div><div class="line">		pTail-&gt;pNext = pCur;<span class="comment">//新节点链接到pTail的后面</span></div><div class="line">		pTail = pCur;</div><div class="line">		p1 = p1-&gt;pNext;</div><div class="line">	&#125;</div><div class="line">	<span class="comment">//处理可能存在的进位</span></div><div class="line">	<span class="keyword">if</span>(carry != <span class="number">0</span>)</div><div class="line">		pTail-&gt;pNext = <span class="keyword">new</span> SNode(carry);</div><div class="line">	<span class="keyword">return</span> pSum;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="链表的部分翻转"><a href="#链表的部分翻转" class="headerlink" title="链表的部分翻转"></a>链表的部分翻转</h4><ul>
+<li>给定一个链表，翻转该链表从m到n的位置。 要求直接翻转而非申请新空间。 <ul>
+<li>如：给定1→2→3→4→5，m=2，n=4，返回 1→4→3→2→5。 </li>
+<li>假定给出的参数满足：1≤m≤n≤链表长度</li>
+</ul>
+</li>
+<li>分析 <ul>
+<li>空转m-1次，找到第m-1个结点，即开始翻转的第一个结点的前驱，记做head； </li>
+<li>以head为起始结点遍历n-m次，将第i次时， 将找到的结点插入到head的next中即可。<ul>
+<li>即头插法</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">tagSNode</span>&#123;</span></div><div class="line">	<span class="keyword">int</span> value;</div><div class="line">	tagSnode *pNext;</div><div class="line"></div><div class="line">	tagSNode(<span class="keyword">int</span> v):value(v),pNext(<span class="literal">NULL</span>)&#123;&#125;</div><div class="line">&#125;SNode;</div><div class="line"></div><div class="line"><span class="keyword">int</span> _tmain(<span class="keyword">int</span> argc,_TCHAR* argv[])&#123;</div><div class="line">	SNode* pHead = <span class="keyword">new</span> SNode(<span class="number">0</span>);</div><div class="line">	<span class="keyword">int</span> i;</div><div class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">10</span>; ++i)</div><div class="line">	&#123;</div><div class="line">		SNode *p = <span class="keyword">new</span> SNode(rand() % <span class="number">100</span>);</div><div class="line">		p-&gt;pNext = pHead-&gt;pNext;</div><div class="line">		pHead-&gt;pNext = p;</div><div class="line">	&#125;</div><div class="line">	Print(pHead);</div><div class="line">	Reverse(pHead,<span class="number">4</span>,<span class="number">8</span>);</div><div class="line">	Print(pHead);</div><div class="line">	Destory(pHead);</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">Destory</span><span class="params">(SNode* p)</span></span>&#123;</div><div class="line">	SNode *next;</div><div class="line">	<span class="keyword">while</span>(p)&#123;</div><div class="line">		next = p-&gt;next;</div><div class="line">		<span class="keyword">delete</span> p;</div><div class="line">		p = next;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">Reverse</span><span class="params">(SNode* pHead,<span class="keyword">int</span> from,<span class="keyword">int</span> to)</span></span>&#123;</div><div class="line">	SNode *pCur = pHead-&gt;pNext;</div><div class="line">	<span class="keyword">int</span> i;</div><div class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; from<span class="number">-1</span>; ++i)</div><div class="line">	&#123;</div><div class="line">		pHead = pCur;</div><div class="line">		pCur = pCur-&gt;next;</div><div class="line">	&#125;</div><div class="line">	SNode *pPre = pCur;</div><div class="line">	pCur = pCur-&gt;pNext;</div><div class="line">	to--;</div><div class="line"></div><div class="line">	SNode* pNext;</div><div class="line">	<span class="keyword">for</span> (; i &lt; to; i++)<span class="comment">//to-from</span></div><div class="line">	&#123;</div><div class="line">		pNext = pCur-&gt;pNext;</div><div class="line">		pCur-&gt;pNext = pHead-&gt;pNext;</div><div class="line">		pHead-&gt;pNext = pCur;</div><div class="line">		pPre-&gt;pNext = pNext;</div><div class="line">		pCur = pNext;</div><div class="line"></div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>代码执行示意图</li>
+</ul>
+<p><img src="http://i.imgur.com/blSeH2B.png" alt=""></p>
+<h4 id="链表划分"><a href="#链表划分" class="headerlink" title="链表划分"></a>链表划分</h4><ul>
+<li><p>给定一个链表和一个值x，将链表划分成两 部分，使得划分后小于x的结点在前，大于 等于x的结点在后。在这两部分中要保持原 链表中的出现顺序。  </p>
+<ul>
+<li>如：给定链表1→4→3→2→5→2和x = 3，返回 1→2→2→4→3→5</li>
+</ul>
+</li>
+<li><p>问题分析 </p>
+<ul>
+<li>分别申请两个指针p1和p2，小于x的添加到 p1中，大于等于x的添加到p2中；最后，将 p2链接到p1的末端即可。</li>
+<li>时间复杂度是O(N)，空间复杂度为O(1)；该 问题其实说明：快速排序对于单链表存储结 构仍然适用。 <ul>
+<li>注：不是所有排序都方便使用链表存储，如堆 排序，将不断的查找数组的n/2和n的位置，用链 表做存储结构会不太方便。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line">ypedef <span class="class"><span class="keyword">struct</span> <span class="title">tagSNode</span>&#123;</span></div><div class="line">	<span class="keyword">int</span> value;</div><div class="line">	tagSnode *pNext;</div><div class="line"></div><div class="line">	tagSNode(<span class="keyword">int</span> v):value(v),pNext(<span class="literal">NULL</span>)&#123;&#125;</div><div class="line">&#125;SNode;</div><div class="line"></div><div class="line"><span class="keyword">int</span> _tmain(<span class="keyword">int</span> argc,_TCHAR* argv[])&#123;</div><div class="line">	SNode* pHead = <span class="keyword">new</span> SNode(<span class="number">0</span>);</div><div class="line">	pHead-&gt;pNext = <span class="literal">NULL</span>;<span class="comment">//这一步冗余</span></div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; ++i)</div><div class="line">	&#123;</div><div class="line">		SNode *p = <span class="keyword">new</span> SNode(rand() % <span class="number">100</span>);</div><div class="line">		p-&gt;pNext = pHead-&gt;pNext;</div><div class="line">		pHead-&gt;pNext = p;</div><div class="line">	&#125;</div><div class="line">	Print(pHead);</div><div class="line">	Partition(pHead,<span class="number">50</span>);</div><div class="line">	Print(pHead);</div><div class="line">	Destory(pHead);</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">Destory</span><span class="params">(SNode* p)</span></span>&#123;</div><div class="line">	SNode *next;</div><div class="line">	<span class="keyword">while</span>(p)&#123;</div><div class="line">		next = p-&gt;next;</div><div class="line">		<span class="keyword">delete</span> p;</div><div class="line">		p = next;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">Partition</span><span class="params">(SNode* pHead,<span class="keyword">int</span> pivotKey)</span></span>&#123;</div><div class="line">	<span class="comment">//两个链表的头指针</span></div><div class="line">	SNode* pLeftHead = <span class="keyword">new</span> SNode(<span class="number">0</span>);</div><div class="line">	SNode* pRightHead = <span class="keyword">new</span> SNode(<span class="number">0</span>);</div><div class="line"></div><div class="line">	<span class="comment">//两个链表的当前最后一个元素</span></div><div class="line">	SNode* left = pLeftHead;</div><div class="line">	SNode* right = pRightHead;</div><div class="line">	SNode* p = pHead-&gt;pNext;</div><div class="line">	<span class="keyword">while</span>(p)&#123;<span class="comment">//遍历原链表</span></div><div class="line">		<span class="keyword">if</span>(p-&gt;value &lt; pivotKey)&#123;</div><div class="line">			left-&gt;pNext = p;</div><div class="line">			left = p;</div><div class="line">		&#125;<span class="keyword">else</span>&#123;</div><div class="line">			right-&gt;pNext = p;</div><div class="line">			right = p;</div><div class="line">		&#125;</div><div class="line">		p = p-&gt;pNext;</div><div class="line">	&#125;</div><div class="line">	<span class="comment">//将right链接到left尾部</span></div><div class="line">	left-&gt;pNext = pLeftHead-&gt;pNext;</div><div class="line"></div><div class="line">	<span class="keyword">delete</span> pLeftHead;</div><div class="line">	<span class="keyword">delete</span> pRightHead;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="排序链表中去重"><a href="#排序链表中去重" class="headerlink" title="排序链表中去重"></a>排序链表中去重</h4><ul>
+<li>给定排序的链表，删除重复元素，只保留重 复元素第一次出现的结点。 </li>
+<li>如： <ul>
+<li>给定：2→3→3→5→7→8→8→8→9→9→10 </li>
+<li>返回：2→3→5→7→8→9→10</li>
+</ul>
+</li>
+<li>问题分析 <ul>
+<li>若p-&gt;next的值和p的值相等，则将p-&gt;next&gt;next赋值给p，删除p-&gt;next；重复上述过 程，直至链表尾端。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">tagSNode</span>&#123;</span></div><div class="line">	<span class="keyword">int</span> value;</div><div class="line">	tagSnode *pNext;</div><div class="line"></div><div class="line">	tagSNode(<span class="keyword">int</span> v):value(v),pNext(<span class="literal">NULL</span>)&#123;&#125;</div><div class="line">&#125;SNode;</div><div class="line"></div><div class="line"><span class="keyword">int</span> _tmain(<span class="keyword">int</span> argc,_TCHAR* argv[])&#123;</div><div class="line">	SNode* pHead = <span class="keyword">new</span> SNode(<span class="number">0</span>);</div><div class="line">	<span class="keyword">int</span> data[] = [<span class="number">2</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">8</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">20</span>,<span class="number">20</span>];</div><div class="line">	<span class="keyword">int</span> size = <span class="keyword">sizeof</span>(data)/<span class="keyword">sizeof</span>(<span class="keyword">int</span>);</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = size <span class="number">-1</span>; i &gt;=<span class="number">0</span>; i--)</div><div class="line">	&#123;</div><div class="line">		SNode* p = <span class="keyword">new</span> SNode(data[i]);</div><div class="line">		p-&gt;pNext = pHead-&gt;pNext;</div><div class="line">		pHead-&gt;pNext = p;</div><div class="line">	&#125;</div><div class="line">	Print(pHead);</div><div class="line">	DeleteDuplicateNode(pHead);</div><div class="line">	Print(pHead);</div><div class="line">	Destroy(pHead);</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"><span class="comment">//方法一 2,3,3 pPre=3 pNext = 3</span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">DeleteDuplicateNode</span><span class="params">(SNode* pHead)</span></span>&#123;</div><div class="line">	SNode* pPre = pHead-&gt;pNext;</div><div class="line">	SNode* pCur;</div><div class="line">	<span class="keyword">while</span>(pPre)&#123;</div><div class="line">		pCur = pPre-&gt;pNext;</div><div class="line">		<span class="keyword">if</span>(pCur &amp;&amp;(pCur-&gt;value == pPre-&gt;value))&#123;</div><div class="line">			pPre-&gt;pNext = pCur-&gt;pNext;</div><div class="line">			<span class="keyword">delete</span> pCur;</div><div class="line">		&#125;<span class="keyword">else</span>&#123;</div><div class="line">			pPre = pCur;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"><span class="comment">//方法二 2,3,3 pPre=2 pCur = 3 pNext = 3</span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">DeleteDuplicateNode2</span><span class="params">(SNode *pHead)</span></span>&#123;</div><div class="line">	SNode* pPre = pHead;</div><div class="line">	SNode* pCur = pPre-&gt;pNext;</div><div class="line">	SNode* pNext;</div><div class="line">	<span class="keyword">while</span>(pCur)&#123;</div><div class="line">		pNext = pCur-&gt;pNext;</div><div class="line">		<span class="keyword">while</span>(pNext &amp;&amp; (pCur-&gt;value == pNext-&gt;value))&#123;</div><div class="line">			pPre-&gt;pNext = pNext;</div><div class="line">			<span class="keyword">delete</span> pCur;</div><div class="line">			pCur = pNext;</div><div class="line">			pNext = pCur-&gt;pNext;</div><div class="line">		&#125;</div><div class="line">		pPre = pCur;</div><div class="line">		pCur = pNext;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="排序链表中去重2"><a href="#排序链表中去重2" class="headerlink" title="排序链表中去重2"></a>排序链表中去重2</h4><ul>
+<li>若题目变成：若发现重复元素，则重复元素 全部删除，代码应该怎么实现呢？ </li>
+<li>如： <ul>
+<li>给定：2→3→3→5→7→8→8→8→9→9→10 <ul>
+<li>返回：2→5→7→10</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">DeleteDuplicateNode3</span><span class="params">(SNode *pHead)</span></span>&#123;</div><div class="line">	SNode* pPre = pHead;</div><div class="line">	SNode* pCur = pPre-&gt;pNext;</div><div class="line">	SNode* pNext;</div><div class="line">	<span class="keyword">bool</span> bDup;</div><div class="line">	<span class="keyword">while</span>(pCur)&#123;</div><div class="line">		pNext = pCur-&gt;pNext;</div><div class="line">		bDup = <span class="literal">false</span>;</div><div class="line">		<span class="keyword">while</span>(pNext &amp;&amp; (pCur-&gt;value == pNext-&gt;value))&#123;</div><div class="line">			pPre-&gt;pNext = pNext;</div><div class="line">			<span class="keyword">delete</span> pCur;</div><div class="line">			pCur = pNext;</div><div class="line">			pNext = pCur-&gt;pNext;</div><div class="line">			bDup = <span class="literal">true</span>;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span>(bDup)&#123;<span class="comment">//此刻的pCur与元数据重复，删之</span></div><div class="line">				pPre-&gt;pNext = pNext;</div><div class="line">				<span class="keyword">delete</span> pCur;</div><div class="line">		&#125;<span class="keyword">else</span>&#123;<span class="comment">//pCur未发现重发，则pPre后移</span></div><div class="line">			pPre = pCur;</div><div class="line">		&#125;</div><div class="line">		pCur = pNext;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/算法与数据结构/" rel="tag"># 算法与数据结构</a>
+          
+            <a href="/tags/C/" rel="tag"># C++</a>
+          
+            <a href="/tags/链表/" rel="tag"># 链表</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/01/go/并发Concurrency/" rel="next" title="go之并发concurrency">
+                <i class="fa fa-chevron-left"></i> go之并发concurrency
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/01/算法/栈算法/" rel="prev" title="栈相关算法（括号匹配 ）">
+                栈相关算法（括号匹配 ） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="刘铸澎" />
+          <p class="site-author-name" itemprop="name">刘铸澎</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">44</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://git.oschina.net/dashboard/projects" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#链表相加"><span class="nav-number">1.</span> <span class="nav-text">链表相加</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#链表的部分翻转"><span class="nav-number">2.</span> <span class="nav-text">链表的部分翻转</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#链表划分"><span class="nav-number">3.</span> <span class="nav-text">链表划分</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#排序链表中去重"><span class="nav-number">4.</span> <span class="nav-text">排序链表中去重</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#排序链表中去重2"><span class="nav-number">5.</span> <span class="nav-text">排序链表中去重2</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">刘铸澎</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+<div>
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.1"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("6OMtX0qKxdIdOnV5KE5rgWX1-gzGzoHsz", "ODT08Qg3pX4wC18rqsaLQb35");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

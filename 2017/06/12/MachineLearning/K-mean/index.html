@@ -1,0 +1,1022 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="true" />
+
+
+
+
+
+
+
+	<meta name="baidu-site-verification" content="ADEVsVvcYE" />
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="python,K-means," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="liuzhupeng的博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="机器学习概念基本概念训练集，测试集，特征值，监督学习，非监督学习，半监督学习，分类，回归   训练集(training set/data)/训练样例（training examples): 用来进行训练，也就是产生模型或者算法的数据集 测试集(testing set/data)/测试样例 (testing examples)：用来专门进行测试已经学习好的模型或者算法的数据集 特征向量(featur">
+<meta name="keywords" content="python,K-means">
+<meta property="og:type" content="article">
+<meta property="og:title" content="聚类(Clustering) K-means算法">
+<meta property="og:url" content="http://yoursite.com/2017/06/12/MachineLearning/K-mean/index.html">
+<meta property="og:site_name" content="liuzhupeng的博客">
+<meta property="og:description" content="机器学习概念基本概念训练集，测试集，特征值，监督学习，非监督学习，半监督学习，分类，回归   训练集(training set/data)/训练样例（training examples): 用来进行训练，也就是产生模型或者算法的数据集 测试集(testing set/data)/测试样例 (testing examples)：用来专门进行测试已经学习好的模型或者算法的数据集 特征向量(featur">
+<meta property="og:image" content="http://i.imgur.com/LwD2Qme.jpg">
+<meta property="og:image" content="http://i.imgur.com/LwD2Qme.jpg">
+<meta property="og:image" content="http://i.imgur.com/Zbyc6xz.png">
+<meta property="og:image" content="http://i.imgur.com/U99WRB0.png">
+<meta property="og:image" content="http://i.imgur.com/jW7KcIe.png">
+<meta property="og:image" content="http://i.imgur.com/XxoLja2.png">
+<meta property="og:image" content="http://i.imgur.com/9JiXVGn.png">
+<meta property="og:image" content="http://i.imgur.com/abqDoUF.png">
+<meta property="og:image" content="http://i.imgur.com/fy6liSi.png">
+<meta property="og:image" content="http://i.imgur.com/NqjNoLS.png">
+<meta property="og:image" content="http://i.imgur.com/HPwErlT.png">
+<meta property="og:image" content="http://i.imgur.com/vheO1RU.png">
+<meta property="og:image" content="http://i.imgur.com/KutWEkT.png">
+<meta property="og:image" content="http://i.imgur.com/y5DaTcq.png">
+<meta property="og:image" content="http://i.imgur.com/aFUm9fi.png">
+<meta property="og:image" content="http://i.imgur.com/JsjIMBO.png">
+<meta property="og:updated_time" content="2017-06-12T10:32:58.638Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="聚类(Clustering) K-means算法">
+<meta name="twitter:description" content="机器学习概念基本概念训练集，测试集，特征值，监督学习，非监督学习，半监督学习，分类，回归   训练集(training set/data)/训练样例（training examples): 用来进行训练，也就是产生模型或者算法的数据集 测试集(testing set/data)/测试样例 (testing examples)：用来专门进行测试已经学习好的模型或者算法的数据集 特征向量(featur">
+<meta name="twitter:image" content="http://i.imgur.com/LwD2Qme.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'XO07FKRYQU',
+      apiKey: '42f277b78659c936fba4af368318e5b9',
+      indexName: 'lzpnote',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"搜索...","hits_empty":"未发现与 「${query}」相关的内容","hits_stats":"${hits} 条相关条目，使用了 ${time} 毫秒"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/06/12/MachineLearning/K-mean/"/>
+
+
+
+
+
+  <title>聚类(Clustering) K-means算法 | liuzhupeng的博客</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">liuzhupeng的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  <!-- 
+ -->
+ 
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+                <a href="javascript:;" class="popup-trigger">
+			<!-- 增加结束 -->
+              
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/12/MachineLearning/K-mean/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘铸澎">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="liuzhupeng的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">聚类(Clustering) K-means算法</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-12T15:59:19+08:00">
+                2017-06-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/06/12/MachineLearning/K-mean/" class="leancloud_visitors" data-flag-title="聚类(Clustering) K-means算法">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="机器学习概念"><a href="#机器学习概念" class="headerlink" title="机器学习概念"></a>机器学习概念</h3><h4 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h4><p>训练集，测试集，特征值，监督学习，非监督学习，半监督学习，分类，回归 </p>
+<ul>
+<li>训练集(training set/data)/训练样例（training examples): 用来进行训练，也就是产生模型或者算法的数据集</li>
+<li>测试集(testing set/data)/测试样例 (testing examples)：用来专门进行测试已经学习好的模型或者算法的数据集</li>
+<li>特征向量(features/feature vector)：属性的集合，通常用一个向量来表示，附属于一个实例</li>
+<li>标记(label): c(x), 实例类别的标记</li>
+<li>正例(positive example)</li>
+<li>反例(negative example)</li>
+<li>分类 (classification): 目标标记为类别型数据(category) </li>
+<li>回归(regression): 目标标记为连续性数值 (continuous numeric value)</li>
+<li>有监督学习(supervised learning)： 训练集有类别标记(class label)</li>
+<li>无监督学习(unsupervised learning)： 无类别标记(class label)</li>
+<li>半监督学习（semi-supervised learning)：有类别标记的训练集 + 无标记的训练集</li>
+</ul>
+<h4 id="机器学习步骤框架"><a href="#机器学习步骤框架" class="headerlink" title="机器学习步骤框架"></a>机器学习步骤框架</h4><ul>
+<li>把数据拆分为训练集和测试集</li>
+<li>用训练集和训练集的特征向量来训练算法</li>
+<li>用学习来的算法运用在测试集上来评估算法 （可能要设计到调整参数（parameter tuning), 用验证集（validation set）</li>
+</ul>
+<h4 id="监督学习"><a href="#监督学习" class="headerlink" title="监督学习"></a>监督学习</h4><ul>
+<li>分类<ul>
+<li>决策树</li>
+<li>临近取样</li>
+<li>支持向量机</li>
+<li>神经网络算法</li>
+</ul>
+</li>
+<li>回归<ul>
+<li>线性回归</li>
+<li>非线性回归<h4 id="非监督学习"><a href="#非监督学习" class="headerlink" title="非监督学习"></a>非监督学习</h4></li>
+</ul>
+</li>
+<li>用K-mean算法聚类</li>
+<li>用hierarchical clustering算法聚类</li>
+</ul>
+<h3 id="K-means算法"><a href="#K-means算法" class="headerlink" title="K-means算法"></a>K-means算法</h3><h4 id="归类："><a href="#归类：" class="headerlink" title="归类："></a>归类：</h4><ul>
+<li>聚类(clustering) 属于非监督学习 (unsupervised learning) 无类别标记(class label)<h4 id="举例："><a href="#举例：" class="headerlink" title="举例："></a>举例：</h4><img src="http://i.imgur.com/LwD2Qme.jpg" alt=""></li>
+</ul>
+<h4 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h4><ul>
+<li>Clustering 中的经典算法，数据挖掘十大经典算法之一</li>
+<li>算法接受参数 k ；然后将事先输入的n个数据对象划分为 k个聚类以便使得所获得的聚类满足：同一聚类中的对象相似度较高；而不同聚类中的对象相似度较小。</li>
+<li>算法思想：<ul>
+<li>以空间中k个点为中心进行聚类，对最靠近他们的对象归类。通过迭代的方法，逐次更新各聚类中心的值，直至得到最好的聚类结果</li>
+</ul>
+</li>
+<li>算法描述：<ul>
+<li>适当选择c个类的初始中心；</li>
+<li>在第k次迭代中，对任意一个样本，求其到c各中心的距离，将该样本归到距离最短的中心所在的类；</li>
+<li>利用均值等方法更新该类的中心值；</li>
+<li>对于所有的c个聚类中心，如果利用（2）（3）的迭代法更新后，值保持不变，则迭代结束，否则继续迭代。</li>
+</ul>
+</li>
+<li><p>算法流程：</p>
+<p><img src="http://i.imgur.com/LwD2Qme.jpg" alt=""></p>
+<ul>
+<li>输入：k, data[n];<ul>
+<li>选择k个初始中心点，例如c[0]=data[0],…c[k-1]=data[k-1];</li>
+<li>对于data[0]….data[n], 分别与c[0]…c[k-1]比较，假定与c[i]差值最少，就标记为i;</li>
+<li>对于所有标记为i点，重新计算c[i]={ 所有标记为i的data[j]之和}/标记为i的个数；</li>
+<li>重复(2)(3),直到所有c[i]值的变化小于给定阈值。<h4 id="举例：-1"><a href="#举例：-1" class="headerlink" title="举例："></a>举例：</h4><img src="http://i.imgur.com/Zbyc6xz.png" alt=""><br><img src="http://i.imgur.com/U99WRB0.png" alt=""><br><img src="http://i.imgur.com/jW7KcIe.png" alt=""><br><img src="http://i.imgur.com/XxoLja2.png" alt=""><br><img src="http://i.imgur.com/9JiXVGn.png" alt=""><br><img src="http://i.imgur.com/abqDoUF.png" alt=""><br><img src="http://i.imgur.com/fy6liSi.png" alt=""><br><img src="http://i.imgur.com/NqjNoLS.png" alt=""><br><img src="http://i.imgur.com/HPwErlT.png" alt=""><br><img src="http://i.imgur.com/vheO1RU.png" alt=""><br><img src="http://i.imgur.com/KutWEkT.png" alt=""><br><img src="http://i.imgur.com/y5DaTcq.png" alt=""><br><img src="http://i.imgur.com/aFUm9fi.png" alt=""></li>
+</ul>
+</li>
+</ul>
+<p>停止<br><img src="http://i.imgur.com/JsjIMBO.png" alt=""></p>
+</li>
+<li>优点：速度快，简单</li>
+<li>缺点：最终结果跟初始点选择相关，容易陷入局部最优，需直到k值</li>
+</ul>
+<p><a href="http://croce.ggf.br/dados/K%20mean%20Clustering1.pdf" target="_blank" rel="external">Reference</a></p>
+<h5 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># coding: utf-8</span></div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"></div><div class="line"><span class="comment"># Function: K Means</span></div><div class="line"><span class="comment"># -------------</span></div><div class="line"><span class="comment"># K-Means is an algorithm that takes in a dataset and a constant</span></div><div class="line"><span class="comment"># k and returns k centroids (which define clusters of data in the</span></div><div class="line"><span class="comment"># dataset which are similar to one another).</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">kmeans</span><span class="params">(X, k, maxIt)</span>:</span></div><div class="line">    numPoints, numDim = X.shape <span class="comment"># 行 列 (4, 2)</span></div><div class="line"></div><div class="line">    dataSet = np.zeros((numPoints, numDim + <span class="number">1</span>))<span class="comment"># 行 列 (4, 3)</span></div><div class="line">    dataSet[:, :<span class="number">-1</span>] = X</div><div class="line"></div><div class="line">    <span class="comment"># Initialize centroids randomly</span></div><div class="line">    centroids = dataSet[np.random.randint(numPoints, size = k), :]<span class="comment">#numPoints行中生成k个</span></div><div class="line">    centroids = dataSet[<span class="number">0</span>:<span class="number">2</span>, :]<span class="comment">#前两个</span></div><div class="line">    <span class="comment">#Randomly assign labels to initial centorid</span></div><div class="line">    centroids[:, <span class="number">-1</span>] = range(<span class="number">1</span>, k +<span class="number">1</span>)</div><div class="line"></div><div class="line">    <span class="comment"># Initialize book keeping vars.</span></div><div class="line">    iterations = <span class="number">0</span></div><div class="line">    oldCentroids = <span class="keyword">None</span></div><div class="line"></div><div class="line">    <span class="comment"># Run the main k-means algorithm</span></div><div class="line">    <span class="keyword">while</span> <span class="keyword">not</span> shouldStop(oldCentroids, centroids, iterations, maxIt):</div><div class="line">        print(<span class="string">"iteration: \n"</span>, iterations)</div><div class="line">        print(<span class="string">"dataSet: \n"</span>, dataSet)</div><div class="line">        print(<span class="string">"centroids: \n"</span>, centroids)</div><div class="line">        <span class="comment"># Save old centroids for convergence test. Book keeping.</span></div><div class="line">        oldCentroids = np.copy(centroids)</div><div class="line">        iterations += <span class="number">1</span></div><div class="line"></div><div class="line">        <span class="comment"># Assign labels to each datapoint based on centroids</span></div><div class="line">        updateLabels(dataSet, centroids)</div><div class="line"></div><div class="line">        <span class="comment"># Assign centroids based on datapoint labels</span></div><div class="line">        centroids = getCentroids(dataSet, k)</div><div class="line"></div><div class="line">        <span class="comment"># We can get the labels too by calling getLabels(dataSet, centroids)</span></div><div class="line">    <span class="keyword">return</span> dataSet</div><div class="line"><span class="comment"># Function: Should Stop</span></div><div class="line"><span class="comment"># -------------</span></div><div class="line"><span class="comment"># Returns True or False if k-means is done. K-means terminates either</span></div><div class="line"><span class="comment"># because it has run a maximum number of iterations OR the centroids</span></div><div class="line"><span class="comment"># stop changing.</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">shouldStop</span><span class="params">(oldCentroids, centroids, iterations, maxIt)</span>:</span></div><div class="line">    <span class="keyword">if</span> iterations &gt; maxIt:</div><div class="line">         <span class="keyword">return</span> <span class="keyword">True</span></div><div class="line">    <span class="keyword">return</span> np.array_equal(oldCentroids, centroids)</div><div class="line"><span class="comment"># Function: Get Labels</span></div><div class="line"><span class="comment"># -------------</span></div><div class="line"><span class="comment"># Update a label for each piece of data in the dataset. </span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">updateLabels</span><span class="params">(dataSet, centroids)</span>:</span></div><div class="line">    <span class="comment"># For each element in the dataset, chose the closest centroid. </span></div><div class="line">    <span class="comment"># Make that centroid the element's label.</span></div><div class="line">    numPoints, numDim = dataSet.shape</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, numPoints):</div><div class="line">        dataSet[i, <span class="number">-1</span>] = getLabelFromClosestCentroid(dataSet[i, :<span class="number">-1</span>], centroids)</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">getLabelFromClosestCentroid</span><span class="params">(dataSetRow, centroids)</span>:</span></div><div class="line">    label = centroids[<span class="number">0</span>, <span class="number">-1</span>];</div><div class="line">    minDist = np.linalg.norm(dataSetRow - centroids[<span class="number">0</span>, :<span class="number">-1</span>])</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span> , centroids.shape[<span class="number">0</span>]):<span class="comment">#centroids.shape[0] 行</span></div><div class="line">        dist = np.linalg.norm(dataSetRow - centroids[i, :<span class="number">-1</span>])</div><div class="line">        <span class="keyword">if</span> dist &lt; minDist:</div><div class="line">            minDist = dist</div><div class="line">            label = centroids[i, <span class="number">-1</span>]</div><div class="line">    print(<span class="string">"minDist:"</span>, minDist)</div><div class="line">    <span class="keyword">return</span> label</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># Function: Get Centroids</span></div><div class="line"><span class="comment"># -------------</span></div><div class="line"><span class="comment"># Returns k random centroids, each of dimension n.</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">getCentroids</span><span class="params">(dataSet, k)</span>:</span></div><div class="line">    <span class="comment"># Each centroid is the geometric mean of the points that</span></div><div class="line">    <span class="comment"># have that centroid's label. Important: If a centroid is empty (no points have</span></div><div class="line">    <span class="comment"># that centroid's label) you should randomly re-initialize it.</span></div><div class="line">    result = np.zeros((k, dataSet.shape[<span class="number">1</span>]))</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, k + <span class="number">1</span>):</div><div class="line">        oneCluster = dataSet[dataSet[:, <span class="number">-1</span>] == i, :<span class="number">-1</span>]</div><div class="line">        result[i - <span class="number">1</span>, :<span class="number">-1</span>] = np.mean(oneCluster, axis = <span class="number">0</span>)<span class="comment">#axis 沿着行求和</span></div><div class="line">        result[i - <span class="number">1</span>, <span class="number">-1</span>] = i</div><div class="line"></div><div class="line">    <span class="keyword">return</span> result</div><div class="line"></div><div class="line"></div><div class="line">x1 = np.array([<span class="number">1</span>, <span class="number">1</span>])</div><div class="line">x2 = np.array([<span class="number">2</span>, <span class="number">1</span>])</div><div class="line">x3 = np.array([<span class="number">4</span>, <span class="number">3</span>])</div><div class="line">x4 = np.array([<span class="number">5</span>, <span class="number">4</span>])</div><div class="line">testX = np.vstack((x1, x2, x3, x4))</div><div class="line"></div><div class="line">result = kmeans(testX, <span class="number">2</span>, <span class="number">10</span>)</div><div class="line">print(<span class="string">"final result:"</span>)</div><div class="line">print(result)</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line">iteration: </div><div class="line"> <span class="number">0</span></div><div class="line">dataSet: </div><div class="line"> [[ <span class="number">1.</span>  <span class="number">1.</span>  <span class="number">1.</span>]</div><div class="line"> [ <span class="number">2.</span>  <span class="number">1.</span>  <span class="number">2.</span>]</div><div class="line"> [ <span class="number">4.</span>  <span class="number">3.</span>  <span class="number">0.</span>]</div><div class="line"> [ <span class="number">5.</span>  <span class="number">4.</span>  <span class="number">0.</span>]]</div><div class="line">centroids: </div><div class="line"> [[ <span class="number">1.</span>  <span class="number">1.</span>  <span class="number">1.</span>]</div><div class="line"> [ <span class="number">2.</span>  <span class="number">1.</span>  <span class="number">2.</span>]]</div><div class="line">minDist: <span class="number">0.0</span></div><div class="line">minDist: <span class="number">0.0</span></div><div class="line">minDist: <span class="number">2.82842712475</span></div><div class="line">minDist: <span class="number">4.24264068712</span></div><div class="line">iteration: </div><div class="line"> <span class="number">1</span></div><div class="line">dataSet: </div><div class="line"> [[ <span class="number">1.</span>  <span class="number">1.</span>  <span class="number">1.</span>]</div><div class="line"> [ <span class="number">2.</span>  <span class="number">1.</span>  <span class="number">2.</span>]</div><div class="line"> [ <span class="number">4.</span>  <span class="number">3.</span>  <span class="number">2.</span>]</div><div class="line"> [ <span class="number">5.</span>  <span class="number">4.</span>  <span class="number">2.</span>]]</div><div class="line">centroids: </div><div class="line"> [[ <span class="number">1.</span>          <span class="number">1.</span>          <span class="number">1.</span>        ]</div><div class="line"> [ <span class="number">3.66666667</span>  <span class="number">2.66666667</span>  <span class="number">2.</span>        ]]</div><div class="line">minDist: <span class="number">0.0</span></div><div class="line">minDist: <span class="number">1.0</span></div><div class="line">minDist: <span class="number">0.471404520791</span></div><div class="line">minDist: <span class="number">1.88561808316</span></div><div class="line">iteration: </div><div class="line"> <span class="number">2</span></div><div class="line">dataSet: </div><div class="line"> [[ <span class="number">1.</span>  <span class="number">1.</span>  <span class="number">1.</span>]</div><div class="line"> [ <span class="number">2.</span>  <span class="number">1.</span>  <span class="number">1.</span>]</div><div class="line"> [ <span class="number">4.</span>  <span class="number">3.</span>  <span class="number">2.</span>]</div><div class="line"> [ <span class="number">5.</span>  <span class="number">4.</span>  <span class="number">2.</span>]]</div><div class="line">centroids: </div><div class="line"> [[ <span class="number">1.5</span>  <span class="number">1.</span>   <span class="number">1.</span> ]</div><div class="line"> [ <span class="number">4.5</span>  <span class="number">3.5</span>  <span class="number">2.</span> ]]</div><div class="line">minDist: <span class="number">0.5</span></div><div class="line">minDist: <span class="number">0.5</span></div><div class="line">minDist: <span class="number">0.707106781187</span></div><div class="line">minDist: <span class="number">0.707106781187</span></div><div class="line">final result:</div><div class="line">[[ <span class="number">1.</span>  <span class="number">1.</span>  <span class="number">1.</span>]</div><div class="line"> [ <span class="number">2.</span>  <span class="number">1.</span>  <span class="number">1.</span>]</div><div class="line"> [ <span class="number">4.</span>  <span class="number">3.</span>  <span class="number">2.</span>]</div><div class="line"> [ <span class="number">5.</span>  <span class="number">4.</span>  <span class="number">2.</span>]]</div></pre></td></tr></table></figure>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/K-means/" rel="tag"># K-means</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/07/算法/常用排序算法/" rel="next" title="常用排序算法总结">
+                <i class="fa fa-chevron-left"></i> 常用排序算法总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/12/TensorFlow/Optimizer/" rel="prev" title="TensorFlow 传统神经网络之优化器">
+                TensorFlow 传统神经网络之优化器 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="刘铸澎" />
+          <p class="site-author-name" itemprop="name">刘铸澎</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">44</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://git.oschina.net/dashboard/projects" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#机器学习概念"><span class="nav-number">1.</span> <span class="nav-text">机器学习概念</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#基本概念"><span class="nav-number">1.1.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#机器学习步骤框架"><span class="nav-number">1.2.</span> <span class="nav-text">机器学习步骤框架</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#监督学习"><span class="nav-number">1.3.</span> <span class="nav-text">监督学习</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#非监督学习"><span class="nav-number">1.4.</span> <span class="nav-text">非监督学习</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#K-means算法"><span class="nav-number">2.</span> <span class="nav-text">K-means算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#归类："><span class="nav-number">2.1.</span> <span class="nav-text">归类：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#举例："><span class="nav-number">2.2.</span> <span class="nav-text">举例：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#概念"><span class="nav-number">2.3.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#举例：-1"><span class="nav-number">2.4.</span> <span class="nav-text">举例：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#代码实现"><span class="nav-number">2.4.1.</span> <span class="nav-text">代码实现</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">刘铸澎</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+<div>
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.1"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("6OMtX0qKxdIdOnV5KE5rgWX1-gzGzoHsz", "ODT08Qg3pX4wC18rqsaLQb35");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

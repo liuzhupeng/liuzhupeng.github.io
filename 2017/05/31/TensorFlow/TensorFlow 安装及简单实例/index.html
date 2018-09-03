@@ -1,0 +1,991 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="true" />
+
+
+
+
+
+
+
+	<meta name="baidu-site-verification" content="ADEVsVvcYE" />
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="TensorFlow,python," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="liuzhupeng的博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="安装TensorFlow步骤Anaconda 安装 1.Window,MacOS,Linux 都已支持 都已支持  2.Window用 户只能使python3.5(64bit) 。MacOS,Linux 支持 python2.7 和python3.3+。  有GPU 可以安装带 GPU 版本的，没有 GPU 就安装 CPU 版本的。 - - 推荐安装 Anaconda ，pip 版本大于8.1 。">
+<meta name="keywords" content="TensorFlow,python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TensorFlow 安装及简单实例">
+<meta property="og:url" content="http://yoursite.com/2017/05/31/TensorFlow/TensorFlow 安装及简单实例/index.html">
+<meta property="og:site_name" content="liuzhupeng的博客">
+<meta property="og:description" content="安装TensorFlow步骤Anaconda 安装 1.Window,MacOS,Linux 都已支持 都已支持  2.Window用 户只能使python3.5(64bit) 。MacOS,Linux 支持 python2.7 和python3.3+。  有GPU 可以安装带 GPU 版本的，没有 GPU 就安装 CPU 版本的。 - - 推荐安装 Anaconda ，pip 版本大于8.1 。">
+<meta property="og:image" content="http://i.imgur.com/9oe2But.png">
+<meta property="og:updated_time" content="2017-06-03T01:38:27.818Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TensorFlow 安装及简单实例">
+<meta name="twitter:description" content="安装TensorFlow步骤Anaconda 安装 1.Window,MacOS,Linux 都已支持 都已支持  2.Window用 户只能使python3.5(64bit) 。MacOS,Linux 支持 python2.7 和python3.3+。  有GPU 可以安装带 GPU 版本的，没有 GPU 就安装 CPU 版本的。 - - 推荐安装 Anaconda ，pip 版本大于8.1 。">
+<meta name="twitter:image" content="http://i.imgur.com/9oe2But.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'XO07FKRYQU',
+      apiKey: '42f277b78659c936fba4af368318e5b9',
+      indexName: 'lzpnote',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"搜索...","hits_empty":"未发现与 「${query}」相关的内容","hits_stats":"${hits} 条相关条目，使用了 ${time} 毫秒"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/05/31/TensorFlow/TensorFlow 安装及简单实例/"/>
+
+
+
+
+
+  <title>TensorFlow 安装及简单实例 | liuzhupeng的博客</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">liuzhupeng的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  <!-- 
+ -->
+ 
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+                <a href="javascript:;" class="popup-trigger">
+			<!-- 增加结束 -->
+              
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/31/TensorFlow/TensorFlow 安装及简单实例/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘铸澎">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="liuzhupeng的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">TensorFlow 安装及简单实例</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-31T20:24:56+08:00">
+                2017-05-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/" itemprop="url" rel="index">
+                    <span itemprop="name">深度学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/05/31/TensorFlow/TensorFlow 安装及简单实例/" class="leancloud_visitors" data-flag-title="TensorFlow 安装及简单实例">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="安装TensorFlow步骤"><a href="#安装TensorFlow步骤" class="headerlink" title="安装TensorFlow步骤"></a>安装TensorFlow步骤</h4><h5 id="Anaconda-安装"><a href="#Anaconda-安装" class="headerlink" title="Anaconda 安装"></a>Anaconda <a href="http://pan.baidu.com/s/1eRG3gbC" target="_blank" rel="external">安装</a></h5><ul>
+<li>1.Window,MacOS,Linux 都已支持 都已支持 </li>
+<li>2.Window用 户只能使python3.5(64bit) 。MacOS,Linux 支持 python2.7 和python3.3+。</li>
+<li><ol>
+<li>有GPU 可以安装带 GPU 版本的，没有 GPU 就安装 CPU 版本的。 - - 推荐安装 Anaconda ，pip 版本大于8.1 。<h5 id="TensorflowTensorflow-安装-针对python3-5"><a href="#TensorflowTensorflow-安装-针对python3-5" class="headerlink" title="TensorflowTensorflow 安装(针对python3.5)"></a>TensorflowTensorflow 安装(针对python3.5)</h5></li>
+</ol>
+<ul>
+<li>Windows安装Tensorflow <ul>
+<li>CPU版本：<ul>
+<li>管理员方式打开命令提示符，输入命令：pip3 install tensorflow </li>
+</ul>
+</li>
+<li>GPU版本： <ul>
+<li>管理员方式打开命令提示符，输入命令：pip3 install tensorflow-gpu</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>更新Tensorflow： <ul>
+<li>pip uninstall tensorflow </li>
+<li>pip install tensorflow</li>
+</ul>
+</li>
+<li>NOTE: TensorFlow requires MSVCP140.DLL, which may not be installed on your system. If, when you import tensorflow as tf, you see an error about No module named “_pywrap_tensorflow” and/or DLL load failed, check whether MSVCP140.DLL is in your %PATH% and, if not, you should install the <a href="https://www.microsoft.com/en-us/download/details.aspx?id=53587" target="_blank" rel="external"> Visual C++ 2015 </a> redistributable (x64 version).</li>
+<li>tensorflow-gpu 需要安装<a href="http://pan.baidu.com/s/1mhJEFX2" target="_blank" rel="external">cuda8+cudnn5.1</a></li>
+<li>Linux和MacOS安装Tensorflow<ul>
+<li>CPU版本：<ul>
+<li>Python 2.7用户：pip install tensorflow</li>
+<li>Python3.3+用户：pip3 install tensorflow </li>
+</ul>
+</li>
+<li>GPU版本： <ul>
+<li>Python 2.7用户：pip install tensorflow-gpu </li>
+<li>Python3.3+用户：pip3 install tensorflow-gpu<h4 id="tensorFlow基本概念"><a href="#tensorFlow基本概念" class="headerlink" title="tensorFlow基本概念"></a>tensorFlow基本概念</h4></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>使用图（graphs）来表示计算任务 </li>
+<li>在被称之为会话（Session）的上下文（context）中执行图 </li>
+<li>使用tensor表示数据 </li>
+<li>通过变量（Variable）维护状态</li>
+<li><p>使用feed和fetch可以为任意的操作赋值或者从其中获取数据</p>
+<p>Tensorflow是一个编程系统，使用图（graphs）来表示计算任务，图（graphs）中的节点称之为op （operation），一个op获得0个或多个Tensor，执行计算，产生0个或多个Tensor。Tensor 看作是 一个 n 维的数组或列表。图必须在会话（Session）里被启动。</p>
+<h4 id="TensorFlow结构"><a href="#TensorFlow结构" class="headerlink" title="TensorFlow结构"></a>TensorFlow结构</h4><p><img src="http://i.imgur.com/9oe2But.png" alt=""></p>
+<h4 id="创建图，启动图"><a href="#创建图，启动图" class="headerlink" title="创建图，启动图"></a>创建图，启动图</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="string">"""</span></div><div class="line">Please note, this code is only for python 3+. If you are using python 2+, please modify the code accordingly.</div><div class="line">"""</div><div class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</div><div class="line"><span class="comment">#创建一个常量op</span></div><div class="line">matrix1 = tf.constant([[<span class="number">3</span>, <span class="number">3</span>]])<span class="comment">#1行2列</span></div><div class="line"><span class="comment">#创建一个常量op</span></div><div class="line">matrix2 = tf.constant([[<span class="number">2</span>],</div><div class="line">                       [<span class="number">2</span>]])   <span class="comment">#2行1列</span></div><div class="line"><span class="comment">#创建一个矩阵乘法op,把m1和m2传入</span></div><div class="line">product = tf.matmul(matrix1, matrix2)  <span class="comment"># matrix multiply np.dot(m1, m2)</span></div><div class="line">print(product)</div><div class="line"></div><div class="line"><span class="comment"># method 1</span></div><div class="line"><span class="comment">#定义一个会话，启动默认图</span></div><div class="line">sess = tf.Session()</div><div class="line"><span class="comment">#调用sess的run方法来执行矩阵乘法op</span></div><div class="line"><span class="comment">#run(product)触发了图中3个op</span></div><div class="line">result = sess.run(product)</div><div class="line">print(result)</div><div class="line">sess.close()</div><div class="line"></div><div class="line"><span class="comment"># method 2</span></div><div class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</div><div class="line">	<span class="comment">#调用sess的run方法来执行矩阵乘法op</span></div><div class="line">	<span class="comment">#run(product)触发了图中3个op</span></div><div class="line">	result = sess.run(product)</div><div class="line">	print(result)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h4><h5 id="变量加减"><a href="#变量加减" class="headerlink" title="变量加减"></a>变量加减</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</div><div class="line"></div><div class="line">x = tf.Variable([<span class="number">1</span>,<span class="number">2</span>])</div><div class="line">a = tf.constant([<span class="number">3</span>,<span class="number">3</span>])</div><div class="line"><span class="comment">#增加一个减法op</span></div><div class="line">sub = tf.subtract(x,a)</div><div class="line"><span class="comment">#增加一个加法op</span></div><div class="line">add = tf.add(x,sub)</div><div class="line"></div><div class="line">init = tf.global_variables_initializer()</div><div class="line"></div><div class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</div><div class="line">    	sess.run(init)</div><div class="line">    	print(sess.run(sub))</div><div class="line">    	print(sess.run(add))</div><div class="line">--------------------------</div><div class="line">[<span class="number">-2</span> <span class="number">-1</span>]</div><div class="line">[<span class="number">-1</span>  <span class="number">1</span>]</div></pre></td></tr></table></figure>
+<h5 id="变量自增"><a href="#变量自增" class="headerlink" title="变量自增"></a>变量自增</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</div><div class="line"><span class="comment">#创建一个变量初始化为0</span></div><div class="line">state = tf.Variable(<span class="number">0</span>,name=<span class="string">'counter'</span>)<span class="comment">#给变量命名</span></div><div class="line"><span class="comment">#创建一个op，作用是state加1</span></div><div class="line">new_value = tf.add(state,<span class="number">1</span>)</div><div class="line"><span class="comment">#赋值op</span></div><div class="line">update = tf.assign(state,new_value)</div><div class="line"><span class="comment">#变量初始化</span></div><div class="line">init = tf.global_variables_initializer()</div><div class="line"></div><div class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</div><div class="line">    sess.run(init)</div><div class="line">    print(sess.run(state))</div><div class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">5</span>):</div><div class="line">        sess.run(update)</div><div class="line">        print(sess.run(state))</div><div class="line">--------------------------</div><div class="line"><span class="number">0</span></div><div class="line"><span class="number">1</span></div><div class="line"><span class="number">2</span></div><div class="line"><span class="number">3</span></div><div class="line"><span class="number">4</span></div><div class="line"><span class="number">5</span></div></pre></td></tr></table></figure>
+<h4 id="Fetch-和-Feed"><a href="#Fetch-和-Feed" class="headerlink" title="Fetch 和 Feed"></a>Fetch 和 Feed</h4><h5 id="Fetch"><a href="#Fetch" class="headerlink" title="Fetch"></a>Fetch</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</div><div class="line">inp1 = tf.constant(<span class="number">2.0</span>)</div><div class="line">inp2 = tf.constant(<span class="number">3.0</span>)</div><div class="line">inp3 = tf.constant(<span class="number">4.0</span>)</div><div class="line"></div><div class="line">add = tf.add(inp1,inp2)</div><div class="line">mult = tf.multiply(inp3,add)</div><div class="line"></div><div class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</div><div class="line">    result = sess.run([mult,add])</div><div class="line">   	print(result)</div><div class="line">------------------------</div><div class="line">[<span class="number">20.0</span>, <span class="number">5.0</span>]</div></pre></td></tr></table></figure>
+<h5 id="Feed"><a href="#Feed" class="headerlink" title="Feed"></a>Feed</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</div><div class="line"><span class="comment">#创建占位符</span></div><div class="line">inp1 = tf.placeholder(tf.float32)</div><div class="line">inp2 = tf.placeholder(tf.float32)</div><div class="line">oup = tf.multiply(inp1,inp2)</div><div class="line"></div><div class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</div><div class="line">    <span class="comment">#Feed的数据以字典的形式传入</span></div><div class="line">    print(sess.run(oup,feed_dict=&#123;inp1:[<span class="number">5.</span>],inp2:[<span class="number">3.</span>]&#125;))</div><div class="line">-----------------------------</div><div class="line">[ <span class="number">15.</span>]</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/TensorFlow/" rel="tag"># TensorFlow</a>
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/25/gitSvn/git常用命令/" rel="next" title="git常用命令">
+                <i class="fa fa-chevron-left"></i> git常用命令
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/01/go/并发Concurrency/" rel="prev" title="go之并发concurrency">
+                go之并发concurrency <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="刘铸澎" />
+          <p class="site-author-name" itemprop="name">刘铸澎</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">44</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://git.oschina.net/dashboard/projects" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装TensorFlow步骤"><span class="nav-number">1.</span> <span class="nav-text">安装TensorFlow步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Anaconda-安装"><span class="nav-number">1.1.</span> <span class="nav-text">Anaconda 安装</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#TensorflowTensorflow-安装-针对python3-5"><span class="nav-number">1.2.</span> <span class="nav-text">TensorflowTensorflow 安装(针对python3.5)</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tensorFlow基本概念"><span class="nav-number">2.</span> <span class="nav-text">tensorFlow基本概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TensorFlow结构"><span class="nav-number">3.</span> <span class="nav-text">TensorFlow结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建图，启动图"><span class="nav-number">4.</span> <span class="nav-text">创建图，启动图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#变量"><span class="nav-number">5.</span> <span class="nav-text">变量</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#变量加减"><span class="nav-number">5.1.</span> <span class="nav-text">变量加减</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#变量自增"><span class="nav-number">5.2.</span> <span class="nav-text">变量自增</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Fetch-和-Feed"><span class="nav-number">6.</span> <span class="nav-text">Fetch 和 Feed</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Fetch"><span class="nav-number">6.1.</span> <span class="nav-text">Fetch</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Feed"><span class="nav-number">6.2.</span> <span class="nav-text">Feed</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">刘铸澎</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+<div>
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.1"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("6OMtX0qKxdIdOnV5KE5rgWX1-gzGzoHsz", "ODT08Qg3pX4wC18rqsaLQb35");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

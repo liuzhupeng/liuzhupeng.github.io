@@ -1,0 +1,1030 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="true" />
+
+
+
+
+
+
+
+	<meta name="baidu-site-verification" content="ADEVsVvcYE" />
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="shell,linux,SVN,Apache,CentOS," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="liuzhupeng的博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="Subversion和apache,apr,apr-util服务器 subversion服务器是不需要apache的，但是可以使用apache，视具体情况来选择。- 1、如果只要通过file://或svn://来访问，则不需要apache，只安装svn即可，使用svnserve来作为服务。 - 2、如果你要建立一个可以通过http://或https://来访问的版本库服务器，则你需要使用apach">
+<meta name="keywords" content="shell,linux,SVN,Apache,CentOS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="搭建SVN ＋ Apache CentOS服务器">
+<meta property="og:url" content="http://yoursite.com/2017/05/25/gitSvn/CentOS搭建SVN ＋ Apache 服务器/index.html">
+<meta property="og:site_name" content="liuzhupeng的博客">
+<meta property="og:description" content="Subversion和apache,apr,apr-util服务器 subversion服务器是不需要apache的，但是可以使用apache，视具体情况来选择。- 1、如果只要通过file://或svn://来访问，则不需要apache，只安装svn即可，使用svnserve来作为服务。 - 2、如果你要建立一个可以通过http://或https://来访问的版本库服务器，则你需要使用apach">
+<meta property="og:updated_time" content="2017-05-25T03:45:45.357Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="搭建SVN ＋ Apache CentOS服务器">
+<meta name="twitter:description" content="Subversion和apache,apr,apr-util服务器 subversion服务器是不需要apache的，但是可以使用apache，视具体情况来选择。- 1、如果只要通过file://或svn://来访问，则不需要apache，只安装svn即可，使用svnserve来作为服务。 - 2、如果你要建立一个可以通过http://或https://来访问的版本库服务器，则你需要使用apach">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'XO07FKRYQU',
+      apiKey: '42f277b78659c936fba4af368318e5b9',
+      indexName: 'lzpnote',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"搜索...","hits_empty":"未发现与 「${query}」相关的内容","hits_stats":"${hits} 条相关条目，使用了 ${time} 毫秒"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/05/25/gitSvn/CentOS搭建SVN ＋ Apache 服务器/"/>
+
+
+
+
+
+  <title>搭建SVN ＋ Apache CentOS服务器 | liuzhupeng的博客</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">liuzhupeng的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  <!-- 
+ -->
+ 
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+                <a href="javascript:;" class="popup-trigger">
+			<!-- 增加结束 -->
+              
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/25/gitSvn/CentOS搭建SVN ＋ Apache 服务器/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘铸澎">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="liuzhupeng的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">搭建SVN ＋ Apache CentOS服务器</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-25T11:26:25+08:00">
+                2017-05-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/版本控制git-svn/" itemprop="url" rel="index">
+                    <span itemprop="name">版本控制git&svn</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/05/25/gitSvn/CentOS搭建SVN ＋ Apache 服务器/" class="leancloud_visitors" data-flag-title="搭建SVN ＋ Apache CentOS服务器">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="Subversion和apache-apr-apr-util"><a href="#Subversion和apache-apr-apr-util" class="headerlink" title="Subversion和apache,apr,apr-util"></a>Subversion和apache,apr,apr-util</h3><h4 id="服务器"><a href="#服务器" class="headerlink" title="服务器"></a>服务器</h4><ul>
+<li>subversion服务器是不需要apache的，但是可以使用apache，视具体情况来选择。<pre><code>- 1、如果只要通过file://或svn://来访问，则不需要apache，只安装svn即可，使用svnserve来作为服务。
+- 2、如果你要建立一个可以通过http://或https://来访问的版本库服务器，则你需要使用apache。
+</code></pre><h4 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h4></li>
+<li>在类Linux系统下，如果你通过file://或svn://来访问，则只要编译安装svn就可以，</li>
+<li>如果通过<a href="http://访问，则要同neon编译，" target="_blank" rel="external">http://访问，则要同neon编译，</a></li>
+<li>如果通过<a href="https://访问，则要同带ssl支持的neon编译，" target="_blank" rel="external">https://访问，则要同带ssl支持的neon编译，</a></li>
+<li>不论怎样，都要同apr和apr-util编译。</li>
+<li>neon、apr、apr-util也很容易获得，目前发布的subversion代码都会有一个叫做subversion-deps-xxx的文件</li>
+</ul>
+<h3 id="安装和配置"><a href="#安装和配置" class="headerlink" title="安装和配置"></a>安装和配置</h3><h4 id="安装软件包"><a href="#安装软件包" class="headerlink" title="安装软件包"></a>安装软件包</h4><pre><code># yum install httpd
+# yum install mod_dav_svn
+# yum install subversion
+</code></pre><h4 id="验证安装"><a href="#验证安装" class="headerlink" title="验证安装"></a>验证安装</h4><pre><code># httpd -version
+显示结果：
+#httpd -version
+如果失败前往 /etc/httpd/modules/ 下，检查是否包含mod_dav_svn.so和mod_authz_svn.so,如果有，mod_dav_svn安装成功。
+</code></pre><h4 id="创建仓库"><a href="#创建仓库" class="headerlink" title="创建仓库"></a>创建仓库</h4><pre><code># mkdir /var/www/svn
+ # cd /var/www/svn
+ # svnadmin create repo1
+</code></pre><h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><pre><code>/var/www/svn 目录下会有一个repo1的文件夹
+  修改所有者:
+ # chown -R apache:apache repo1
+  copy  /var/www/svn/repo1/conf 下的 authz到 /var/www/svn下,并创建passwd文件
+ # cp /var/www/svn/repo1/conf/authz /var/www/svn/authz
+ # cd /var/www/svn
+ # vi passwd
+ :wq保存退出
+  生成账号：
+ # htpasswd /var/www/svn/passwd user1
+    输入密码，生成user1账号
+ 权限管理设置:
+ # vi /var/www/svn/authz
+在[groups]下添加组,
+ [/] 相当于/var/www/svn这个目录,赋予权限给用户组
+ [repo1:/] 是指repo1库
+ [repo1:/desgin]是repo1下的desgin目录
+[groups]
+admin=user1
+proj1_developer=user2,user3
+proj2_develoer=user2,user4
+
+proj1_desgin=user5,user6
+
+[/]
+@admin=rw
+
+[repo1:/]
+@proj1_developer=rw
+
+[repo1:/desgin]
+@proj1_desgin=rw
+
+[repo2:/]
+@proj2_developer=rw
+ 将svn关联到apache上:
+ # vim /etc/httpd/conf.d/subversion.conf
+  在底部加上:
+&lt;Location /repos&gt;
+       DAV svn
+       SVNParentPath /var/www/svn
+
+#   # Limit write permission to list of valid users.#   &lt;LimitExcept GET PROPFIND OPTIONS REPORT&gt;#      # Require SSL connection for password protection.#      # SSLRequireSSL#
+  AuthType Basic
+  AuthName &quot;Authorization SVN&quot;
+  AuthzSVNAccessFile /var/www/svn/authz
+  AuthUserFile /var/www/svn/passwd
+  Require valid-user
+#   &lt;/LimitExcept&gt;
+&lt;/Location&gt;
+</code></pre><ul>
+<li><p>重启httpd</p>
+<pre><code># service httpd restart
+</code></pre></li>
+</ul>
+<h3 id="通过浏览器测试"><a href="#通过浏览器测试" class="headerlink" title="通过浏览器测试"></a>通过浏览器测试</h3><ul>
+<li>在浏览器中输入<a href="http://ip或网站/repos/repo1" target="_blank" rel="external">http://ip或网站/repos/repo1</a></li>
+<li><p>此时会弹出输入密码框，输入创建的用户名和密码就可以登录了</p>
+<h3 id="SVN开机启动"><a href="#SVN开机启动" class="headerlink" title="SVN开机启动"></a>SVN开机启动</h3><p>安装好的svn服务端，默认是不会开机自启动的，每次开机自己启动会很麻烦，我们可以把它设成开机启动</p>
+<p>  首先：编写一个启动脚本svn_startup.sh，我放在/root/    svn_startup.sh<br>  #!/bin/bash<br>  /usr/bin/svnserve -d -r /home/svn/<br>  这里的svnserve路径保险起见，最好写绝对路径，因为启动的时候，环境变量也许没加载。<br>  绝对路径怎么查？<br>  which svnserve<br>  这里还有可能碰到一个问题，如果你在windows下建立和编写的脚步，拿到linux下，用vi或者vim修改后可能会无法执行，这是文件格式的问题<br>  vi svn_startup.sh</p>
+<p>  输入：set ff 回车</p>
+<p>  如果显示的结果不是fileformat=unix</p>
+<p>  再次输入</p>
+<p>  set ff=unix</p>
+<p>  就OK了<br>  然后修改该脚本的执行权限<br>  chmod ug+x svn_startup.sh</p>
+<p>  或者万能的</p>
+<p>  chmod 777 svn_startup.sh<br>  最后：加入自动运行<br>  vi /etc/rc.d/rc.local<br>  在末尾添加脚本的路径，如：<br>  /root/svn_startup.sh<br>  现在，你可以重启一下试试了。 不懂得怎么确认成功？败给你了<br>  ps -ef|grep svnserve</p>
+</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/shell/" rel="tag"># shell</a>
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+            <a href="/tags/SVN/" rel="tag"># SVN</a>
+          
+            <a href="/tags/Apache/" rel="tag"># Apache</a>
+          
+            <a href="/tags/CentOS/" rel="tag"># CentOS</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/25/Docker/Docker（nginx）镜像构建/" rel="next" title="Docker（nginx）镜像构建.md">
+                <i class="fa fa-chevron-left"></i> Docker（nginx）镜像构建.md
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/25/gitSvn/git链接远程仓库/" rel="prev" title="git 本地关联远程仓库">
+                git 本地关联远程仓库 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="刘铸澎" />
+          <p class="site-author-name" itemprop="name">刘铸澎</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">44</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://git.oschina.net/dashboard/projects" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Subversion和apache-apr-apr-util"><span class="nav-number">1.</span> <span class="nav-text">Subversion和apache,apr,apr-util</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#服务器"><span class="nav-number">1.1.</span> <span class="nav-text">服务器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#客户端"><span class="nav-number">1.2.</span> <span class="nav-text">客户端</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装和配置"><span class="nav-number">2.</span> <span class="nav-text">安装和配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装软件包"><span class="nav-number">2.1.</span> <span class="nav-text">安装软件包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#验证安装"><span class="nav-number">2.2.</span> <span class="nav-text">验证安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建仓库"><span class="nav-number">2.3.</span> <span class="nav-text">创建仓库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置"><span class="nav-number">2.4.</span> <span class="nav-text">配置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过浏览器测试"><span class="nav-number">3.</span> <span class="nav-text">通过浏览器测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SVN开机启动"><span class="nav-number">4.</span> <span class="nav-text">SVN开机启动</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">刘铸澎</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+<div>
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.1"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("6OMtX0qKxdIdOnV5KE5rgWX1-gzGzoHsz", "ODT08Qg3pX4wC18rqsaLQb35");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
